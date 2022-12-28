@@ -2,6 +2,8 @@ class Synth extends Control {
 	ac = new AudioContext();
 	nodes = [];
 	nextId = 1;
+	wire = null;
+	holding = null;
 
 	constructor(){
 		super(0, null, "Speakers");
@@ -27,26 +29,37 @@ class Synth extends Control {
 	}
 }
 
-/*
+document.onmousedown = function(event){
+	if (event.target.className != "handle"){
+		return;
+	}
+	synth.holding = event;
+}
 
-let filter = new BiquadFilterNode(ac);
-filter.frequency.value = 1000;
-filter.type = "highpass"; // lowpass, highpass, bandpass, lowshelf, highshelf, peaking, notch, allpass
+document.onmouseup = function(event){
+	if (synth.holding == null){
+		return;
+	}
 
-let gain = new GainNode(ac);
-gain.gain.value = 0.05;
+	let from = synth.holding;
+	let to = event;
+	let element = from.target.parentElement;
 
-osc.connect(filter).connect(gain).connect(ac.destination);
+	let shiftX = to.screenX - from.screenX;
+	let shiftY = to.screenY - from.screenY;
 
+	let left = parseFloat(element.style.left.replace("px", ""));
+	if (isNaN(left)){
+		left = 0;
+	}
 
-/* PARAMS
- * Oscillator
- * 	Wave Type
- * 	Detune
- * Filter
- * 	Filter Type
- * 	Frequency
- * 	Q Factor
- * Gain
- * 	Volume
- */
+	let top = parseFloat(element.style.top.replace("px", ""));
+	if (isNaN(top)){
+		top = 0;
+	}
+
+	element.style.left = left + shiftX + "px";
+	element.style.top = top + shiftY + "px";
+
+	synth.holding = null;
+}
