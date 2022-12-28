@@ -10,14 +10,12 @@ class Control {
 		this.title = title;
 	}
 
-	connectTo(id){
-		this.node.disconnect();
-		this.node.connect( this.synth.nodes.find(node => node.id == id).node );
-	}
-
 	addControl(){
 		let div = document.createElement("div");
-		this.addH3(div, this.title);
+		div.className = "control";
+
+		let h3 = this.addH3(div, this.title);
+		h3.setAttribute("contenteditable", true);
 
 		this.addTable(div);
 
@@ -74,17 +72,24 @@ class Control {
 		return input;
 	}
 
-	addConnections(div){
-		let tbody = this.addTable(div);
-		let cell = this.addLabelledRow(tbody, "Connect To");
+	addJack(cell, connectFunc){
+		return this.addButton(cell, "Connect", connectFunc);
+	}
 
-		let changeFunc = function() { this.calumObject.connectTo(this.value); };
-		let select = this.addSelect(cell, changeFunc);
-		this.synth.nodes.forEach(node => select.appendChild(node.generateOption()));
+	addHandle(cell){
+		let button = this.addButton(cell, "", null);
+		button.className = "handle";
+		return button;
+	}
 
-		this.connectTo(select.querySelector("option:checked").value);
+	addButton(cell, text, clickFunc){
+		let button = document.createElement("button");
+		cell.appendChild(button);
 
-		return select;
+		button.innerHTML = text;
+		button.calumObject = this;
+		button.onclick = clickFunc;
+		return button;
 	}
 
 	addSelect(cell, changeFunc){
@@ -101,13 +106,6 @@ class Control {
 		select.appendChild(option);
 		option.innerHTML = text;
 		option.value = value;
-		return option;
-	}
-
-	generateOption(){
-		let option = document.createElement("option");
-		option.value = this.id;
-		option.innerHTML = this.title;
 		return option;
 	}
 }
