@@ -7,7 +7,6 @@ class Oscillator extends Control {
 	}
 
 	set Type(value){
-		console.log("Oscillator type from", this.node.type, "to", value);
 		this.node.type = value;
 	}
 
@@ -16,7 +15,6 @@ class Oscillator extends Control {
 	}
 
 	set Freq(value){
-		console.log("Oscillator frequency", this.node.frequency.value);
 		this.node.frequency.value = value;
 	}
 
@@ -25,12 +23,20 @@ class Oscillator extends Control {
 	}
 
 	set Detune(value){
-		console.log("Oscillator detune", this.node.detune.value);
 		this.node.detune.value = value;
 	}
 
 	get Detune(){
 		return this.node.detune.value;
+	}
+
+	connectFreqIn(){
+		this.synth.wire.connect(this.node.frequency);
+	}
+
+	connectOut(){
+		this.node.disconnect();
+		this.synth.wire = this.node;
 	}
 
 	generate(){
@@ -49,11 +55,15 @@ class Oscillator extends Control {
 		cell = super.addLabelledRow(table, "Frequency");
 		let freqFunc = function() { this.calumObject.Freq = this.value; };
 		super.addInput(cell, "Frequency", this.Freq, 0, 10000, freqFunc);
+		super.addJack(cell, function() { this.calumObject.connectFreqIn(); } );
 
 		cell = super.addLabelledRow(table, "Detune");
 		let detuneFunc = function() { this.calumObject.Detune = this.value; };
 		super.addInput(cell, "Detune", this.Detune, -10000, 10000, detuneFunc);
 
-		super.addConnections(div);
+		cell = super.addLabelledRow(table, "Output");
+		super.addJack(cell, function() { this.calumObject.connectOut(); } );
+
+		super.addHandle(div);
 	}
 }
