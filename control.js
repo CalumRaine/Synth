@@ -2,12 +2,18 @@ class Control {
 	id = 0;
 	title = "Control";
 	synth = null;
-	node = null;
+	nodes = [];
+	wiresIn = [];
+	wiresOut = [];
 
 	constructor(id, synth, title){
 		this.id = id;
 		this.synth = synth;
 		this.title = title;
+	}
+
+	get LastNode(){
+		return this.nodes.length == 0 ? null : this.nodes[this.nodes.length - 1];
 	}
 
 	addControl(){
@@ -58,14 +64,13 @@ class Control {
 		return cell;
 	}
 
-	addInput(tr, label, value, min, max, changeFunc){
+	addInput(tr, label, value, changeFunc){
 		let input = document.createElement("input");
 		tr.appendChild(input);
 
 		input.type = "number";
 		input.name = label;
 		input.value = value;
-		input.placeholder = `${min} - ${max}`;
 		input.oninput = changeFunc;
 		input.calumObject = this;
 

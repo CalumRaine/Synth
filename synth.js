@@ -4,11 +4,17 @@ class Synth extends Control {
 	nextId = 1;
 	wire = null;
 	holding = null;
+	output = null;
 
 	constructor(){
 		super(0, null, "Speakers");
 		this.node = this.ac.destination;
-		this.nodes.push(this);
+	}
+
+	set Output(connection){
+		connection.to = this;
+		this.output = connection;
+		connection.from.nodes.forEach(node => { node.disconnect(); node.connect(this.ac.destination) });
 	}
 
 	addOscillator(){
@@ -26,6 +32,41 @@ class Synth extends Control {
 	get NextId() {
 		this.nextId += 1;
 		return this.nextId;
+	}
+
+	make(frequency){
+		console.log("Make", frequency);
+		this.nodes.forEach(node => node.make(frequency));
+		this.nodes.forEach(node => node.connect());
+		this.connect();
+	}
+
+	connect(){
+		this.output.from.LastNode.connect(this.ac.destination);
+	}
+}
+
+document.onkeydown = function(event){
+	if (event.keyCode == 67){
+		return synth.make(261.626);
+	}
+	else if (event.keyCode == 68){
+		return synth.make(293.665);
+	}
+	else if (event.keyCode == 69){
+		return synth.make(329.628);
+	}
+	else if (event.keyCode == 70){
+		return synth.make(349.228);
+	}
+	else if (event.keyCode == 71){
+		return synth.make(391.995);
+	}
+	else if (event.keyCode == 65){
+		return synth.make(440);
+	}
+	else if (event.keyCode == 66){
+		return synth.make(493.883);
 	}
 }
 
