@@ -135,6 +135,9 @@ class Keyboard {
 
 	keyDown(keyCode){
 		let frequency = this.keyCodeToFrequency(keyCode);
+		if (this.keys.some(key => key.frequency == frequency)){
+			return;
+		}
 		this.keys.push(new Key(frequency));
 	}
 
@@ -330,12 +333,14 @@ class Filter extends IOModule {
 	type = "lowpass";
 	types = ["lowpass", "highpass", "lowshelf", "highshelf", "bandpass", "peaking", "notch", "allpass"];
 	frequency = 1000;
-	frequencyJack = new Jack(Jack.INPUT, function(node) { return node.frequency; });
+	frequencyJack = null;
 	qFactor = 1;
-	qFactorJack = new Jack(Jack.INPUT, function(node) { return node.Q; });
+	qFactorJack = null;
 
 	constructor(id){
 		super(id, Module.FILTER);
+		this.frequencyJack = new Jack(id, Jack.INPUT, function(node) { return node.frequency; });
+		this.qFactorJack = new Jack(id, Jack.INPUT, function(node) { return node.Q; });
 	}
 
 	set Type(value){
@@ -373,10 +378,11 @@ class Filter extends IOModule {
 
 class Gain extends IOModule {
 	gain = 1;
-	gainJack = new Jack(Jack.INPUT, function(node) { return node.gain; });
+	gainJack = null;
 
 	constructor(id){
 		super(id, Module.GAIN);
+		this.gainJack = new Jack(id, Jack.INPUT, function(node) { return node.gain; });
 	}
 
 	set Gain(value){
@@ -429,7 +435,7 @@ class Synth {
 
 	connect(fromJack, toJack){
 		if (fromJack.direction != Jack.OUTPUT || toJack.direction != Jack.INPUT){
-			console.log("ERROR: Cables must go from output jack to input jack.");
+			console.log("ERROR: Cables must go from output jack to input jack:", fromJack.direction, toJack.direction);
 		}
 		else {
 			console.log("CONNECTING:", fromJack, "to", toJack);
