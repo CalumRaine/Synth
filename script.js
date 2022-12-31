@@ -1,26 +1,21 @@
 var synth = new Synth();
 var keyboard = new Keyboard();
-
-let osc = synth.addOscillatorKey();
-let filter = synth.addFilter();
-synth.connect(osc.outputJack, filter.inputJack);
-
-let gain = synth.addGain();
-gain.Gain = 0.5;
-synth.connect(filter.outputJack, gain.inputJack);
-synth.connect(gain.outputJack, synth.speakers.inputJack);
-
 document.onkeydown = function(event){
 	if (event.repeat){
 		return;
 	}
-	else {
-		keyboard.keyDown(event.keyCode);
-	}
-}
+	keyboard.keyDown(event.keyCode);
+};
 
-document.onkeyup = function(event){
-	keyboard.keyUp(event.keyCode);
-}
+let osc = synth.addOscillatorKey(true);
+let filter = synth.addFilter(true);
+let gain = synth.addGain(true);
 
-document.addEventListener("Synth Event", function(event) { keyboard.eventHandler(event); } );
+synth.connect(osc.outputJack, filter.inputJack);
+synth.connect(filter.outputJack, gain.inputJack);
+synth.connect(gain.outputJack, synth.speakers.inputJack);
+
+let env = synth.addEnvelopeAbsolute(0);
+env.addWaypoint(0.5, 2);
+env.addWaypoint(0.01, 1);
+synth.connect(env.outputJack, gain.gainJack);
