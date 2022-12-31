@@ -53,4 +53,10 @@ class Synth {
 		this.modules.push(module);
 		return module;
 	}
+
+	addEnvelopeRelative(from){
+		let module = new EnvelopeRelative(this.NextId, from, this.audioContext);
+		this.modules.push(module);
+		return module;
+	}
 }

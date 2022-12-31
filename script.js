@@ -8,14 +8,18 @@ document.onkeydown = function(event){
 };
 
 let osc = synth.addOscillatorKey(true);
+osc.Type = "sawtooth";
+
 let filter = synth.addFilter(true);
 let gain = synth.addGain(true);
+gain.Gain = 0.2;
 
 synth.connect(osc.outputJack, filter.inputJack);
 synth.connect(filter.outputJack, gain.inputJack);
 synth.connect(gain.outputJack, synth.speakers.inputJack);
 
-let env = synth.addEnvelopeAbsolute(0);
-env.addWaypoint(0.5, 2);
-env.addWaypoint(0.01, 1);
-synth.connect(env.outputJack, gain.gainJack);
+let env = synth.addEnvelopeRelative(-100);
+env.addWaypoint(0, 0.2);
+env.addWaypoint(50, 0.2);
+env.addWaypoint(0, 0.2);
+synth.connect(env.outputJack, osc.frequencyJack);

@@ -4,9 +4,13 @@ class Oscillator extends SoundModule {
 	frequencyJack = null;
 	outputJack = null;
 
+	detune = 0;
+	detuneJack = null;
+
 	constructor(id, moduleType, polyphonic, audioContext){
 		super(id, moduleType, polyphonic, audioContext);
 		this.frequencyJack = new Jack(id, Jack.INPUT, this.nodes, function(node) { return node.frequency; });
+		this.detuneJack = new Jack(id, Jack.INPUT, this.nodes, function(node) { return node.detune; });
 		this.outputJack = new Jack(id, Jack.OUTPUT, this.nodes, function(node) { return node; });
 	}
 
@@ -18,8 +22,18 @@ class Oscillator extends SoundModule {
 		this.nodes.forEach(node => node.type = this.type);
 	}
 
+	set Detune(value){
+		if (isNaN(parseFloat(value))){
+			return;
+		}
+		this.detune = value;
+		this.nodes.forEach(node => { node.detune.value = this.detune; node.detune.calumValue = this.detune; })
+	}
+
 	make(node, keyId){
 		node.type = this.type;
+		node.detune.value = this.detune;
+		node.detune.calumValue = this.detune;
 		node.start();
 		return super.make(node, keyId);
 	}
@@ -48,11 +62,13 @@ class OscillatorFixed extends Oscillator {
 			return;
 		}
 		this.frequency = value;
-		this.nodes.forEach(node => node.frequency.value = this.frequency);
+		this.nodes.forEach(node => { node.frequency.value = this.frequency; node.frequency.calumValue = this.frequency; });
 	}
 
 	make(keyId){
 		let node = new OscillatorNode(this.audioContext);
+		node.frequency.value = this.frequency;
+		node.frequency.calumValue = this.frequency;
 		return super.make(node, keyId);
 	}
 }

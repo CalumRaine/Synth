@@ -14,8 +14,11 @@ class Key {
 		synth.modules.filter(module => module.polyphonic).map(module => module.make(this.keyId));
 
 		// Set frequency of OscillatorKey modules
-		synth.modules.filter(module => module.moduleType == Module.OSCILLATOR_KEY)
-			     .forEach(module => module.nodes.find(node => node.keyId == this.keyId).frequency.value = this.frequency);
+		for (let module of synth.modules.filter(module => module.moduleType == Module.OSCILLATOR_KEY)){
+			let node = module.nodes.find(node => node.keyId == this.keyId);
+			node.frequency.value = this.frequency;
+			node.frequency.calumValue = this.frequency;
+		}
 
 		// Make connections
 		synth.cables.forEach(cable => cable.connect(this.keyId));

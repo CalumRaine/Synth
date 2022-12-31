@@ -25,15 +25,15 @@ class EnvelopeRelative extends Envelope {
 		super(id, Module.ENVELOPE_RELATIVE, from, audioContext);
 	}
 
-	trigger(keyId, value){
+	trigger(keyId){
 		let time = 0;
-		let last = this.from + value;
 		let parameter = this.getParameter(keyId);
+		let last = this.from + parameter.calumValue;
 		parameter.value = last;
 		for (let waypoint of this.waypoints){
-			parameter.setValueCurveAtTime([last, waypoint.value + value], this.audioContext + time, waypoint.time);
+			parameter.setValueCurveAtTime([last, waypoint.value + parameter.calumValue], this.audioContext.currentTime + time, waypoint.time);
 			time += waypoint.time;
-			last = waypoint.value + value;
+			last = waypoint.value + parameter.calumValue;
 		}
 	}
 }

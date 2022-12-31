@@ -16,12 +16,13 @@ class Gain extends SoundModule {
 			return;
 		}
 		this.gain = value;
-		this.nodes.forEach(node => node.gain.value = this.gain);
+		this.nodes.forEach(node => { node.gain.value = this.gain; node.gain.calumValue = this.gain; });
 	}
 
 	make(keyId){
 		let node = new GainNode(this.audioContext);
 		node.gain.value = this.gain;
+		node.gain.calumValue = this.gain;
 		return super.make(node, keyId);
 	}
 }

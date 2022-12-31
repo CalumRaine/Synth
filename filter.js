@@ -29,7 +29,7 @@ class Filter extends SoundModule {
 			return;
 		}
 		this.frequency = value;
-		this.nodes.forEach(node => node.frequency.value = this.frequency);
+		this.nodes.forEach(node => { node.frequency.value = this.frequency; node.frequency.calumValue = this.frequency; });
 	}
 
 	set QFactor(value){
@@ -37,14 +37,16 @@ class Filter extends SoundModule {
 			return;
 		}
 		this.qFactor = value;
-		this.nodes.forEach(node => node.Q.value = this.qFactor);
+		this.nodes.forEach(node => { node.Q.value = this.qFactor; node.Q.calumValue = this.qFactor; });
 	}
 
 	make(keyId){
 		let node = new BiquadFilterNode(this.audioContext);
 		node.type = this.type;
 		node.frequency.value = this.frequency;
+		node.frequency.calumValue = this.frequency;
 		node.Q.value = this.qFactor;
+		node.Q.calumValue = this.qFactor;
 		return super.make(node, keyId);
 	}
 }
