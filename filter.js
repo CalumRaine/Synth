@@ -9,12 +9,12 @@ class Filter extends SoundModule {
 	outputJack = null;
 
 	constructor(id, polyphonic, audioContext){
-		super(id, Module.FILTER, polyphonic, audioContext);
+		super(id, polyphonic ? [Module.FILTER, Module.POLYPHONIC] : [Module.FILTER], audioContext);
 		this.frequencyJack = new Jack(id, Jack.INPUT, this.nodes, function(node) { return node.frequency; });
 		this.qFactorJack = new Jack(id, Jack.INPUT, this.nodes, function(node) { return node.Q; });
 		this.inputJack = new Jack(id, Jack.INPUT, this.nodes, function(node) { return node; });
 		this.outputJack = new Jack(id, Jack.OUTPUT, this.nodes, function(node) { return node; });
-		if (!this.polyphonic){
+		if (!this.hasType(Module.POLYPHONIC)){
 			this.make(Keyboard.MONOPHONIC);
 		}
 	}

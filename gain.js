@@ -5,11 +5,11 @@ class Gain extends SoundModule {
 	outputJack = null;
 
 	constructor(id, polyphonic, audioContext){
-		super(id, Module.GAIN, polyphonic, audioContext);
+		super(id, polyphonic ? [Module.GAIN, Module.POLYPHONIC] : [Module.GAIN], audioContext);
 		this.gainJack = new Jack(id, Jack.INPUT, this.nodes, function(node) { return node.gain; });
 		this.inputJack = new Jack(id, Jack.INPUT, this.nodes, function(node) { return node; });
 		this.outputJack = new Jack(id, Jack.OUTPUT, this.nodes, function(node) { return node; });
-		if (!this.polyphonic){
+		if (!this.hasType(Module.POLYPHONIC)){
 			this.make(Keyboard.MONOPHONIC);
 		}
 	}

@@ -7,8 +7,8 @@ class Oscillator extends SoundModule {
 	detune = 0;
 	detuneJack = null;
 
-	constructor(id, moduleType, polyphonic, audioContext){
-		super(id, moduleType, polyphonic, audioContext);
+	constructor(id, moduleTypes, audioContext){
+		super(id, moduleTypes.concat([Module.OSCILLATOR]), audioContext);
 		this.frequencyJack = new Jack(id, Jack.INPUT, this.nodes, function(node) { return node.frequency; });
 		this.detuneJack = new Jack(id, Jack.INPUT, this.nodes, function(node) { return node.detune; });
 		this.outputJack = new Jack(id, Jack.OUTPUT, this.nodes, function(node) { return node; });
@@ -41,7 +41,7 @@ class Oscillator extends SoundModule {
 
 class OscillatorKey extends Oscillator {
 	constructor(id, polyphonic, audioContext){
-		super(id, Module.OSCILLATOR_KEY, polyphonic, audioContext);
+		super(id, polyphonic ? [Module.OSCILLATOR_KEY, Module.POLYPHONIC] : [Module.OSCILLATOR_KEY], audioContext);
 	}
 
 	make(keyId){
@@ -50,7 +50,7 @@ class OscillatorKey extends Oscillator {
 	}
 
 	release(keyId, time){
-		return this.polyphonic ? this.nodes.find(node => node.keyId == keyId).stop(time) : this.nodes[0].stop(time);
+		return this.hasType(Module.POLYPHONIC) ? this.nodes.find(node => node.keyId == keyId).stop(time) : this.nodes[0].stop(time);
 	}
 }
 
@@ -58,8 +58,8 @@ class OscillatorFixed extends Oscillator {
 	frequency = 440;
 
 	constructor(id, polyphonic, audioContext){
-		super(id, Module.OSCILLATOR_FIXED, polyphonic, audioContext);
-		if (!this.polyphonic){
+		super(id, polyphonic ? [Module.OSCILLATOR_FIXED, Module.POLYPHONIC] : [Module.OSCILLATOR_FIXED], audioContext);
+		if (!this.hasType(Module.POLYPHONIC)){
 			this.make();
 		}
 	}

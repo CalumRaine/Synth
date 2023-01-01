@@ -4,8 +4,8 @@ class Envelope extends ControlModule {
 	releaseWaypoints = [];
 	outputJack = null;
 
-	constructor(id, type, from, audioContext){
-		super(id, type, audioContext);
+	constructor(id, moduleTypes, from, audioContext){
+		super(id, moduleTypes.concat([Module.ENVELOPE]), audioContext);
 		this.from = from;
 		this.outputJack = new Jack(id, Jack.OUTPUT, null, function(node) { return node; });
 	}
@@ -35,7 +35,7 @@ class Envelope extends ControlModule {
 
 class EnvelopeRelative extends Envelope {
 	constructor(id, from, audioContext){
-		super(id, Module.ENVELOPE_RELATIVE, from, audioContext);
+		super(id, [Module.ENVELOPE_RELATIVE], from, audioContext);
 	}
 
 	trigger(keyId){
@@ -65,7 +65,7 @@ class EnvelopeRelative extends Envelope {
 
 class EnvelopeAbsolute extends Envelope {
 	constructor(id, from, audioContext){
-		super(id, Module.ENVELOPE_ABSOLUTE, from, audioContext);
+		super(id, [Module.ENVELOPE_ABSOLUTE], from, audioContext);
 	}
 
 	trigger(keyId){

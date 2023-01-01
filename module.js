@@ -1,37 +1,42 @@
 class Module {
 	audioContext = null;
 	moduleId = 0;
-	moduleType = 0;
-	static OSCILLATOR = 0;
-	static OSCILLATOR_KEY = 1;
-	static OSCILLATOR_FIXED = 2;
-	static FILTER = 3;
-	static GAIN = 4;
-	static SPEAKERS = 5;
-	static ENVELOPE = 6;
-	static ENVELOPE_RELATIVE = 7;
-	static ENVELOPE_ABSOLUTE = 8;
+	moduleTypes = 0;
+	static CONTROL_MODULE = 1;
+	static SOUND_MODULE = 2;
+	static POLYPHONIC = 4;
+	static OSCILLATOR = 8;
+	static OSCILLATOR_KEY = 16;
+	static OSCILLATOR_FIXED = 32;
+	static FILTER = 64;
+	static GAIN = 128;
+	static SPEAKERS = 256;
+	static ENVELOPE = 512;
+	static ENVELOPE_RELATIVE = 1024;
+	static ENVELOPE_ABSOLUTE = 2048;
 
-	constructor(id, type, audioContext){
+	constructor(id, moduleTypes, audioContext){
 		this.moduleId = id;
-		this.moduleType = type;
 		this.audioContext = audioContext;
+		moduleTypes.forEach(type => this.moduleTypes |= type);
+	}
+
+	hasType(type){
+		return (this.moduleTypes & type) != 0;
 	}
 }
 
 class ControlModule extends Module {
-	constructor(id, type, audioContext){
-		super(id, type, audioContext);
+	constructor(id, moduleTypes, audioContext){
+		super(id, moduleTypes.concat([Module.CONTROL_MODULE]), audioContext);
 	}
 }
 
 class SoundModule extends Module {
-	polyphonic = false;
 	nodes = [];
 
-	constructor(id, type, polyphonic, audioContext){
-		super(id, type, audioContext);
-		this.polyphonic = polyphonic;
+	constructor(id, moduleTypes, audioContext){
+		super(id, moduleTypes.concat([Module.SOUND_MODULE]), audioContext);
 	}
 
 	make(node, keyId){
