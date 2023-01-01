@@ -157,8 +157,4 @@ class Keyboard {
 	keyCodeToFrequency(keyCode){
 		return this.frequencies[this.offset + keyCode - 49];
 	}
-
-	eventHandler(event){
-		this.keys.forEach(key => key.nodes.filter(node => node.moduleId == event.moduleId).forEach(node => event.func(event.value, node)));
-	}
 }
