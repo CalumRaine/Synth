@@ -17,11 +17,6 @@ class Module {
 		this.moduleType = type;
 		this.audioContext = audioContext;
 	}
-
-	triggerEvent(value, func){
-		let e = new CustomEvent("Synth Event", { detail: { func: func, value: value, moduleId: this.moduleId } } );
-		document.dispatchEvent(e);
-	}
 }
 
 class ControlModule extends Module {
