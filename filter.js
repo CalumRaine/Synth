@@ -14,6 +14,9 @@ class Filter extends SoundModule {
 		this.qFactorJack = new Jack(id, Jack.INPUT, this.nodes, function(node) { return node.Q; });
 		this.inputJack = new Jack(id, Jack.INPUT, this.nodes, function(node) { return node; });
 		this.outputJack = new Jack(id, Jack.OUTPUT, this.nodes, function(node) { return node; });
+		if (!this.polyphonic){
+			this.make(Keyboard.MONOPHONIC);
+		}
 	}
 
 	set Type(value){

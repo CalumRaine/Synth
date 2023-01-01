@@ -9,6 +9,9 @@ class Gain extends SoundModule {
 		this.gainJack = new Jack(id, Jack.INPUT, this.nodes, function(node) { return node.gain; });
 		this.inputJack = new Jack(id, Jack.INPUT, this.nodes, function(node) { return node; });
 		this.outputJack = new Jack(id, Jack.OUTPUT, this.nodes, function(node) { return node; });
+		if (!this.polyphonic){
+			this.make(Keyboard.MONOPHONIC);
+		}
 	}
 
 	set Gain(value){

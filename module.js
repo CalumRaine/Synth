@@ -37,9 +37,6 @@ class SoundModule extends Module {
 	constructor(id, type, polyphonic, audioContext){
 		super(id, type, audioContext);
 		this.polyphonic = polyphonic;
-		if (!this.polyphonic){
-			this.make(Keyboard.MONOPHONIC);
-		}
 	}
 
 	make(node, keyId){
