@@ -48,6 +48,10 @@ class OscillatorKey extends Oscillator {
 		let node = new OscillatorNode(this.audioContext);
 		return super.make(node, keyId);
 	}
+
+	release(keyId, time){
+		return this.polyphonic ? this.nodes.find(node => node.keyId == keyId).stop(time) : this.nodes[0].stop(time);
+	}
 }
 
 class OscillatorFixed extends Oscillator {
@@ -55,6 +59,9 @@ class OscillatorFixed extends Oscillator {
 
 	constructor(id, polyphonic, audioContext){
 		super(id, Module.OSCILLATOR_FIXED, polyphonic, audioContext);
+		if (!this.polyphonic){
+			this.make();
+		}
 	}
 
 	set Frequency(value){
