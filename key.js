@@ -3,11 +3,13 @@ class Key {
 	static KEY_UP = 1;
 	state = 0;
 	keyId = 0;
+	keyCode = 0;
 	frequency = 440;
 	nodes = [];
 
-	constructor(id, frequency){
+	constructor(id, keyCode, frequency){
 		this.keyId = id;
+		this.keyCode = keyCode;
 		this.frequency = frequency;
 
 		// Make duplicates of polyphonic modules
@@ -28,9 +30,14 @@ class Key {
 			     .forEach(module => module.trigger(this.keyId));
 	}
 
-	remove(){
-		synth.cables.forEach(cable => cable.disconnect(this.nodes));
-		synth.nodes = [];
-		return this;
+	release(){
+		let envelopes = synth.modules.filter(module => module.moduleType == Module.ENVELOPE_RELATIVE || module.moduleType == Module.ENVELOPE_ABSOLUTE);
+		let releaseTime = Math.max(...envelopes.map(envelope => envelope.ReleaseTime));
+		envelopes.forEach(envelope => envelope.release(this.keyId));
+
+		let oscillators = synth.modules.filter(module => module.type == Module.OSCILLATOR_KEY);
+		oscillators.forEach(oscillator => oscillator.release(this.keyId, releaseTime));
+
+		this.state = Key.KEY_UP;
 	}
 }
