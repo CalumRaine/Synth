@@ -141,18 +141,17 @@ class Keyboard {
 
 	keyDown(keyCode){
 		let frequency = this.keyCodeToFrequency(keyCode);
-		if (this.keys.some(key => key.frequency == frequency)){
+		console.log("Key Down:", keyCode, frequency);
+		if (this.keys.some(key => key.frequency == frequency && key.state == Key.KEY_DOWN)){
 			return;
 		}
-		console.log("key down", keyCode, frequency);
-		this.keys.push(new Key(this.NextId, frequency));
+		this.keys.push(new Key(this.NextId, keyCode, frequency));
 	}
 
 	keyUp(keyCode){
-		let frequency = this.keyCodeToFrequency(keyCode);
-		let index = this.keys.findIndex(key => key.frequency == frequency && key.state == key.KEY_DOWN);
-		this.keys[index].remove();
-		this.keys.splice(index, 1);
+		let key = this.keys.find(key => key.keyCode == keyCode && key.state == Key.KEY_DOWN);
+		console.log("Key Up:", keyCode, key.keyId);
+		key.release();
 	}
 
 	keyCodeToFrequency(keyCode){
