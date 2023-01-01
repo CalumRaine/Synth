@@ -16,5 +16,6 @@
 	<script src="./script.js"></script>
 </head>
 <body>
+	<button onclick="calumFunction()">GO</button>
 </body>
 </html>
