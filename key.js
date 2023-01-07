@@ -37,6 +37,10 @@ class Key {
 		let oscillators = synth.modules.filter(module => module.hasType(Module.OSCILLATOR_KEY));
 		oscillators.forEach(oscillator => oscillator.release(this.keyId, releaseTime));
 
+		setTimeout( function(keyId){
+			synth.modules.filter(module => module.hasType(Module.POLYPHONIC)).forEach(module => module.remove(keyId));
+		}, releaseTime * 1000, this.keyId);
+
 		this.state = Key.KEY_UP;
 	}
 }

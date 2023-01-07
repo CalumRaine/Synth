@@ -45,4 +45,10 @@ class SoundModule extends Module {
 		this.nodes.push(node);
 		return node;
 	}
+
+	remove(keyId){
+		let index = this.nodes.findIndex(node => node.keyId == keyId);
+		this.nodes[index].disconnect();
+		this.nodes.splice(index, 1);
+	}
 }
