@@ -17,8 +17,8 @@ class KeyboardController extends HTMLDivElement {
 class KeyboardKeys extends HTMLDivElement {
 	keys = [];
 	keyWidth = 30;
-	whiteKeys = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
-	blackKeys = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
+	whiteKbd = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
+	blackKbd = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
 
 	constructor(rootNote, rootFreq, keyCount){
 		super();
@@ -30,15 +30,15 @@ class KeyboardKeys extends HTMLDivElement {
 
 		this.adjustPositions();
 		
-		let qwertyLength = 9;
+		let qwertyLength = this.whiteKbd.length;
 		let start = parseInt( (keyCount-qwertyLength) / 2 );
-		for (let k=start, w=0, b=0; w < 9; ++k){
+		for (let k=start, w=0, b=0; w < qwertyLength; ++k){
 			let key = this.keys[k];
 			if (key.blackKey){
-				key.Key = this.blackKeys[b];
+				key.Kbd = this.blackKbd[b];
 			}
 			else {
-				key.Key = this.whiteKeys[w];
+				key.Kbd = this.whiteKbd[w];
 				++w;
 				++b;
 			}
@@ -91,7 +91,7 @@ class KeyboardKey extends HTMLButtonElement {
 	note = "A";
 	freq = 440.0;
 	span = null;
-	key = ""; // qwerty keyboard key
+	kbd = "";
 	blackKey = false;
 
 	constructor(note, freq){
@@ -104,6 +104,8 @@ class KeyboardKey extends HTMLButtonElement {
 		this.span = document.createElement("span");
 		this.appendChild(this.span);
 		this.onpointerdown = (e) => { this.press(e); };
+		window.addEventListener("keydown", (e) => { this.kbdDown(e); } );
+		window.addEventListener("keyup", (e) => { this.kbdUp(e); } );
 	}
 	
 	adjustPosition(position, width){
@@ -139,11 +141,31 @@ class KeyboardKey extends HTMLButtonElement {
 		return this.LeftPos + this.Width;
 	}
 
-	set Key(key){
-		this.key = this.span.innerHTML = key;
+	set Kbd(kbd){
+		this.kbd = kbd;
+		this.span.innerHTML = kbd;
+	}
+
+	kbdDown(event){
+		if (event.repeat || event.key.toUpperCase() != this.kbd){
+			return false;
+		}
+		else {
+			return this.press(event);
+		}
+	}
+
+	kbdUp(event){
+		if (event.key.toUpperCase() != this.kbd){
+			return false;
+		}
+		else {
+			return this.release(event);
+		}
 	}
 
 	press(event){
+		this.classList.add("key-pressed");
 		this.onpointerout = this.release;
 		this.onpointerup = this.release;
 		let ac = new AudioContext();
@@ -154,6 +176,7 @@ class KeyboardKey extends HTMLButtonElement {
 	}
 
 	release(event){
+		this.classList.remove("key-pressed");
 		this.onpointerout = null;
 		this.onpointerup = null;
 		this.osc.stop();

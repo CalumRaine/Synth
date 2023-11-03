@@ -42,7 +42,7 @@ button[is="keyboard-key"]:hover {
 	background-color: lightgray;
 }
 
-button[is="keyboard-key"]:active {
+button[is="keyboard-key"].key-pressed {
 	background-color: gray;
 }
 
