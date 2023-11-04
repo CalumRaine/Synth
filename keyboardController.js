@@ -16,7 +16,11 @@ class KeyboardController extends HTMLDivElement {
 
 class KeyboardKeys extends HTMLDivElement {
 	keys = [];
+	blackKeys = [];
+	whiteKeys = [];
+	whiteKeyCount = 0;
 	keyWidth = 30;
+	startKbd = 0;
 	whiteKbd = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
 	blackKbd = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
 
@@ -26,13 +30,21 @@ class KeyboardKeys extends HTMLDivElement {
 		for (let k=0, freq=rootFreq, note=rootNote, cursor=0; k < keyCount; ++k, note=this.getNextNote(note), freq=this.getNextFreq(freq)){
 			let key = new KeyboardKey(note, freq);
 			this.keys.push(key);
+			if (key.blackKey){
+				this.blackKeys.push(key);
+			}
+			else {
+				this.whiteKeys.push(key);
+			}
 		}
+
+		this.whiteKeyCount = this.whiteKeys.length;
 
 		this.adjustPositions();
 		
 		let qwertyLength = this.whiteKbd.length;
-		let start = parseInt( (keyCount-qwertyLength) / 2 );
-		for (let k=start, w=0, b=0; w < qwertyLength; ++k){
+		this.startKbd = parseInt( (keyCount-qwertyLength) / 2 );
+		for (let k=this.startKbd, w=0, b=0; w < qwertyLength; ++k){
 			let key = this.keys[k];
 			if (key.blackKey){
 				key.Kbd = this.blackKbd[b];
@@ -43,15 +55,63 @@ class KeyboardKeys extends HTMLDivElement {
 				++b;
 			}
 		}
+
 	}
 
 	connectedCallback(){
 		this.keys.forEach(k => this.appendChild(k));
+		this.MarginLeft = (this.getBoundingClientRect().width - this.TotalSize) / 2;
+	}
+
+	get TotalSize(){
+		return this.whiteKeyCount * this.KeyWidth;
+	}
+
+	get KeyWidth(){
+		return this.keyWidth;
 	}
 
 	set KeyWidth(value){
 		this.keyWidth = parseFloat(value);
 		this.adjustPositions();
+	}
+
+	get MarginLeft(){
+		return parseFloat(this.style.marginLeft.replace("px",""));
+	}
+
+	set MarginLeft(value){
+		this.style.marginLeft = `${value}px`;
+	}
+
+	stepLeft(){
+		this.MarginLeft -= this.keyWidth;
+	}
+
+	stepRight(){
+		this.MarginLeft += this.keyWidth;
+	}
+
+	jumpLeft(){
+		this.MarginLeft -= (this.keyWidth * 7);
+	}
+
+	jumpRight(){
+		this.MarginLeft += (this.keyWidth * 7);
+	}
+
+	zoomIn(){
+		let oldSize = this.TotalSize;
+		this.KeyWidth += 5;
+		let newSize = this.TotalSize;
+		this.MarginLeft -= (newSize - oldSize) / 2;
+	}
+
+	zoomOut(){
+		let oldSize = this.TotalSize;
+		this.KeyWidth -= 5;
+		let newSize = this.TotalSize;
+		this.MarginLeft += (oldSize - newSize) / 2;
 	}
 
 	getNextNote(note){
