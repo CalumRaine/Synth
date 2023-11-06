@@ -15,19 +15,7 @@ class KeyboardKeys extends HTMLDivElement {
 
 		this.adjustPositions();
 		
-		let qwertyLength = this.whiteKbd.length;
-		let startKbd = Math.floor((keyCount-qwertyLength)/2);
-		for (let k=startKbd, w=0, b=0; w < qwertyLength; ++k){
-			let key = this.keys[k];
-			if (key.blackKey){
-				key.Kbd = this.blackKbd[b];
-			}
-			else {
-				key.Kbd = this.whiteKbd[w];
-				++w;
-				++b;
-			}
-		}
+		this.StartKbd = Math.floor((keyCount-this.whiteKbd.length)/2);
 	}
 
 	connectedCallback(){
@@ -59,6 +47,26 @@ class KeyboardKeys extends HTMLDivElement {
 		this.style.marginLeft = `${value}px`;
 	}
 
+	get StartKbd(){
+		return this.startKbd;
+	}
+
+	set StartKbd(value){
+		this.startKbd = value;
+		this.keys.forEach(k => k.Kbd = "");
+		for (let k=this.startKbd, w=0, b=0; w < this.whiteKbd.length; ++k){
+			let key = this.keys[k];
+			if (key.blackKey){
+				key.Kbd = this.blackKbd[b];
+			}
+			else {
+				key.Kbd = this.whiteKbd[w];
+				++w;
+				++b;
+			}
+		}
+	}
+
 	stepLeft(){
 		this.MarginLeft -= this.keyWidth;
 	}
@@ -87,6 +95,18 @@ class KeyboardKeys extends HTMLDivElement {
 		this.KeyWidth -= 5;
 		let newSize = this.TotalSize;
 		this.MarginLeft += (oldSize - newSize) / 2;
+	}
+
+	qwertyMoved(position){
+		position -= this.MarginLeft;
+		let startKbd = this.keys.findIndex(k => k.LeftPos < position && k.RightPos >= position);
+		if (this.StartKbd != startKbd){
+			this.StartKbd = startKbd;
+		}		
+	}
+
+	qwertyReleased(){
+		this.announce("qwerty start", this.keys[this.StartKbd].LeftPos + this.MarginLeft);
 	}
 
 	getNextNote(note){

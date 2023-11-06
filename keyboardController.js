@@ -6,6 +6,7 @@ class KeyboardController extends HTMLDivElement {
 		super();
 		super.setAttribute("is", "keyboard-controller");
 		this.addEventListener("KeyboardKeys", this.handleEvents);
+		this.addEventListener("QwertyHandle", this.handleEvents);
 	}
 
 	connectedCallback(){
@@ -25,6 +26,19 @@ class KeyboardController extends HTMLDivElement {
 						break;
 					case "qwerty width":
 						this.rail.HandleWidth = event.detail.attachment;
+						break;
+					default:
+						console.log("Event message", event.detail.msg, "unhandled");
+						break;
+				}
+				break;
+			case "QwertyHandle":
+				switch (event.detail.msg){
+					case "qwerty moved":
+						this.keyboard.qwertyMoved(event.detail.attachment);
+						break;
+					case "qwerty released":
+						this.keyboard.qwertyReleased();
 						break;
 					default:
 						console.log("Event message", event.detail.msg, "unhandled");
