@@ -1,4 +1,6 @@
 class QwertyRail extends HTMLDivElement {
+	handle = null;
+
 	constructor(){
 		super();
 		super.setAttribute("is", "qwerty-rail");
@@ -26,8 +28,10 @@ class QwertyHandle extends HTMLDivElement {
 	}
 
 	click(event){
-		this.addEventListener("pointermove", this.slide);
-		this.addEventListener("pointerup", this.release);
+		//this.addEventListener("pointermove", this.slide);
+		//this.addEventListener("pointerup", this.release);
+		this.classList.add("qwerty-clicked");
+		this.announce("qwerty clicked", null);
 	}
 
 	slide(event){
@@ -36,8 +40,9 @@ class QwertyHandle extends HTMLDivElement {
 	}
 
 	release(event){
-		this.removeEventListener("pointermove", this.slide);
-		this.removeEventListener("pointerup", this.release);
+		//this.removeEventListener("pointermove", this.slide);
+		//this.removeEventListener("pointerup", this.release);
+		this.classList.remove("qwerty-clicked");
 		this.announce("qwerty released", this.LeftPos);
 	}
 

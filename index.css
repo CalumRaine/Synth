@@ -60,4 +60,9 @@ div[is="qwerty-rail"] {
 div[is="qwerty-handle"] {
 	height: 80%;
 	background-color: yellow;
+	cursor: grab;
+}
+
+div[is="qwerty-handle"].qwerty-clicked {
+	cursor: grabbing;
 }
