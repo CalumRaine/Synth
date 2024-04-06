@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="./index.css"/>
-	<script src="./keyboardController.js"></script>
-	<script src="./keyboardKeys.js"></script>
-	<script src="./keyboardKey.js"></script>
-	<script src="./qwertyKeys.js"></script>
-	<script src="./lfoModule.js"></script>
+	<script src="./keyboard/keyboardKey.js"></script>
+	<script src="./keyboard/keyboardKeys.js"></script>
+	<script src="./keyboard/keyboardHandle.js"></script>
+	<script src="./keyboard/keyboardController.js"></script>
+	<script src="./modules/labelledInput.js"></script>
+	<script src="./modules/waveSelect.js"></script>
+	<script src="./modules/pitchShift.js"></script>
+	<script src="./modules/pitchDetune.js"></script>
+	<script src="./modules/synthModule.js"></script>
 	<script src="./synthRack.js"></script>
-	<script defer src="./window.js"></script>
+	<link rel="stylesheet" href="./index.css"/>
+	<link rel="stylesheet" href="./keyboard/keyboard.css"/>
+	<link rel="stylesheet" href="./modules/modules.css"/>
 </head>
 <body>
-	<div is="synth-patch"></div>
-	<div is="keyboard-controller"></div>
+	<div is="synth-rack"></div>
 </body>
 </html>
+
