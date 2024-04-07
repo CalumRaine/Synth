@@ -1,3 +1,33 @@
-div[is="synth-rack"] {
+form[is="synth-module"] {
+	display: flex;
+	flex-direction: row;
+	border: 1px solid black;
+	padding: 1rem;
+	margin: 1rem;
 }
 
+form[is="synth-module"] fieldset {
+	border: 1px solid black;
+}
+
+form[is="synth-module"] fieldset div {
+	display: block;
+}
+
+form[is="synth-module"] fieldset div label {
+	display: inline-block;
+	width: 10ch;
+}
+
+form[is="synth-module"] fieldset div select {
+	width: 12ch;
+}
+
+form[is="synth-module"] fieldset div input {
+	width: 11ch;
+}
+
+form[is="synth-module"] fieldset div select:focus,
+form[is="synth-module"] fieldset div input:focus {
+	background-color: lightgray;
+}

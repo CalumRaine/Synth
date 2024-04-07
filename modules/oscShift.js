@@ -1,6 +1,7 @@
-class PitchShift extends LabelledInput {
+class OscShift extends LabelledInput {
 	constructor(){
 		super("Shift");
+		super.setAttribute("is", "osc-shift");
 		
 		this.input = this.appendChild(document.createElement("input"));
 		this.input.setAttribute("type", "number");
@@ -27,5 +28,5 @@ class PitchShift extends LabelledInput {
 	}
 }
 
-customElements.define("pitch-shift", PitchShift, { extends: "div" });
+customElements.define("osc-shift", OscShift, { extends: "div" });
 

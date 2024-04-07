@@ -54,7 +54,7 @@ class SynthRack extends HTMLDivElement {
 
 	releaseKey(key){
 		key.release();
-		this.modules.forEach(m => m.stopSound(key));
+		this.modules.forEach(m => m.stopSound(this.audioContext, key));
 		return true;
 	}
 
@@ -101,8 +101,10 @@ class SynthRack extends HTMLDivElement {
 		
 		let decimalPlaces = 0;
 		for (let step=input.step; step < 1; step *= 10, ++decimalPlaces);
-		
-		input.setAttribute("value", value.toFixed(decimalPlaces));
+
+		input.value = value.toFixed(decimalPlaces);
+		input.setAttribute("value", input.value);
+		input.dispatchEvent(new Event("change", { bubbles: true }));
 		return true;
 	}
 }
