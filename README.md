@@ -42,6 +42,7 @@ Very early stages of development.  Known bugs.  Need to get a working prototype 
 * Figure out how to stop polyphonic sounds from overloading the speakers
 * Add option to export/import patches as JSON
 * Add stereo sound
+* Automatically redraw keyboard when window is resized
 * Add wood skins and metal skins etc.
 * Add recording/editing functionality
 * Add cool controllers (instead of just a keyboard)

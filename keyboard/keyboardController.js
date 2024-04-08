@@ -15,7 +15,6 @@ class KeyboardController extends HTMLDivElement {
 	static BLACK_KEY_WIDTH = 15;
 	
 	static NUM_KEYS = 88;
-	//static ROOT_FREQ = 440.0;
 	static ROOT_FREQ = 27.5;
 	static ROOT_NOTE = "A";
 
