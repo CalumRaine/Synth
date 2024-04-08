@@ -27,6 +27,10 @@ Very early stages of development.  Known bugs.  Need to get a working prototype 
     * Gain parameter
     * ADSR envelope 
 
+## How To Run
+
+Just download the repository and open `index.html` in a browser window.
+
 ## To Do
 
 * Add button to generate a new patch
