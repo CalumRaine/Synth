@@ -4,6 +4,8 @@ A browser-based synth using the Web Audio API and HTML.
 
 Very early stages of development.  Known bugs.  Need to get a working prototype quickly, will fix later.
 
+![synth screenshot](./images/screenshot.png)
+
 ## Features
 
 * Polyphonic
