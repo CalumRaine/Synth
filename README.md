@@ -37,8 +37,6 @@ Just download the repository and open `index.html` in a browser window.
 
 ## To Do
 
-* Add button to generate a new patch
-* Add button to duplicate the current patch
 * Use "detune cents" property of oscillator for shift/detune
 * Add filter ADSR
 * Add frequency glide
