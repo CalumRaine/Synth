@@ -9,9 +9,20 @@ class OscDetune extends LabelledInput {
 		this.input = this.appendChild(document.createElement("input"));
 		this.input.setAttribute("type", "number");
 		this.input.setAttribute("value", OscDetune.DEFAULT);
-		this.input.setAttribute("step", 1);
+		this.input.setAttribute("title", `${this.input.value} cents`);
+		this.input.setAttribute("step", 0.01);
 		this.input.setAttribute("min", OscDetune.MIN);
 		this.input.setAttribute("max", OscDetune.MAX);
+		this.input.setPercent = (percent) => { this.Percent = percent; };
+	}
+
+	set Percent(percent){
+		let fraction = percent / 100;
+		let range = OscDetune.MAX - OscDetune.MIN;
+		let value = OscDetune.MIN + (range * fraction);
+		this.input.value = value.toFixed(2);
+		this.input.setAttribute("value", this.input.value);
+		this.input.setAttribute("title", `${this.input.value} cents`);
 	}
 
 	calculate(freq){

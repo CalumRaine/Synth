@@ -10,6 +10,8 @@ class SynthRack extends HTMLDivElement {
 		super.setAttribute("is", "synth-rack");
 		this.keyboard = this.appendChild(new KeyboardController());
 		this.modules.push(this.appendChild(new SynthModule()));
+		this.addEventListener("duplicate module", (event) => { this.modules.push(event.detail); });
+		this.addEventListener("remove module", (event) => { this.removeModule(event.detail); });
 
 		this.activate = this.appendChild(document.createElement("dialog"));
 		let start = this.activate.appendChild(document.createElement("button"));
@@ -34,6 +36,18 @@ class SynthRack extends HTMLDivElement {
 
 		navigator.requestMIDIAccess().then((access) => { this.setupMidi(access); });
 		this.activate.close();
+	}
+
+	removeModule(module){
+		if (this.modules.length == 1){
+			// Refuse to remove the only module
+			return false;
+		}
+		
+		let index = this.modules.findIndex(m => m == module);
+		this.modules.splice(index, 1);
+		module.remove();
+		return true;
 	}
 
 	setupMidi(midiAccess){
@@ -95,8 +109,8 @@ class SynthRack extends HTMLDivElement {
 
 	midiKnob(value){
 		let input = document.activeElement;
-		input.value = value / 1.27;
-		input.dispatchEvent(new Event("input", { bubbles: true }));
+		let percent = value / 1.27;
+		input.setPercent(percent);
 		return true;
 	}
 }
