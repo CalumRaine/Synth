@@ -1,4 +1,5 @@
 form[is="synth-module"] {
+	position: relative;
 	display: flex;
 	flex-direction: row;
 	border: 1px solid black;
@@ -31,3 +32,21 @@ form[is="synth-module"] fieldset div select:focus,
 form[is="synth-module"] fieldset div input:focus {
 	background-color: lightgray;
 }
+
+form[is="synth-module"] div[is="module-buttons"] {
+	position: absolute;
+	bottom: -0.75rem;
+}
+
+form[is="synth-module"] div[is="module-buttons"] button {
+	font-weight: bold;
+	cursor: pointer;
+	width: 4rem;
+	height: 1.5rem;
+	margin-right: 0.3rem;
+}
+
+form[is="synth-module"]:only-of-type div[is="module-buttons"] button:last-child {
+	cursor: not-allowed;
+}
+

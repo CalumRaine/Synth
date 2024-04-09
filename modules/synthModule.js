@@ -42,7 +42,40 @@ class SynthModule extends HTMLFormElement {
 		this.ampSustain = fieldset.appendChild(new AmpSustain());
 		this.ampRelease = fieldset.appendChild(new EnvRelease());
 
+		let buttons = this.appendChild(new ModuleButtons());
+		buttons.duplicate.onclick = (event) => { this.duplicateModule(event); };
+		buttons.remove.onclick = (event) => { this.removeModule(event); }
+
 		this.addEventListener("input", (event) => { this.updateSound(); });
+	}
+
+	duplicateModule(){
+		let patch = new SynthModule();
+		patch.oscShape.input.value = this.oscShape.input.value;
+		patch.oscShift.input.value = this.oscShift.input.value;
+		patch.oscDetune.input.value = this.oscDetune.input.value;
+		
+		patch.filterType.input.value = this.filterType.input.value;
+		patch.filterCutoff.input.value = this.filterCutoff.input.value;
+
+		patch.ampGain.input.value = this.ampGain.input.value;
+		patch.ampAttack.input.value = this.ampAttack.input.value;
+		patch.ampDecay.input.value = this.ampDecay.input.value;
+		patch.ampSustain.input.value = this.ampSustain.input.value;
+		patch.ampRelease.input.value = this.ampRelease.input.value;
+
+		let e = new CustomEvent("duplicate module", { detail: patch, bubbles: true });
+		this.dispatchEvent(e);
+
+		this.after(patch);
+		return patch;
+	}
+
+	removeModule(){
+		// Note: Any existing sounds are not cleaned up
+		let e = new CustomEvent("remove module", { detail: this, bubbles: true });
+		this.dispatchEvent(e);
+		return this;
 	}
 
 	makeSound(audioContext, key, speakers){
