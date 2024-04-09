@@ -1,16 +1,10 @@
-class FilterCutoff extends LabelledInput {
-	static LOWER = 0;
-	static UPPER = 24000;
+class FilterCutoff extends NumericalInput {
+	static MIN = 20;
+	static MAX = 24000;
+	static DEFAULT = 24000;
 	constructor(){
-		super("Cutoff");
+		super("Cutoff", FilterCutoff.DEFAULT, FilterCutoff.MIN, FilterCutoff.MAX, NumericalInput.SLOPE_EXP, "Hz");
 		super.setAttribute("is", "filter-cutoff");
-		
-		this.input = this.appendChild(document.createElement("input"));
-		this.input.setAttribute("type", "number");
-		this.input.setAttribute("value", FilterCutoff.UPPER);
-		this.input.setAttribute("step", 1);
-		this.input.setAttribute("min", FilterCutoff.LOWER);
-		this.input.setAttribute("max", FilterCutoff.UPPER);
 	}
 }
 

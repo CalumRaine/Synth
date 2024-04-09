@@ -94,17 +94,9 @@ class SynthRack extends HTMLDivElement {
 	}
 
 	midiKnob(value){
-		let fraction = value / 127;
 		let input = document.activeElement;
-		let range = input.max - input.min;
-		value = parseFloat(input.min) + (range * fraction);
-		
-		let decimalPlaces = 0;
-		for (let step=input.step; step < 1; step *= 10, ++decimalPlaces);
-
-		input.value = value.toFixed(decimalPlaces);
-		input.setAttribute("value", input.value);
-		input.dispatchEvent(new Event("change", { bubbles: true }));
+		input.value = value / 1.27;
+		input.dispatchEvent(new Event("input", { bubbles: true }));
 		return true;
 	}
 }

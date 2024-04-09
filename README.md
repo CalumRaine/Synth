@@ -25,7 +25,11 @@ Very early stages of development.  Known bugs.  Need to get a working prototype 
     * Cutoff frequency parameter
 * Amplifier
     * Gain parameter
-    * ADSR envelope 
+    * ADSR envelope
+* Optimised parameter mappings
+    * Frequency filter cutoffs and ADSR times have exponential slopes
+    * Gain controls have linear slopes
+    * Pitch shift and detune parameters have discrete increments
 
 ## How To Run
 
@@ -35,7 +39,6 @@ Just download the repository and open `index.html` in a browser window.
 
 * Add button to generate a new patch
 * Add button to duplicate the current patch
-* Make parameters logarithmic
 * Use "detune cents" property of oscillator for shift/detune
 * Add filter ADSR
 * Add frequency glide

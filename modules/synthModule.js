@@ -42,7 +42,7 @@ class SynthModule extends HTMLFormElement {
 		this.ampSustain = fieldset.appendChild(new AmpSustain());
 		this.ampRelease = fieldset.appendChild(new EnvRelease());
 
-		this.addEventListener("change", (event) => { this.updateSound(); });
+		this.addEventListener("input", (event) => { this.updateSound(); });
 	}
 
 	makeSound(audioContext, key, speakers){
