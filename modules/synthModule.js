@@ -3,6 +3,8 @@ class SynthModule extends HTMLFormElement {
 	oscShift = null;
 	oscDetune = null;
 
+	freqLfo = null;
+
 	filterType = null;
 	filterCutoff = null;
 
@@ -26,6 +28,7 @@ class SynthModule extends HTMLFormElement {
 		this.oscShape = fieldset.appendChild(new OscShape());
 		this.oscShift = fieldset.appendChild(new OscShift());
 		this.oscDetune = fieldset.appendChild(new OscDetune());
+		this.freqLfo = fieldset.appendChild(new LfoModule(1200, "Cents"));
 
 		fieldset = this.appendChild(document.createElement("fieldset"));
 		legend = fieldset.appendChild(document.createElement("legend"));
@@ -54,6 +57,10 @@ class SynthModule extends HTMLFormElement {
 		patch.oscShape.input.value = this.oscShape.input.value;
 		patch.oscShift.input.value = this.oscShift.input.value;
 		patch.oscDetune.input.value = this.oscDetune.input.value;
+		
+		patch.freqLfo.shape.input.value = this.freqLfo.shape.input.value;
+		patch.freqLfo.freq.input.value = this.freqLfo.freq.input.value;
+		patch.freqLfo.depth.input.value = this.freqLfo.depth.input.value;
 		
 		patch.filterType.input.value = this.filterType.input.value;
 		patch.filterCutoff.input.value = this.filterCutoff.input.value;
@@ -87,6 +94,9 @@ class SynthModule extends HTMLFormElement {
 		osc.start();
 		this.oscillators.push(osc);
 
+		let freqLfo = this.freqLfo.makeSound(audioContext, key);
+		freqLfo.connect(osc.detune);
+
 		let filter = audioContext.createBiquadFilter();
 		filter.calumKey = key;
 		filter.type = this.filterType.Value;
@@ -115,6 +125,8 @@ class SynthModule extends HTMLFormElement {
 			osc.detune.value = this.oscShift.Cents + this.oscDetune.Cents;
 			osc.type = this.oscShape.Value;
 		}
+		
+		this.freqLfo.updateSound();
 
 		for (let filter of this.filters){
 			filter.type = this.filterType.Value;
@@ -134,6 +146,8 @@ class SynthModule extends HTMLFormElement {
 			let index = this.oscillators.findIndex(o => o == oscillator);
 			this.oscillators.splice(index, 1);
 		}
+
+		this.freqLfo.stopSound(audioContext, key);
 
 		let matchingFilters = this.filters.filter(f => f.calumKey == key);
 		for (let filter of matchingFilters){
