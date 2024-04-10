@@ -9,10 +9,7 @@ class SynthModule extends HTMLFormElement {
 	filterLfo = null;
 
 	ampGain = null;
-	ampAttack = null;
-	ampDecay = null;
-	ampSustain = null;
-	ampRelease = null;
+	ampEnv = null;
 	ampLfo = null;
 
 	oscillators = [];
@@ -42,10 +39,7 @@ class SynthModule extends HTMLFormElement {
 		legend = fieldset.appendChild(document.createElement("legend"));
 		legend.innerHTML = "Amp";
 		this.ampGain = fieldset.appendChild(new AmpGain());
-		this.ampAttack = fieldset.appendChild(new EnvAttack());
-		this.ampDecay = fieldset.appendChild(new EnvDecay());
-		this.ampSustain = fieldset.appendChild(new AmpSustain());
-		this.ampRelease = fieldset.appendChild(new EnvRelease());
+		this.ampEnv = fieldset.appendChild(new EnvelopeModule());
 		this.ampLfo = fieldset.appendChild(new LfoModule(1, "", false));
 
 		let buttons = this.appendChild(new ModuleButtons());
@@ -73,10 +67,10 @@ class SynthModule extends HTMLFormElement {
 		patch.filterLfo.depth.input.value = this.filterLfo.depth.input.value;
 		
 		patch.ampGain.input.value = this.ampGain.input.value;
-		patch.ampAttack.input.value = this.ampAttack.input.value;
-		patch.ampDecay.input.value = this.ampDecay.input.value;
-		patch.ampSustain.input.value = this.ampSustain.input.value;
-		patch.ampRelease.input.value = this.ampRelease.input.value;
+		patch.ampEnv.attack.input.value = this.ampEnv.attack.input.value;
+		patch.ampEnv.decay.input.value = this.ampEnv.decay.input.value;
+		patch.ampEnv.sustain.input.value = this.ampEnv.sustain.input.value;
+		patch.ampEnv.release.input.value = this.ampEnv.release.input.value;
 
 		patch.ampLfo.shape.input.value = this.ampLfo.shape.input.value;
 		patch.ampLfo.freq.input.value = this.ampLfo.freq.input.value;
@@ -117,13 +111,11 @@ class SynthModule extends HTMLFormElement {
 		let filterLfo = this.filterLfo.makeSound(audioContext, key);
 		filterLfo.connect(filter.detune);
 
-		let attack = audioContext.currentTime + (this.ampAttack.Value / 1000);
-		let decay = attack + (this.ampDecay.Value / 1000);
 		let gain = audioContext.createGain();
 		gain.calumKey = key;
 		gain.gain.value = 0;
-		gain.gain.linearRampToValueAtTime(this.ampGain.Value, attack);
-		gain.gain.linearRampToValueAtTime(this.ampSustain.Value, decay);
+		gain.gain.linearRampToValueAtTime(this.ampGain.Value, audioContext.currentTime + this.ampEnv.Attack);
+		gain.gain.linearRampToValueAtTime(this.ampEnv.Sustain * this.ampGain.Value, audioContext.currentTime + this.ampEnv.Decay);
 		this.gains.push(gain);
 
 		let ampLfo = this.ampLfo.makeSound(audioContext, key);
@@ -174,11 +166,10 @@ class SynthModule extends HTMLFormElement {
 			this.filters.splice(index, 1);
 		}
 
-		let release = audioContext.currentTime + (this.ampRelease.Value / 1000);
 		let matchingGains = this.gains.filter(g => g.calumKey == key);
 		for (let gain of matchingGains){
 			gain.gain.cancelScheduledValues(0.0);
-			gain.gain.linearRampToValueAtTime(0.0, release);
+			gain.gain.linearRampToValueAtTime(0.0, audioContext.currentTime + this.ampEnv.Release);
 			let index = this.gains.findIndex(g => g == gain);
 			this.gains.splice(index, 1);
 		}
@@ -190,7 +181,7 @@ class SynthModule extends HTMLFormElement {
 			matchingFilters.forEach(f => { f.disconnect(); });
 			this.ampLfo.stopSound(audioContext, key);
 			matchingGains.forEach(g => { g.disconnect(); });
-		}, this.ampRelease.Value);
+		}, this.ampEnv.ReleaseMs);
 		
 		return true;
 	}
