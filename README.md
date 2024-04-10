@@ -37,6 +37,7 @@ Just download the repository and open `index.html` in a browser window.
 
 ## To Do
 
+* Envelope needs a "depth" parameter to attack from and release to
 * Add filter ADSR
 * Add frequency glide
 * Add option to sync LFOs
