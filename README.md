@@ -46,6 +46,7 @@ Just download the repository and open `index.html` in a browser window.
 * Figure out how to stop polyphonic sounds from overloading the speakers
 * Add option to export/import patches as JSON
 * Add stereo sound
+* Fix QWERTY mapping on black keys
 * Automatically redraw keyboard when window is resized
 * Add wood skins and metal skins etc.
 * Add recording/editing functionality
