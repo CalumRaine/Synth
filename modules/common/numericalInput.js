@@ -19,8 +19,8 @@ class NumericalInput extends LabelledInput {
 	 * 	- even more = 3, 4, 5, 6...
 	 * 	(actually tests have shown 2 is ideal)
 	 */
-	static SLOPE_LINEAR = 1
-	static SLOPE_EXP = 2
+	static SLOPE_LINEAR = 1;
+	static SLOPE_EXP = 2;
 	
 	min = 0;		// e.g. 20 Hz or 0 ms
 	max = 0;		// e.g. 20,000 Hz or 10000 ms
@@ -36,7 +36,6 @@ class NumericalInput extends LabelledInput {
 		this.range = this.max - this.min;
 		this.exp = exponent;
 		this.units = units;
-
 		this.input = this.appendChild(document.createElement("input"));
 		this.input.setAttribute("type", "number");
 		this.input.setAttribute("min", 0);
@@ -83,4 +82,6 @@ class NumericalInput extends LabelledInput {
 		return x;
 	}
 }
+
+customElements.define("numerical-input", NumericalInput, { extends: "div" });
 
