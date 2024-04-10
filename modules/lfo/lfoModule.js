@@ -13,15 +13,15 @@ class LfoModule extends HTMLFieldSetElement {
 
 	oscillators = [];
 	gains = [];
-	constructor(depthMax, depthUnits){
+	constructor(maxDepth, unitsDepth, expDepth){
 		super();
 		super.setAttribute("is", "lfo-module");
 		let legend = this.appendChild(document.createElement("legend"));
 		legend.innerHTML = "LFO";
 
 		this.shape = this.appendChild(new OscShape());
-		this.depth = this.appendChild(new NumericalInput("Depth", LfoModule.DEPTH_DEFAULT, LfoModule.DEPTH_MIN, depthMax, NumericalInput.SLOPE_EXP, depthUnits));
-		this.freq = this.appendChild(new NumericalInput("Freq", LfoModule.FREQ_DEFAULT, LfoModule.FREQ_MIN, LfoModule.FREQ_MAX, NumericalInput.SLOPE_EXP, LfoModule.FREQ_UNITS));
+		this.depth = this.appendChild(new NumericalInput("Depth", LfoModule.DEPTH_DEFAULT, LfoModule.DEPTH_MIN, maxDepth, expDepth, unitsDepth));
+		this.freq = this.appendChild(new NumericalInput("Freq", LfoModule.FREQ_DEFAULT, LfoModule.FREQ_MIN, LfoModule.FREQ_MAX, true, LfoModule.FREQ_UNITS));
 	}
 
 	makeSound(audioContext, key){

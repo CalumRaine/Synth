@@ -29,14 +29,14 @@ class SynthModule extends HTMLFormElement {
 		this.oscShape = fieldset.appendChild(new OscShape());
 		this.oscShift = fieldset.appendChild(new OscShift());
 		this.oscDetune = fieldset.appendChild(new OscDetune());
-		this.freqLfo = fieldset.appendChild(new LfoModule(1200, "Cents"));
+		this.freqLfo = fieldset.appendChild(new LfoModule(1200, "Cents", true));
 
 		fieldset = this.appendChild(document.createElement("fieldset"));
 		legend = fieldset.appendChild(document.createElement("legend"));
 		legend.innerHTML = "Filter";
 		this.filterType = fieldset.appendChild(new FilterType());
 		this.filterCutoff = fieldset.appendChild(new FilterCutoff());
-		this.filterLfo = fieldset.appendChild(new LfoModule(24000, "Hz"));
+		this.filterLfo = fieldset.appendChild(new LfoModule(24000, "Hz", true));
 
 		fieldset = this.appendChild(document.createElement("fieldset"));
 		legend = fieldset.appendChild(document.createElement("legend"));
@@ -46,7 +46,7 @@ class SynthModule extends HTMLFormElement {
 		this.ampDecay = fieldset.appendChild(new EnvDecay());
 		this.ampSustain = fieldset.appendChild(new AmpSustain());
 		this.ampRelease = fieldset.appendChild(new EnvRelease());
-		this.ampLfo = fieldset.appendChild(new LfoModule(1, ""));
+		this.ampLfo = fieldset.appendChild(new LfoModule(1, "", false));
 
 		let buttons = this.appendChild(new ModuleButtons());
 		buttons.duplicate.onclick = (event) => { this.duplicateModule(event); };
