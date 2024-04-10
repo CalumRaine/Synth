@@ -1,24 +1,17 @@
 class NumericalInput extends LabelledInput {
-	// Normalise min-max to 0-100
-	// Normalisation can be linear or exponential
-	// Will be a range/knob input eventually
+	// Produces numerical input with range 0-100 
+	// Will internally convert value to between specified min-max
+	// Conversion can be linear or exponential
+
+	// Possible confusion between parameter value (true value) and input value (percent)
+	// Will eventually be a range/knob input
 	// Suitable for continuous values, such as freq filters and time
 	// Unsuitable for discrete values, such as note shifts
 	
-	/* Usually want finer control at lower end of range
-	 * 	- e.g. fade time
-	 *	- e.g. cutoff frequency
-	 * Let developer choose linear/exponential slope
-	 * 	- Linear: y = x
-	 * 	- Exponential: y = (x^2) / 100
-	 * Can allow for even more control over slope:
-	 * 	- y = (x^z) / (100^(z-1))
-	 * 	- where z is exponent
-	 * 	- linear exponent = 1
-	 * 	- exponential exponent = 2
-	 * 	- even more = 3, 4, 5, 6...
-	 * 	(actually tests have shown 2 is ideal)
-	 */
+	// Exponential slope allows finer control at lower end of range
+	// 	- e.g. fade time
+	//	- e.g. cutoff frequency
+	// Exponent could be increased further but 2 works well
 	static SLOPE_LINEAR = 1;
 	static SLOPE_EXP = 2;
 	
@@ -48,7 +41,8 @@ class NumericalInput extends LabelledInput {
 	}
 
 	get Value(){
-		return parseFloat(this.value);
+		// Override: return true parameter value not percentage value from input.
+		return this.value;
 	}
 
 	set Percent(percent){
@@ -59,6 +53,7 @@ class NumericalInput extends LabelledInput {
 		this.value = this.percentToValue(percent);
 		this.input.value = percent;
 		this.input.setAttribute("value", this.input.value);
+
 		this.input.setAttribute("title", `${this.value} ${this.units}`);
 
 		// Promp parent to update sounds on the fly
