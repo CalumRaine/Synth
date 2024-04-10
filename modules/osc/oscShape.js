@@ -1,18 +1,9 @@
-class OscShape extends LabelledInput {
+class OscShape extends DropdownInput {
 	static SHAPES = ["Sine", "Triangle", "Square", "Sawtooth"];
-	select = null;
 
 	constructor(){
-		super("Shape");
+		super("Shape", OscShape.SHAPES);
 		super.setAttribute("is", "osc-shape");
-
-		this.select = this.input = this.appendChild(document.createElement("select"));
-		for (let shape of OscShape.SHAPES){
-			let option = document.createElement("option");
-			option.setAttribute("value", shape.toLowerCase());
-			option.innerHTML = shape;
-			this.select.options.add(option);
-		}
 	}
 }
 
