@@ -37,7 +37,6 @@ Just download the repository and open `index.html` in a browser window.
 
 ## To Do
 
-* Use "detune cents" property of oscillator for shift/detune
 * Add filter ADSR
 * Add frequency glide
 * Add LFO to frequency, filter and amp
