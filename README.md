@@ -39,7 +39,6 @@ Just download the repository and open `index.html` in a browser window.
 
 * Add filter ADSR
 * Add frequency glide
-* Add LFO to frequency, filter and amp
 * Add option to sync LFOs
 * Use velocity from MIDI messages on key press
 * Figure out how to stop polyphonic sounds from overloading the speakers
