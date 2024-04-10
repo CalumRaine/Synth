@@ -2,11 +2,11 @@ class SynthModule extends HTMLFormElement {
 	oscShape = null;
 	oscShift = null;
 	oscDetune = null;
-
 	freqLfo = null;
 
 	filterType = null;
 	filterCutoff = null;
+	filterLfo = null;
 
 	ampGain = null;
 	ampAttack = null;
@@ -35,6 +35,7 @@ class SynthModule extends HTMLFormElement {
 		legend.innerHTML = "Filter";
 		this.filterType = fieldset.appendChild(new FilterType());
 		this.filterCutoff = fieldset.appendChild(new FilterCutoff());
+		this.filterLfo = fieldset.appendChild(new LfoModule(24000, "Hz"));
 
 		fieldset = this.appendChild(document.createElement("fieldset"));
 		legend = fieldset.appendChild(document.createElement("legend"));
@@ -65,6 +66,10 @@ class SynthModule extends HTMLFormElement {
 		patch.filterType.input.value = this.filterType.input.value;
 		patch.filterCutoff.input.value = this.filterCutoff.input.value;
 
+		patch.filterLfo.shape.input.value = this.filterLfo.shape.input.value;
+		patch.filterLfo.freq.input.value = this.filterLfo.freq.input.value;
+		patch.filterLfo.depth.input.value = this.filterLfo.depth.input.value;
+		
 		patch.ampGain.input.value = this.ampGain.input.value;
 		patch.ampAttack.input.value = this.ampAttack.input.value;
 		patch.ampDecay.input.value = this.ampDecay.input.value;
@@ -103,6 +108,9 @@ class SynthModule extends HTMLFormElement {
 		filter.frequency.value = this.filterCutoff.Value;
 		this.filters.push(filter);
 
+		let filterLfo = this.filterLfo.makeSound(audioContext, key);
+		filterLfo.connect(filter.detune);
+
 		let attack = audioContext.currentTime + (this.ampAttack.Value / 1000);
 		let decay = attack + (this.ampDecay.Value / 1000);
 		let gain = audioContext.createGain();
@@ -133,6 +141,8 @@ class SynthModule extends HTMLFormElement {
 			filter.frequency.value = this.filterCutoff.Value;
 		}
 
+		this.filterLfo.updateSound();
+
 		for (let gain of this.gains){
 			gain.gain.value = this.ampGain.Value;
 		}
@@ -146,8 +156,6 @@ class SynthModule extends HTMLFormElement {
 			let index = this.oscillators.findIndex(o => o == oscillator);
 			this.oscillators.splice(index, 1);
 		}
-
-		this.freqLfo.stopSound(audioContext, key);
 
 		let matchingFilters = this.filters.filter(f => f.calumKey == key);
 		for (let filter of matchingFilters){
@@ -165,7 +173,9 @@ class SynthModule extends HTMLFormElement {
 		}
 
 		setTimeout(() => {
+			this.freqLfo.stopSound(audioContext, key);
 			matchingOsc.forEach(o => { o.stop(); o.disconnect(); });
+			this.filterLfo.stopSound(audioContext, key);
 			matchingFilters.forEach(f => { f.disconnect(); });
 			matchingGains.forEach(g => { g.disconnect(); });
 		}, this.ampRelease.Value);
