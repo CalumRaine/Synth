@@ -79,14 +79,11 @@ class SynthModule extends HTMLFormElement {
 	}
 
 	makeSound(audioContext, key, speakers){
-		let freq = key.freq;
-		freq = this.oscShift.calculate(freq);
-		freq = this.oscDetune.calculate(freq);
-
 		let osc = audioContext.createOscillator();
 		osc.calumKey = key;
 		osc.type = this.oscShape.Value;
-		osc.frequency.value = freq;
+		osc.frequency.value = key.freq;
+		osc.detune.value = this.oscShift.Cents + this.oscDetune.Cents;
 		osc.start();
 		this.oscillators.push(osc);
 
@@ -114,10 +111,8 @@ class SynthModule extends HTMLFormElement {
 
 	updateSound(){
 		for (let osc of this.oscillators){
-			let freq = osc.calumKey.freq;
-			freq = this.oscShift.calculate(freq);
-			freq = this.oscDetune.calculate(freq);
-			osc.frequency.value = freq;
+			osc.frequency.value = osc.calumKey.freq;
+			osc.detune.value = this.oscShift.Cents + this.oscDetune.Cents;
 			osc.type = this.oscShape.Value;
 		}
 

@@ -30,20 +30,8 @@ class OscShift extends LabelledInput {
 		this.dispatchEvent(new Event("input", { bubbles: true }));
 	}
 
-	calculate(freq){
-		return this.Value < 0 ? this.pitchDown(freq) : this.pitchUp(freq);
-	}
-
-	pitchUp(freq){
-		let factor = 2 ** (1/12);
-		factor **= this.Value;
-		return freq * factor;
-	}
-
-	pitchDown(freq){
-		let factor = 2 ** (-1/12);
-		factor **= Math.abs(this.Value);
-		return freq * factor;
+	get Cents(){
+		return parseInt(this.Value * 100);
 	}
 }
 
