@@ -12,10 +12,10 @@ class NumericalInput extends LabelledInput {
 	 * 	- Linear: y = x
 	 * 	- Exponential: y = (x^2) / 100
 	 * Can allow for even more control over slope:
-	 * 	- y = (x^f) / (100^(f-1))
-	 * 	- where f is "factor"
-	 * 	- linear "factor" = 1
-	 * 	- exponential "factor" = 2
+	 * 	- y = (x^z) / (100^(z-1))
+	 * 	- where z is exponent
+	 * 	- linear exponent = 1
+	 * 	- exponential exponent = 2
 	 * 	- even more = 3, 4, 5, 6...
 	 * 	(actually tests have shown 2 is ideal)
 	 */
@@ -28,13 +28,13 @@ class NumericalInput extends LabelledInput {
 	exp = 1;		// linear by default
 	units = "";		// e.g. Hz or ms
 	range = 0;		// max - min
-	constructor(label, value, min, max, exponential, units){
+	constructor(label, value, min, max, exponent, units){
 		super(label);
 		this.value = value;
 		this.min = min;
 		this.max = max;
 		this.range = this.max - this.min;
-		this.exp = exponential;
+		this.exp = exponent;
 		this.units = units;
 
 		this.input = this.appendChild(document.createElement("input"));
