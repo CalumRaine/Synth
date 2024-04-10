@@ -4,7 +4,7 @@ class TimeInput extends NumericalInput {
 	static DEFAULT = 0;
 	static UNITS = "ms";
 	constructor(label){
-		super(label, TimeInput.DEFAULT, TimeInput.MIN, TimeInput.MAX, NumericalInput.SLOPE_EXP, TimeInput.UNITS);
+		super(label, TimeInput.DEFAULT, TimeInput.MIN, TimeInput.MAX, true, TimeInput.UNITS);
 	}
 }
 

@@ -3,7 +3,7 @@ class FilterCutoff extends NumericalInput {
 	static MAX = 24000;
 	static DEFAULT = 24000;
 	constructor(){
-		super("Cutoff", FilterCutoff.DEFAULT, FilterCutoff.MIN, FilterCutoff.MAX, NumericalInput.SLOPE_EXP, "Hz");
+		super("Cutoff", FilterCutoff.DEFAULT, FilterCutoff.MIN, FilterCutoff.MAX, true, "Hz");
 		super.setAttribute("is", "filter-cutoff");
 	}
 }

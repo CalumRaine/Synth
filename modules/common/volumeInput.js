@@ -3,7 +3,7 @@ class VolumeInput extends NumericalInput {
 	static MAX = 1;
 	static DEFAULT = 0.5;
 	constructor(label){
-		super(label, VolumeInput.DEFAULT, VolumeInput.MIN, VolumeInput.MAX, NumericalInput.SLOPE_LINEAR, "");
+		super(label, VolumeInput.DEFAULT, VolumeInput.MIN, VolumeInput.MAX, false, "");
 	}
 }
 

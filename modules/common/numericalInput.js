@@ -28,13 +28,13 @@ class NumericalInput extends LabelledInput {
 	exp = 1;		// linear by default
 	units = "";		// e.g. Hz or ms
 	range = 0;		// max - min
-	constructor(label, value, min, max, exponent, units){
+	constructor(label, value, min, max, exponential, units){
 		super(label);
 		this.value = value;
 		this.min = min;
 		this.max = max;
 		this.range = this.max - this.min;
-		this.exp = exponent;
+		this.exp = exponential ? NumericalInput.SLOPE_EXP : NumericalInput.SLOPE_LINEAR;
 		this.units = units;
 		this.input = this.appendChild(document.createElement("input"));
 		this.input.setAttribute("type", "number");
