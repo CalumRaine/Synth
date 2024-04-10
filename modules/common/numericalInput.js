@@ -45,7 +45,7 @@ class NumericalInput extends LabelledInput {
 		this.input.setAttribute("title", `${this.value} ${this.units}`);
 		this.input.setAttribute("value", this.valueToPercent(this.value));
 		this.input.setPercent = (percent) => { this.Percent = percent; };
-		this.input.oninput = (event) => { this.Percent = parseFloat(this.input.value); };
+		this.input.oninput = (event) => { event.stopPropagation(); this.Percent = parseFloat(this.input.value); };
 	}
 
 	get Value(){
@@ -53,10 +53,17 @@ class NumericalInput extends LabelledInput {
 	}
 
 	set Percent(percent){
+		// Translate percentage value between min-max scale
+		// Called when:
+		// 	* MIDI knob turned and element has focus
+		//	* User modifies on-screen input
 		this.value = this.percentToValue(percent);
 		this.input.value = percent;
 		this.input.setAttribute("value", this.input.value);
 		this.input.setAttribute("title", `${this.value} ${this.units}`);
+
+		// Promp parent to update sounds on the fly
+		this.dispatchEvent(new Event("input", { bubbles: true }));
 	}
 
 	percentToValue(x){

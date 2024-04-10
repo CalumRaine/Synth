@@ -17,12 +17,17 @@ class OscShift extends LabelledInput {
 	}
 
 	set Percent(percent){
+		// Convert percentage to value between min-max
+		// Called when MIDI knob turned and input has focus
 		let fraction = percent / 100;
 		let range = OscShift.MAX - OscShift.MIN;
 		let value = OscShift.MIN + (range * fraction);
 		this.input.value = Math.round(value);
 		this.input.setAttribute("value", this.input.value);
 		this.input.setAttribute("title", `${this.input.value} ${Math.abs(this.input.value) == 1 ? "note" : "notes"}`);
+
+		// Prompt parent to update sound on the fly
+		this.dispatchEvent(new Event("input", { bubbles: true }));
 	}
 
 	calculate(freq){

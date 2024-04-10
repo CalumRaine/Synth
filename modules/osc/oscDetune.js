@@ -17,12 +17,17 @@ class OscDetune extends LabelledInput {
 	}
 
 	set Percent(percent){
+		// Convert percentage to value between min-max
+		// Called when MIDI knob turned
 		let fraction = percent / 100;
 		let range = OscDetune.MAX - OscDetune.MIN;
 		let value = OscDetune.MIN + (range * fraction);
 		this.input.value = value.toFixed(2);
 		this.input.setAttribute("value", this.input.value);
 		this.input.setAttribute("title", `${this.input.value} cents`);
+
+		// Prompt parent to update sound on the fly
+		this.dispatchEvent(new Event("input", { bubbles: true }));
 	}
 
 	calculate(freq){
