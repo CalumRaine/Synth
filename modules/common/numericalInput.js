@@ -45,19 +45,11 @@ class NumericalInput extends LabelledInput {
 		this.input.setAttribute("title", `${this.value} ${this.units}`);
 		this.input.setAttribute("value", this.valueToPercent(this.value));
 		this.input.setPercent = (percent) => { this.Percent = percent; };
-		this.input.oninput = (event) => { this.change(event); };
+		this.input.oninput = (event) => { this.Percent = parseFloat(this.input.value); };
 	}
 
 	get Value(){
 		return parseFloat(this.value);
-	}
-
-	change(event){
-		let percent = parseFloat(this.input.value);
-		this.value = this.percentToValue(percent);
-		this.input.setAttribute("value", this.input.value);
-		this.input.setAttribute("title", `${this.value} ${this.units}`);
-		return true;
 	}
 
 	set Percent(percent){
