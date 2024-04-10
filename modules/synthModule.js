@@ -13,6 +13,7 @@ class SynthModule extends HTMLFormElement {
 	ampDecay = null;
 	ampSustain = null;
 	ampRelease = null;
+	ampLfo = null;
 
 	oscillators = [];
 	filters = [];
@@ -45,6 +46,7 @@ class SynthModule extends HTMLFormElement {
 		this.ampDecay = fieldset.appendChild(new EnvDecay());
 		this.ampSustain = fieldset.appendChild(new AmpSustain());
 		this.ampRelease = fieldset.appendChild(new EnvRelease());
+		this.ampLfo = fieldset.appendChild(new LfoModule(1, ""));
 
 		let buttons = this.appendChild(new ModuleButtons());
 		buttons.duplicate.onclick = (event) => { this.duplicateModule(event); };
@@ -76,6 +78,10 @@ class SynthModule extends HTMLFormElement {
 		patch.ampSustain.input.value = this.ampSustain.input.value;
 		patch.ampRelease.input.value = this.ampRelease.input.value;
 
+		patch.ampLfo.shape.input.value = this.ampLfo.shape.input.value;
+		patch.ampLfo.freq.input.value = this.ampLfo.freq.input.value;
+		patch.ampLfo.depth.input.value = this.ampLfo.depth.input.value;
+		
 		let e = new CustomEvent("duplicate module", { detail: patch, bubbles: true });
 		this.dispatchEvent(e);
 
@@ -120,6 +126,9 @@ class SynthModule extends HTMLFormElement {
 		gain.gain.linearRampToValueAtTime(this.ampSustain.Value, decay);
 		this.gains.push(gain);
 
+		let ampLfo = this.ampLfo.makeSound(audioContext, key);
+		ampLfo.connect(gain.gain);
+
 		osc.connect(filter);
 		filter.connect(gain);
 		gain.connect(speakers);
@@ -146,6 +155,8 @@ class SynthModule extends HTMLFormElement {
 		for (let gain of this.gains){
 			gain.gain.value = this.ampGain.Value;
 		}
+
+		this.ampLfo.updateSound();
 
 		return true;
 	}
@@ -177,6 +188,7 @@ class SynthModule extends HTMLFormElement {
 			matchingOsc.forEach(o => { o.stop(); o.disconnect(); });
 			this.filterLfo.stopSound(audioContext, key);
 			matchingFilters.forEach(f => { f.disconnect(); });
+			this.ampLfo.stopSound(audioContext, key);
 			matchingGains.forEach(g => { g.disconnect(); });
 		}, this.ampRelease.Value);
 		
