@@ -62,7 +62,6 @@ class KnobInput extends LabelledInput {
 	get Units(){
 		// Add trailing 's' to plural units if necessary.
 		// i.e. "3 Notes" instead of "3 Note"
-		return this.paramUnits.length > 3 && !this.paramUnits.endsWith("s") && this.paramValue != 1 ? this.paramUnits + "s" : this.paramUnits;
 	}
 
 	percentToParam(percent){
@@ -92,8 +91,15 @@ class KnobInput extends LabelledInput {
 		this.paramValue *= x < 0 ? -1 : 1;
 		this.paramValue += y;
 		this.paramValue = Number(this.paramValue.toFixed(this.dp));
-		this.input.setAttribute("title", `${this.paramValue} ${this.Units}`);
+		this.setTitle();
 		return this.paramValue;
+	}
+
+	setTitle(){
+		let prefix = this.reflect && this.paramValue > 0 ? "+" : "";
+		let units = this.paramUnits.length > 3 && !this.paramUnits.endsWith("s") && this.paramValue != 1 ? this.paramUnits + "s" : this.paramUnits;
+		this.input.setAttribute("title", `${prefix}${this.paramValue} ${units}`);
+		return true;
 	}
 }
 
