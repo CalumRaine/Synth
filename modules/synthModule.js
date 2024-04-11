@@ -105,6 +105,8 @@ class SynthModule extends HTMLFormElement {
 		osc.calumKey = key;
 		osc.type = this.oscParams.shape.Value;
 		osc.frequency.value = key.freq;
+		// Freq env depth adds/subtracts 0-100%
+		// i.e. from 0Hz to one octave above current note
 		osc.frequency.linearRampToValueAtTime(key.freq + (key.freq * this.freqEnv.Depth), audioContext.currentTime + this.freqEnv.Attack);
 		osc.frequency.linearRampToValueAtTime(key.freq, audioContext.currentTime + this.freqEnv.Decay);
 		osc.detune.value = this.oscParams.shift.Cents + this.oscParams.detune.Cents;
@@ -118,7 +120,11 @@ class SynthModule extends HTMLFormElement {
 		filter.calumKey = key;
 		filter.type = this.filterParams.type.Value;
 		filter.frequency.value = this.filterParams.cutoff.Value;
-		let target = this.filterParams.cutoff.Value + (this.filterParams.cutoff.Value * this.filterEnv.Depth);
+		// Filter env depth adds/subtracts 0-100% of the remainder above/below the cutoff
+		// i.e. from 0Hz to 20kHz
+		let target = this.filterEnv.Depth >= 0 ? (this.filterParams.cutoff.paramMax - this.filterParams.cutoff.Value) : this.filterParams.cutoff.Value;
+		target *= this.filterEnv.Depth;
+		target += this.filterParams.cutoff.Value;
 		let delta = target - this.filterParams.cutoff.Value;
 		filter.frequency.linearRampToValueAtTime(target, audioContext.currentTime + this.filterEnv.Attack);
 		filter.frequency.linearRampToValueAtTime(this.filterParams.cutoff.Value + (delta * this.filterEnv.Sustain), audioContext.currentTime + this.filterEnv.Decay);

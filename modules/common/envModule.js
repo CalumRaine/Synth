@@ -40,7 +40,7 @@ class EnvModule extends HTMLFieldSetElement {
 		}
 		
 		if (useDepth){
-			this.depth = this.appendChild(new KnobInput("Depth", EnvModule.DEPTH_MIN, EnvModule.DEPTH_MAX, EnvModule.DEPTH_UNIT, KnobInput.DP_CENT, 0, KnobInput.LINEAR, KnobInput.REFLECT));
+			this.depth = this.appendChild(new KnobInput("Depth", EnvModule.DEPTH_MIN, EnvModule.DEPTH_MAX, EnvModule.DEPTH_UNIT, KnobInput.DP_CENT, 0, KnobInput.CURVED, KnobInput.REFLECT));
 		}
 	}
 

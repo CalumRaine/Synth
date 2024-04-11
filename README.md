@@ -37,7 +37,6 @@ Just download the repository and open `index.html` in a browser window.
 
 ## To Do
 
-* Fix filter sustain: percentage doesn't work well
 * Add option to sync LFOs
 * Add named patches
 * Use velocity from MIDI messages on key press
