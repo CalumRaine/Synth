@@ -40,9 +40,11 @@ Just download the repository and open `index.html` in a browser window.
 * Fix filter sustain: percentage doesn't work well
 * Add step parameter to knob input (to work with discrete values)
 * Add option to sync LFOs
+* Add named patches
 * Use velocity from MIDI messages on key press
 * Figure out how to stop polyphonic sounds from overloading the speakers
 * Add option to export/import patches as JSON
+* Add preset patches
 * Add stereo sound
 * Fix QWERTY mapping on black keys
 * Automatically redraw keyboard when window is resized
