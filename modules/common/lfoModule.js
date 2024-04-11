@@ -20,8 +20,8 @@ class LfoModule extends HTMLFieldSetElement {
 		legend.innerHTML = "LFO";
 
 		this.shape = this.appendChild(new OscShape());
-		this.depth = this.appendChild(new KnobInput("Depth", LfoModule.DEPTH_MIN, maxDepth, unitsDepth, LfoModule.DEPTH_DEF, linearDepth, KnobInput.NO_REFLECT));
-		this.freq = this.appendChild(new KnobInput("Freq", LfoModule.FREQ_MIN, LfoModule.FREQ_MAX, LfoModule.FREQ_UNIT, LfoModule.FREQ_DEF, KnobInput.CURVED, KnobInput.NO_REFLECT));
+		this.depth = this.appendChild(new KnobInput("Depth", LfoModule.DEPTH_MIN, maxDepth, unitsDepth, KnobInput.DP_CENT, LfoModule.DEPTH_DEF, linearDepth, KnobInput.NO_REFLECT));
+		this.freq = this.appendChild(new KnobInput("Freq", LfoModule.FREQ_MIN, LfoModule.FREQ_MAX, LfoModule.FREQ_UNIT, KnobInput.DP_FREQ, LfoModule.FREQ_DEF, KnobInput.CURVED, KnobInput.NO_REFLECT));
 	}
 
 	duplicate(){

@@ -4,7 +4,7 @@ class FilterCutoff extends KnobInput {
 	static DEF = 100;
 	static UNIT = "Hz";
 	constructor(){
-		super("Cutoff", FilterCutoff.MIN, FilterCutoff.MAX, FilterCutoff.UNIT, FilterCutoff.DEF, KnobInput.CURVED, KnobInput.NO_REFLECT);
+		super("Cutoff", FilterCutoff.MIN, FilterCutoff.MAX, FilterCutoff.UNIT, KnobInput.DP_FREQ, FilterCutoff.DEF, KnobInput.CURVED, KnobInput.NO_REFLECT);
 		super.setAttribute("is", "filter-cutoff");
 	}
 }

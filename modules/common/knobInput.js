@@ -2,27 +2,36 @@ class KnobInput extends LabelledInput {
 	// Produces numerical input with 0-100 range
 	// Translates knob position to param min-max range
 	// 	- i.e. 0 to 100 ==> 40Hz to 20kHz
-	// Can be reflected to include -100 to +100
-	// 	- i.e. -100 to 100 ==> -12dB to +12dB
-	// 	- Currently only designed for symmetrical inputs
+	
 	// Translation can be linear or exponential
 	// 	- Often need greater control at lower range
 	static LINEAR = 1;
 	static CURVED = 3;
 	static U_SHAPE = 2; // Probably useful for panning later
 
+	// Can be reflected to include -100 to +100
+	// 	- i.e. -100 to 100 ==> -12dB to +12dB
+	// 	- Currently only designed for symmetrical inputs
 	static REFLECT = true;
 	static NO_REFLECT = false;
+
+	// Will increment by given decimal place steps
+	// 	- i.e. pitch shift is 1 full note at a time
+	// 	- i.e. frequency shown to 5 dp
+	static DP_INT = 0;
+	static DP_CENT = 2;
+	static DP_FREQ = 5;
 
 	paramMin = 0;		// e.g. 20 Hz or 0 ms
 	paramMax = 0;		// e.g. 20,000 Hz or 10000 ms
 	paramRange = 0;		// max - min
 	paramValue = 0;		// e.g. 440 Hz	or 1 ms
 	paramUnits = "";	// e.g. Hz or ms
+	dp = 0;			// decimal places to increment
 	exp = 1;		// linear by default
 	reflect = false;	// 0-100 by default
 	
-	constructor(label, paramMin, paramMax, paramUnits, knobPos, slope, reflect){
+	constructor(label, paramMin, paramMax, paramUnits, decimalPlaces, knobPos, slope, reflect){
 		super(label);
 		this.exp = slope;
 		this.reflect = reflect;
@@ -39,6 +48,7 @@ class KnobInput extends LabelledInput {
 		this.paramMax = paramMax;
 		this.paramRange = this.paramMax - this.paramMin;
 		this.paramUnits = paramUnits;
+		this.dp = decimalPlaces;
 		this.paramValue = this.knobToParam();
 		this.input.percentToParam = (percent) => { this.percentToParam(percent); };
 		this.input.oninput = (event) => { this.knobToParam(); };
@@ -47,6 +57,12 @@ class KnobInput extends LabelledInput {
 	get Value(){
 		// Override: return true parameter value not percentage value from input.
 		return this.paramValue;
+	}
+
+	get Units(){
+		// Add trailing 's' to plural units if necessary.
+		// i.e. "3 Notes" instead of "3 Note"
+		return this.paramUnits.length > 3 && !this.paramUnits.endsWith("s") && this.paramValue != 1 ? this.paramUnits + "s" : this.paramUnits;
 	}
 
 	percentToParam(percent){
@@ -75,7 +91,8 @@ class KnobInput extends LabelledInput {
 		this.paramValue = this.paramMin;
 		this.paramValue *= x < 0 ? -1 : 1;
 		this.paramValue += y;
-		this.input.setAttribute("title", `${this.paramValue} ${this.paramUnits}`);
+		this.paramValue = Number(this.paramValue.toFixed(this.dp));
+		this.input.setAttribute("title", `${this.paramValue} ${this.Units}`);
 		return this.paramValue;
 	}
 }

@@ -31,16 +31,16 @@ class EnvModule extends HTMLFieldSetElement {
 		super();
 		let legend = this.appendChild(document.createElement("legend"));
 		legend.innerHTML = "Envelope";
-		this.attack = this.appendChild(new KnobInput("Attack", EnvModule.TIME_MIN, EnvModule.TIME_MAX, EnvModule.TIME_UNIT, 0, KnobInput.CURVED, KnobInput.NO_REFLECT));
-		this.decay = this.appendChild(new KnobInput("Decay", EnvModule.TIME_MIN, EnvModule.TIME_MAX, EnvModule.TIME_UNIT, 0, KnobInput.CURVED, KnobInput.NO_REFLECT));
+		this.attack = this.appendChild(new KnobInput("Attack", EnvModule.TIME_MIN, EnvModule.TIME_MAX, EnvModule.TIME_UNIT, KnobInput.DP_INT, 0, KnobInput.CURVED, KnobInput.NO_REFLECT));
+		this.decay = this.appendChild(new KnobInput("Decay", EnvModule.TIME_MIN, EnvModule.TIME_MAX, EnvModule.TIME_UNIT, KnobInput.DP_INT, 0, KnobInput.CURVED, KnobInput.NO_REFLECT));
 		
 		if (useSustainRelease){
-			this.sustain = this.appendChild(new KnobInput("Sustain", EnvModule.SUS_MIN, EnvModule.SUS_MAX, EnvModule.SUS_UNIT, 100, KnobInput.LINEAR, KnobInput.NO_REFLECT));
-			this.release = this.appendChild(new KnobInput("Release", EnvModule.TIME_MIN, EnvModule.TIME_MAX, EnvModule.TIME_UNIT, 0, KnobInput.CURVED, KnobInput.NO_REFLECT));
+			this.sustain = this.appendChild(new KnobInput("Sustain", EnvModule.SUS_MIN, EnvModule.SUS_MAX, EnvModule.SUS_UNIT, KnobInput.DP_CENT, 100, KnobInput.LINEAR, KnobInput.NO_REFLECT));
+			this.release = this.appendChild(new KnobInput("Release", EnvModule.TIME_MIN, EnvModule.TIME_MAX, EnvModule.TIME_UNIT, KnobInput.DP_INT, 0, KnobInput.CURVED, KnobInput.NO_REFLECT));
 		}
 		
 		if (useDepth){
-			this.depth = this.appendChild(new KnobInput("Depth", EnvModule.DEPTH_MIN, EnvModule.DEPTH_MAX, EnvModule.DEPTH_UNIT, 0, KnobInput.LINEAR, KnobInput.REFLECT));
+			this.depth = this.appendChild(new KnobInput("Depth", EnvModule.DEPTH_MIN, EnvModule.DEPTH_MAX, EnvModule.DEPTH_UNIT, KnobInput.DP_CENT, 0, KnobInput.LINEAR, KnobInput.REFLECT));
 		}
 	}
 
