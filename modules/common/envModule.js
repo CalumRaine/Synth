@@ -44,6 +44,33 @@ class EnvModule extends HTMLFieldSetElement {
 		}
 	}
 
+	duplicate(){
+		let dupe = new EnvModule(this.sustain != null && this.release != null, this.depth != null);
+
+		dupe.attack.input.value = this.attack.input.value;
+		dupe.attack.paramValue = this.attack.paramValue;
+
+		dupe.decay.input.value = this.decay.input.value;
+		dupe.decay.paramValue = this.decay.paramValue;
+
+		if (this.sustain != null){
+			dupe.sustain.input.value = this.sustain.input.value;
+			dupe.sustain.paramValue = this.sustain.paramValue;
+		}
+		
+		if (this.release != null){
+			dupe.release.input.value = this.release.input.value;
+			dupe.release.paramValue = this.release.paramValue;
+		}
+
+		if (this.depth != null){
+			dupe.depth.input.value = this.depth.input.value;
+			dupe.depth.paramValue = this.depth.paramValue;
+		}
+
+		return dupe;
+	}
+
 	get Attack(){
 		// As seconds
 		return this.attack.Value / 1000;

@@ -21,6 +21,7 @@ class KnobInput extends LabelledInput {
 	paramUnits = "";	// e.g. Hz or ms
 	exp = 1;		// linear by default
 	reflect = false;	// 0-100 by default
+	
 	constructor(label, paramMin, paramMax, paramUnits, knobPos, slope, reflect){
 		super(label);
 		this.exp = slope;

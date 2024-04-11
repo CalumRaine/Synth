@@ -1,5 +1,6 @@
 class AmpParams extends HTMLFieldSetElement {
 	gain = null;
+
 	constructor(){
 		super();
 		super.setAttribute("is", "amp-params");
@@ -8,6 +9,15 @@ class AmpParams extends HTMLFieldSetElement {
 		legend.innerHTML = "Parameters";
 
 		this.gain = this.appendChild(new AmpGain());
+	}
+
+	duplicate(){
+		let dupe = new AmpParams();
+
+		dupe.gain.input.value = this.gain.input.value;
+		dupe.gain.paramValue = this.gain.paramValue;
+
+		return dupe;
 	}
 }
 

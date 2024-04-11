@@ -48,42 +48,49 @@ class SynthModule extends HTMLFormElement {
 	}
 
 	duplicateModule(){
-		let patch = new SynthModule();
-		patch.oscShape.input.value = this.oscShape.input.value;
-		patch.oscShift.input.value = this.oscShift.input.value;
-		patch.oscDetune.input.value = this.oscDetune.input.value;
+		let dupe = new SynthModule();
 		
-		patch.freqLfo.shape.input.value = this.freqLfo.shape.input.value;
-		patch.freqLfo.freq.input.value = this.freqLfo.freq.input.value;
-		patch.freqLfo.depth.input.value = this.freqLfo.depth.input.value;
-		
-		patch.filterType.input.value = this.filterType.input.value;
-		patch.filterCutoff.input.value = this.filterCutoff.input.value;
+		let osc = this.oscParams.duplicate();
+		dupe.oscParams.replaceWith(osc);
+		dupe.oscParams = osc;
 
-		patch.filterEnv.attack.input.value = this.filterEnv.attack.input.value;
-		patch.filterEnv.decay.input.value = this.filterEnv.decay.input.value;
-		patch.filterEnv.sustain.input.value = this.filterEnv.sustain.input.value;
-		patch.filterEnv.release.input.value = this.filterEnv.release.input.value;
+		let freqEnv = this.freqEnv.duplicate();
+		dupe.freqEnv.replaceWith(freqEnv);
+		dupe.freqEnv = freqEnv;
 
-		patch.filterLfo.shape.input.value = this.filterLfo.shape.input.value;
-		patch.filterLfo.freq.input.value = this.filterLfo.freq.input.value;
-		patch.filterLfo.depth.input.value = this.filterLfo.depth.input.value;
-		
-		patch.ampGain.input.value = this.ampGain.input.value;
-		patch.ampEnv.attack.input.value = this.ampEnv.attack.input.value;
-		patch.ampEnv.decay.input.value = this.ampEnv.decay.input.value;
-		patch.ampEnv.sustain.input.value = this.ampEnv.sustain.input.value;
-		patch.ampEnv.release.input.value = this.ampEnv.release.input.value;
+		let freqLfo = this.freqLfo.duplicate();
+		dupe.freqLfo.replaceWith(freqLfo);
+		dupe.freqLfo = freqLfo;
 
-		patch.ampLfo.shape.input.value = this.ampLfo.shape.input.value;
-		patch.ampLfo.freq.input.value = this.ampLfo.freq.input.value;
-		patch.ampLfo.depth.input.value = this.ampLfo.depth.input.value;
-		
-		let e = new CustomEvent("duplicate module", { detail: patch, bubbles: true });
+		let filter = this.filterParams.duplicate();
+		dupe.filterParams.replaceWith(filter);
+		dupe.filterParams = filter;
+
+		let filterEnv = this.filterEnv.duplicate();
+		dupe.filterEnv.replaceWith(filterEnv);
+		dupe.filterEnv = filterEnv;
+
+		let filterLfo = this.filterLfo.duplicate();
+		dupe.filterLfo.replaceWith(filterLfo);
+		dupe.filterLfo = filterLfo;
+
+		let amp = this.ampParams.duplicate();
+		dupe.ampParams.replaceWith(amp);
+		dupe.ampParams = amp;
+
+		let ampEnv = this.ampEnv.duplicate();
+		dupe.ampEnv.replaceWith(ampEnv);
+		dupe.ampEnv = ampEnv;
+
+		let ampLfo = this.ampLfo.duplicate();
+		dupe.ampLfo.replaceWith(ampLfo);
+		dupe.ampLfo = ampLfo;
+
+		let e = new CustomEvent("duplicate module", { detail: dupe, bubbles: true });
 		this.dispatchEvent(e);
 
-		this.after(patch);
-		return patch;
+		this.after(dupe);
+		return dupe;
 	}
 
 	removeModule(){

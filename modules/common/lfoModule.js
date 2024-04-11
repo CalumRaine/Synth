@@ -24,6 +24,20 @@ class LfoModule extends HTMLFieldSetElement {
 		this.freq = this.appendChild(new KnobInput("Freq", LfoModule.FREQ_MIN, LfoModule.FREQ_MAX, LfoModule.FREQ_UNIT, LfoModule.FREQ_DEF, KnobInput.CURVED, KnobInput.NO_REFLECT));
 	}
 
+	duplicate(){
+		let dupe = new LfoModule(this.depth.paramMax, this.depth.paramUnits, this.depth.exp);
+		
+		dupe.shape.input.value = this.shape.input.value;
+		
+		dupe.freq.input.value = this.freq.input.value;
+		dupe.freq.paramValue = this.freq.paramValue;
+		
+		dupe.depth.input.value = this.depth.input.value;
+		dupe.depth.paramValue = this.depth.paramValue;
+		
+		return dupe;
+	}
+
 	makeSound(audioContext, key){
 		let osc = audioContext.createOscillator();
 		osc.calumKey = key;

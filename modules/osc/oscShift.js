@@ -3,6 +3,7 @@ class OscShift extends KnobInput {
 	static MIN = 0;
 	static DEF = 0;
 	static UNIT = "Notes";
+
 	constructor(){
 		super("Shift", OscShift.MIN, OscShift.MAX, OscShift.UNIT, OscShift.DEF, KnobInput.LINEAR, KnobInput.REFLECT);
 		super.setAttribute("is", "osc-shift");

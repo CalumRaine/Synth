@@ -2,6 +2,7 @@ class OscParams extends HTMLFieldSetElement {
 	shape = null;
 	shift = null;
 	detune = null;
+
 	constructor(){
 		super();
 		super.setAttribute("is", "osc-params");
@@ -12,6 +13,20 @@ class OscParams extends HTMLFieldSetElement {
 		this.shape = this.appendChild(new OscShape());
 		this.shift = this.appendChild(new OscShift());
 		this.detune = this.appendChild(new OscDetune());
+	}
+
+	duplicate(){
+		let dupe = new OscParams();
+
+		dupe.shape.select.value = this.shape.select.value;
+		
+		dupe.shift.input.value = this.shift.input.value;
+		dupe.shift.paramValue = this.shift.paramValue;
+
+		dupe.detune.input.value = this.detune.input.value;
+		dupe.detune.paramValue = this.detune.paramValue;
+
+		return dupe;
 	}
 }
 
