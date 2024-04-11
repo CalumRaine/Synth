@@ -30,10 +30,10 @@ class LfoModule extends HTMLFieldSetElement {
 		dupe.shape.input.value = this.shape.input.value;
 		
 		dupe.freq.input.value = this.freq.input.value;
-		dupe.freq.paramValue = this.freq.paramValue;
+		dupe.freq.knobToParam();
 		
 		dupe.depth.input.value = this.depth.input.value;
-		dupe.depth.paramValue = this.depth.paramValue;
+		dupe.depth.knobToParam();
 		
 		return dupe;
 	}

@@ -21,10 +21,10 @@ class OscParams extends HTMLFieldSetElement {
 		dupe.shape.select.value = this.shape.select.value;
 		
 		dupe.shift.input.value = this.shift.input.value;
-		dupe.shift.paramValue = this.shift.paramValue;
+		dupe.shift.knobToParam();
 
 		dupe.detune.input.value = this.detune.input.value;
-		dupe.detune.paramValue = this.detune.paramValue;
+		dupe.detune.knobToParam();
 
 		return dupe;
 	}

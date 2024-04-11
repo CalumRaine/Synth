@@ -19,7 +19,7 @@ class FilterParams extends HTMLFieldSetElement {
 		dupe.type.input.value = this.type.input.value;
 
 		dupe.cutoff.input.value = this.cutoff.input.value;
-		dupe.cutoff.paramValue = this.cutoff.paramValue;
+		dupe.cutoff.knobToParam();
 
 		return dupe;
 	}

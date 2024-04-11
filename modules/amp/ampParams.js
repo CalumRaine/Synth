@@ -15,7 +15,7 @@ class AmpParams extends HTMLFieldSetElement {
 		let dupe = new AmpParams();
 
 		dupe.gain.input.value = this.gain.input.value;
-		dupe.gain.paramValue = this.gain.paramValue;
+		dupe.gain.knobToParam();
 
 		return dupe;
 	}
