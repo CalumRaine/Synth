@@ -1,16 +1,13 @@
 class SynthModule extends HTMLFormElement {
-	oscShape = null;
-	oscShift = null;
-	oscDetune = null;
+	oscParams = null;
 	freqEnv = null;
 	freqLfo = null;
 
-	filterType = null;
-	filterCutoff = null;
+	filterParams = null;
 	filterEnv = null;
 	filterLfo = null;
 
-	ampGain = null;
+	ampParams = null;
 	ampEnv = null;
 	ampLfo = null;
 
@@ -25,24 +22,21 @@ class SynthModule extends HTMLFormElement {
 		let fieldset = this.appendChild(document.createElement("fieldset"));
 		let legend = fieldset.appendChild(document.createElement("legend"));
 		legend.innerHTML = "Oscillator";
-		this.oscShape = fieldset.appendChild(new OscShape());
-		this.oscShift = fieldset.appendChild(new OscShift());
-		this.oscDetune = fieldset.appendChild(new OscDetune());
+		this.oscParams = fieldset.appendChild(new OscParams());
 		this.freqEnv = fieldset.appendChild(new EnvModule(EnvModule.NO_SR, EnvModule.USE_DEPTH));
 		this.freqLfo = fieldset.appendChild(new LfoModule(1200, "Cents", KnobInput.CURVED));
 
 		fieldset = this.appendChild(document.createElement("fieldset"));
 		legend = fieldset.appendChild(document.createElement("legend"));
 		legend.innerHTML = "Filter";
-		this.filterType = fieldset.appendChild(new FilterType());
-		this.filterCutoff = fieldset.appendChild(new FilterCutoff());
+		this.filterParams = fieldset.appendChild(new FilterParams());
 		this.filterEnv = fieldset.appendChild(new EnvModule(EnvModule.USE_SR, EnvModule.USE_DEPTH));
 		this.filterLfo = fieldset.appendChild(new LfoModule(24000, "Hz", KnobInput.CURVED));
 
 		fieldset = this.appendChild(document.createElement("fieldset"));
 		legend = fieldset.appendChild(document.createElement("legend"));
 		legend.innerHTML = "Amp";
-		this.ampGain = fieldset.appendChild(new AmpGain());
+		this.ampParams = fieldset.appendChild(new AmpParams());
 		this.ampEnv = fieldset.appendChild(new EnvModule(EnvModule.USE_SR, EnvModule.NO_DEPTH));
 		this.ampLfo = fieldset.appendChild(new LfoModule(1, "", true));
 
@@ -102,11 +96,11 @@ class SynthModule extends HTMLFormElement {
 	makeSound(audioContext, key, speakers){
 		let osc = audioContext.createOscillator();
 		osc.calumKey = key;
-		osc.type = this.oscShape.Value;
+		osc.type = this.oscParams.shape.Value;
 		osc.frequency.value = key.freq;
 		osc.frequency.linearRampToValueAtTime(key.freq + (key.freq * this.freqEnv.Depth), audioContext.currentTime + this.freqEnv.Attack);
 		osc.frequency.linearRampToValueAtTime(key.freq, audioContext.currentTime + this.freqEnv.Decay);
-		osc.detune.value = this.oscShift.Cents + this.oscDetune.Cents;
+		osc.detune.value = this.oscParams.shift.Cents + this.oscParams.detune.Cents;
 		osc.start();
 		this.oscillators.push(osc);
 
@@ -115,12 +109,12 @@ class SynthModule extends HTMLFormElement {
 
 		let filter = audioContext.createBiquadFilter();
 		filter.calumKey = key;
-		filter.type = this.filterType.Value;
-		filter.frequency.value = this.filterCutoff.Value;
-		let target = this.filterCutoff.Value + (this.filterCutoff.Value * this.filterEnv.Depth);
-		let delta = target - this.filterCutoff.Value;
+		filter.type = this.filterParams.type.Value;
+		filter.frequency.value = this.filterParams.cutoff.Value;
+		let target = this.filterParams.cutoff.Value + (this.filterParams.cutoff.Value * this.filterEnv.Depth);
+		let delta = target - this.filterParams.cutoff.Value;
 		filter.frequency.linearRampToValueAtTime(target, audioContext.currentTime + this.filterEnv.Attack);
-		filter.frequency.linearRampToValueAtTime(this.filterCutoff.Value + (delta * this.filterEnv.Sustain), audioContext.currentTime + this.filterEnv.Decay);
+		filter.frequency.linearRampToValueAtTime(this.filterParams.cutoff.Value + (delta * this.filterEnv.Sustain), audioContext.currentTime + this.filterEnv.Decay);
 		this.filters.push(filter);
 
 		let filterLfo = this.filterLfo.makeSound(audioContext, key);
@@ -129,8 +123,8 @@ class SynthModule extends HTMLFormElement {
 		let gain = audioContext.createGain();
 		gain.calumKey = key;
 		gain.gain.value = 0.0;
-		gain.gain.linearRampToValueAtTime(this.ampGain.Value, audioContext.currentTime + this.ampEnv.Attack);
-		gain.gain.linearRampToValueAtTime(this.ampGain.Value * this.ampEnv.Sustain, audioContext.currentTime + this.ampEnv.Decay);
+		gain.gain.linearRampToValueAtTime(this.ampParams.gain.Value, audioContext.currentTime + this.ampEnv.Attack);
+		gain.gain.linearRampToValueAtTime(this.ampParams.gain.Value * this.ampEnv.Sustain, audioContext.currentTime + this.ampEnv.Decay);
 		this.gains.push(gain);
 
 		let ampLfo = this.ampLfo.makeSound(audioContext, key);
@@ -146,21 +140,21 @@ class SynthModule extends HTMLFormElement {
 	updateSound(){
 		for (let osc of this.oscillators){
 			osc.frequency.value = osc.calumKey.freq;
-			osc.detune.value = this.oscShift.Cents + this.oscDetune.Cents;
-			osc.type = this.oscShape.Value;
+			osc.detune.value = this.oscParams.shift.Cents + this.oscParams.detune.Cents;
+			osc.type = this.oscParams.shape.Value;
 		}
 		
 		this.freqLfo.updateSound();
 
 		for (let filter of this.filters){
-			filter.type = this.filterType.Value;
-			filter.frequency.value = this.filterCutoff.Value;
+			filter.type = this.filterParams.type.Value;
+			filter.frequency.value = this.filterParams.cutoff.Value;
 		}
 
 		this.filterLfo.updateSound();
 
 		for (let gain of this.gains){
-			gain.gain.value = this.ampGain.Value;
+			gain.gain.value = this.ampParams.gain.Value;
 		}
 
 		this.ampLfo.updateSound();
@@ -178,7 +172,7 @@ class SynthModule extends HTMLFormElement {
 		let matchingFilters = this.filters.filter(f => f.calumKey == key);
 		for (let filter of matchingFilters){
 			filter.frequency.cancelScheduledValues(0.0);
-			filter.frequency.linearRampToValueAtTime(this.filterCutoff.Value, audioContext.currentTime + this.filterEnv.Release);
+			filter.frequency.linearRampToValueAtTime(this.filterParams.cutoff.Value, audioContext.currentTime + this.filterEnv.Release);
 			let index = this.filters.findIndex(f => f == filter);
 			this.filters.splice(index, 1);
 		}

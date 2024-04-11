@@ -7,6 +7,11 @@ form[is="synth-module"] {
 	margin: 1rem;
 }
 
+form[is="synth-module"] > fieldset {
+	display: flex;
+	flex-direction: row;
+}
+
 form[is="synth-module"] fieldset {
 	border: 1px solid black;
 }
