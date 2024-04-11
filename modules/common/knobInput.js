@@ -41,8 +41,6 @@ class KnobInput extends LabelledInput {
 		this.paramValue = this.knobToParam();
 		this.input.percentToParam = (percent) => { this.percentToParam(percent); };
 		this.input.oninput = (event) => { this.knobToParam(); };
-
-		console.log(label, this.input.value, this.paramValue, this.paramUnits);
 	}
 
 	get Value(){
@@ -68,11 +66,9 @@ class KnobInput extends LabelledInput {
 	knobToParam(){
 		// Convert knob position to parameter value
 		let x = parseFloat(this.input.value) ** this.exp;
-		console.log(x);	
 		let denominator = 100 ** (this.exp - 1);
-		console.log(denominator);	
 		x /= denominator;
-		console.log(x);	
+		
 		let y = this.paramRange * (x / 100);
 		
 		this.paramValue = this.paramMin;
