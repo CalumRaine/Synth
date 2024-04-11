@@ -108,6 +108,11 @@ class SynthRack extends HTMLDivElement {
 	}
 
 	midiKnob(value){
+		if (document.activeElement.percentToParam == undefined){
+			// Element doesn't support midi knob yet
+			return false;
+		}
+
 		document.activeElement.percentToParam(value / 1.27);
 		return true;
 	}
