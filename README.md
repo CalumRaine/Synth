@@ -37,9 +37,7 @@ Just download the repository and open `index.html` in a browser window.
 
 ## To Do
 
-* Envelope needs a "depth" parameter to attack from and release to
-* Add filter ADSR
-* Add frequency glide
+* Fix filter sustain: percentage doesn't work well
 * Add step parameter to knob input (to work with discrete values)
 * Add option to sync LFOs
 * Use velocity from MIDI messages on key press
