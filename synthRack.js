@@ -108,9 +108,7 @@ class SynthRack extends HTMLDivElement {
 	}
 
 	midiKnob(value){
-		let input = document.activeElement;
-		let percent = value / 1.27;
-		input.setPercent(percent);
+		document.activeElement.percentToParam(value / 1.27);
 		return true;
 	}
 }

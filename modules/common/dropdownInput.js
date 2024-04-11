@@ -10,10 +10,10 @@ class DropdownInput extends LabelledInput {
 			this.select.options.add(option);
 		}
 
-		this.input.setPercent = (percent) => { this.Percent = percent; };
+		this.input.percentToParam = (percent) => { this.percentToParam(percent); };
 	}
 
-	set Percent(percent){
+	percentToParam(percent){
 		// Convert percentage to index position and select relevant option
 		// Called when MIDI knob is moved while dropdown has focus
 		let fraction = percent / 100;

@@ -6,6 +6,7 @@ class SynthModule extends HTMLFormElement {
 
 	filterType = null;
 	filterCutoff = null;
+	filterEnv = null;
 	filterLfo = null;
 
 	ampGain = null;
@@ -26,21 +27,22 @@ class SynthModule extends HTMLFormElement {
 		this.oscShape = fieldset.appendChild(new OscShape());
 		this.oscShift = fieldset.appendChild(new OscShift());
 		this.oscDetune = fieldset.appendChild(new OscDetune());
-		this.freqLfo = fieldset.appendChild(new LfoModule(1200, "Cents", true));
+		this.freqLfo = fieldset.appendChild(new LfoModule(1200, "Cents", KnobInput.CURVED));
 
 		fieldset = this.appendChild(document.createElement("fieldset"));
 		legend = fieldset.appendChild(document.createElement("legend"));
 		legend.innerHTML = "Filter";
 		this.filterType = fieldset.appendChild(new FilterType());
 		this.filterCutoff = fieldset.appendChild(new FilterCutoff());
-		this.filterLfo = fieldset.appendChild(new LfoModule(24000, "Hz", true));
+		this.filterEnv = fieldset.appendChild(new EnvModule());
+		this.filterLfo = fieldset.appendChild(new LfoModule(24000, "Hz", KnobInput.CURVED));
 
 		fieldset = this.appendChild(document.createElement("fieldset"));
 		legend = fieldset.appendChild(document.createElement("legend"));
 		legend.innerHTML = "Amp";
 		this.ampGain = fieldset.appendChild(new AmpGain());
-		this.ampEnv = fieldset.appendChild(new EnvelopeModule());
-		this.ampLfo = fieldset.appendChild(new LfoModule(1, "", false));
+		this.ampEnv = fieldset.appendChild(new EnvModule());
+		this.ampLfo = fieldset.appendChild(new LfoModule(1, "", true));
 
 		let buttons = this.appendChild(new ModuleButtons());
 		buttons.duplicate.onclick = (event) => { this.duplicateModule(event); };
@@ -61,6 +63,11 @@ class SynthModule extends HTMLFormElement {
 		
 		patch.filterType.input.value = this.filterType.input.value;
 		patch.filterCutoff.input.value = this.filterCutoff.input.value;
+
+		patch.filterEnv.attack.input.value = this.filterEnv.attack.input.value;
+		patch.filterEnv.decay.input.value = this.filterEnv.decay.input.value;
+		patch.filterEnv.sustain.input.value = this.filterEnv.sustain.input.value;
+		patch.filterEnv.release.input.value = this.filterEnv.release.input.value;
 
 		patch.filterLfo.shape.input.value = this.filterLfo.shape.input.value;
 		patch.filterLfo.freq.input.value = this.filterLfo.freq.input.value;

@@ -3,25 +3,25 @@ class LfoModule extends HTMLFieldSetElement {
 
 	static FREQ_MIN = 0;
 	static FREQ_MAX = 40;
-	static FREQ_DEFAULT = 0;
-	static FREQ_UNITS = "Hz";
+	static FREQ_DEF = 0;
+	static FREQ_UNIT = "Hz";
 	freq = null;
 
-	static DEPTH_DEFAULT = 0;
+	static DEPTH_DEF = 0;
 	static DEPTH_MIN = 0
 	depth = null;
 
 	oscillators = [];
 	gains = [];
-	constructor(maxDepth, unitsDepth, expDepth){
+	constructor(maxDepth, unitsDepth, linearDepth){
 		super();
 		super.setAttribute("is", "lfo-module");
 		let legend = this.appendChild(document.createElement("legend"));
 		legend.innerHTML = "LFO";
 
 		this.shape = this.appendChild(new OscShape());
-		this.depth = this.appendChild(new NumericalInput("Depth", LfoModule.DEPTH_DEFAULT, LfoModule.DEPTH_MIN, maxDepth, expDepth, unitsDepth));
-		this.freq = this.appendChild(new NumericalInput("Freq", LfoModule.FREQ_DEFAULT, LfoModule.FREQ_MIN, LfoModule.FREQ_MAX, true, LfoModule.FREQ_UNITS));
+		this.depth = this.appendChild(new KnobInput("Depth", LfoModule.DEPTH_MIN, maxDepth, unitsDepth, LfoModule.DEPTH_DEF, linearDepth, KnobInput.NO_REFLECT));
+		this.freq = this.appendChild(new KnobInput("Freq", LfoModule.FREQ_MIN, LfoModule.FREQ_MAX, LfoModule.FREQ_UNIT, LfoModule.FREQ_DEF, KnobInput.CURVED, KnobInput.NO_REFLECT));
 	}
 
 	makeSound(audioContext, key){
