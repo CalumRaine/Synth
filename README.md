@@ -16,7 +16,6 @@ Very early stages of development.  Known bugs.  Need to get a working prototype 
 * MIDI Keyboard
     * Tested with M-Audio Keystation Mini 32
     * Volume knob will modify whichever parameter has focus
-* Audio immediately responds to parameter changes
 * Oscillators
     * Various wave forms
     * Shift and detune parameters
@@ -26,10 +25,11 @@ Very early stages of development.  Known bugs.  Need to get a working prototype 
 * Amplifier
     * Gain parameter
     * ADSR envelope
-* Optimised parameter mappings
-    * Frequency filter cutoffs and ADSR times have exponential slopes
-    * Gain controls have linear slopes
-    * Pitch shift and detune parameters have discrete increments
+* Parameters
+    * Immediately update audio when changed
+    * Have linear or exponential mappings for enhanced control, e.g. pitch shift (linear) or frequency cutoff (exp)
+    * Can be continuous or discrete, e.g. detune (continuous) or pitch shift (discrete notes)
+* LFOs can be synced for improved polyphony
 
 ## How To Run
 
@@ -37,7 +37,6 @@ Just download the repository and open `index.html` in a browser window.
 
 ## To Do
 
-* Add option to sync LFOs
 * Add named patches
 * Use velocity from MIDI messages on key press
 * Figure out how to stop polyphonic sounds from overloading the speakers
