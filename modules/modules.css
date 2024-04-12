@@ -55,3 +55,13 @@ form[is="synth-module"]:only-of-type div[is="module-buttons"] button:last-child 
 	cursor: not-allowed;
 }
 
+div[is="toggle-input"] button {
+	width: 1rem;
+	height: 1rem;
+	background-color: red;
+}
+
+div[is="toggle-input"] button:has(input[checked]) {
+	background-color: green;
+}
+
