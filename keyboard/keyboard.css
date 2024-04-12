@@ -27,7 +27,8 @@ div[is="keyboard-controller"] {
 
 	div[is="keyboard-keys"] {
 		position: relative;
-		height: 10vh;
+		max-height: 40vh;
+		height: 5rem;
 	}
 
 		button[is="keyboard-key"] {
