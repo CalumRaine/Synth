@@ -1,4 +1,6 @@
 class SynthModule extends HTMLFormElement {
+	header = null;
+
 	oscParams = null;
 	freqEnv = null;
 	freqLfo = null;
@@ -15,9 +17,13 @@ class SynthModule extends HTMLFormElement {
 	filters = [];
 	gains = [];
 
-	constructor(){
+	constructor(name){
 		super();
 		super.setAttribute("is", "synth-module");
+
+		this.header = this.appendChild(document.createElement("h1"));
+		this.header.innerHTML = name;
+		this.header.setAttribute("contenteditable", "true");
 
 		let fieldset = this.appendChild(document.createElement("fieldset"));
 		let legend = fieldset.appendChild(document.createElement("legend"));
@@ -47,8 +53,17 @@ class SynthModule extends HTMLFormElement {
 		this.addEventListener("input", (event) => { this.updateSound(); });
 	}
 
+	connectedCallback(){
+		// Highlight module name for editing
+		let selection = window.getSelection();
+		selection.removeAllRanges();
+		let range = document.createRange();
+		range.selectNodeContents(this.header);
+		selection.addRange(range);
+	}
+
 	duplicateModule(){
-		let dupe = new SynthModule();
+		let dupe = new SynthModule(`${this.header.innerHTML} (duplicate)`);
 		
 		let osc = this.oscParams.duplicate();
 		dupe.oscParams.replaceWith(osc);

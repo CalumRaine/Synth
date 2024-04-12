@@ -9,7 +9,7 @@ class SynthRack extends HTMLDivElement {
 		super();
 		super.setAttribute("is", "synth-rack");
 		this.keyboard = this.appendChild(new KeyboardController());
-		this.modules.push(this.appendChild(new SynthModule()));
+		this.modules.push(this.appendChild(new SynthModule(this.getUniqueName())));
 		this.addEventListener("duplicate module", (event) => { this.modules.push(event.detail); });
 		this.addEventListener("remove module", (event) => { this.removeModule(event.detail); });
 
@@ -115,6 +115,12 @@ class SynthRack extends HTMLDivElement {
 
 		document.activeElement.percentToParam(value / 1.27);
 		return true;
+	}
+
+	getUniqueName(){
+		let num=0;
+		for (num=this.modules.length+1; this.modules.some(m => m.header.innerHTML == `Module ${num}`); ++num);
+		return `Module ${num}`;
 	}
 }
 

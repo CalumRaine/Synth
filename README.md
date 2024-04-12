@@ -37,7 +37,6 @@ Just download the repository and open `index.html` in a browser window.
 
 ## To Do
 
-* Add named patches
 * Use velocity from MIDI messages on key press
 * Figure out how to stop polyphonic sounds from overloading the speakers
 * Add option to export/import patches as JSON

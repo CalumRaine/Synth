@@ -2,9 +2,15 @@ form[is="synth-module"] {
 	position: relative;
 	display: flex;
 	flex-direction: row;
+	flex-wrap: wrap;
 	border: 1px solid black;
 	padding: 1rem;
 	margin: 1rem;
+}
+
+form[is="synth-module"] h1 {
+	width: 100%;
+	margin: -0.5rem 0rem 0.5rem 0rem;
 }
 
 form[is="synth-module"] > fieldset {
