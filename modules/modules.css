@@ -18,12 +18,18 @@ form[is="synth-module"] > fieldset {
 	flex-direction: row;
 }
 
+form[is="synth-module"] > fieldset > legend {
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
 form[is="synth-module"] fieldset {
 	border: 1px solid black;
 }
 
 form[is="synth-module"] fieldset div {
 	display: block;
+	margin-bottom: 0.2rem;
 }
 
 form[is="synth-module"] fieldset div label {
