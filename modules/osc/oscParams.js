@@ -28,6 +28,21 @@ class OscParams extends HTMLFieldSetElement {
 
 		return dupe;
 	}
+
+	toJson(){
+		let json = {};
+		json.shape = this.shape.toJson();
+		json.shift = this.shift.toJson();
+		json.detune = this.detune.toJson();
+		return json;
+	}
+
+	fromJson(json){
+		this.shape.fromJson(json.shape);
+		this.shift.fromJson(json.shift);
+		this.detune.fromJson(json.detune);
+		return true;
+	}
 }
 
 customElements.define("osc-params", OscParams, { extends: "fieldset" });

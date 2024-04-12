@@ -224,6 +224,41 @@ class SynthModule extends HTMLFormElement {
 		
 		return true;
 	}
+
+	toJson(){
+		let json = {};
+		json.name = this.header.innerHTML;
+		
+		json.oscParams = this.oscParams.toJson();
+		json.freqEnv = this.freqEnv.toJson();
+		json.freqLfo = this.freqLfo.toJson();
+		
+		json.filterParams = this.filterParams.toJson();
+		json.filterEnv = this.filterEnv.toJson();
+		json.filterLfo = this.filterLfo.toJson();
+		
+		json.ampParams = this.ampParams.toJson();
+		json.ampEnv = this.ampEnv.toJson();
+		json.ampLfo = this.ampLfo.toJson();
+		return json;
+	}
+
+	fromJson(json){
+		this.header.innerHTML = json.name;
+
+		this.oscParams.fromJson(json.oscParams);
+		this.freqEnv.fromJson(json.freqEnv);
+		this.freqLfo.fromJson(json.freqLfo);
+		
+		this.filterParams.fromJson(json.filterParams);
+		this.filterEnv.fromJson(json.filterEnv);
+		this.filterLfo.fromJson(json.filterLfo);
+
+		this.ampParams.fromJson(json.ampParams);
+		this.ampEnv.fromJson(json.ampEnv);
+		this.ampLfo.fromJson(json.ampLfo);
+		return true;
+	}
 }
 
 customElements.define("synth-module", SynthModule, { extends: "form" });

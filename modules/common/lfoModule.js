@@ -135,6 +135,21 @@ class LfoModule extends HTMLFieldSetElement {
 		this.masterGain = null;
 		return true;
 	}
+
+	toJson(){
+		let json = {};
+		json.freq = this.freq.toJson();
+		json.depth = this.depth.toJson();
+		json.sync = this.sync.toJson();
+		return json;
+	}
+
+	fromJson(json){
+		this.freq.fromJson(json.freq);
+		this.depth.fromJson(json.depth);
+		this.sync.fromJson(json.sync);
+		return true;
+	}
 }
 
 customElements.define("lfo-module", LfoModule, { extends: "fieldset" });

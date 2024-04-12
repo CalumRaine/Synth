@@ -100,6 +100,35 @@ class EnvModule extends HTMLFieldSetElement {
 		// As fraction
 		return this.depth.Value / 100;
 	}
+
+	toJson(){
+		let json = {};
+		json.attack = this.attack.toJson();
+		json.decay = this.decay.toJson();
+		json.sustain = this.sustain?.toJson();
+		json.release = this.release?.toJson();
+		json.depth = this.depth?.toJson();
+		return json;
+	}
+
+	fromJson(json){
+		this.attack.fromJson(json.attack);
+		this.decay.fromJson(json.decay);
+
+		if (this.sustain != null){
+			this.sustain.fromJson(json.sustain);
+		}
+
+		if (this.release != null){
+			this.release.fromJson(json.release);
+		}
+
+		if (this.depth != null){
+			this.depth.fromJson(json.depth);
+		}
+
+		return true;
+	}
 }
 
 customElements.define("env-module", EnvModule, { extends: "fieldset" });

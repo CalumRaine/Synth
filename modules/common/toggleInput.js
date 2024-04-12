@@ -31,6 +31,17 @@ class ToggleInput extends LabelledInput {
 	get Checked(){
 		return this.input.checked;
 	}
+
+	toJson(){
+		let json = {};
+		json.value = this.Checked;
+		return json;
+	}
+
+	fromJson(json){
+		this.Checked = json.value;
+		return true;
+	}
 }
 
 customElements.define("toggle-input", ToggleInput, { extends: "div" });

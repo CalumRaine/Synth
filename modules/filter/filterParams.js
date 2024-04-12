@@ -23,6 +23,19 @@ class FilterParams extends HTMLFieldSetElement {
 
 		return dupe;
 	}
+
+	toJson(){
+		let json = {};
+		json.type = this.type.toJson();
+		json.cutoff = this.cutoff.toJson();
+		return json;
+	}
+
+	fromJson(json){
+		this.type.fromJson(json.type);
+		this.cutoff.fromJson(json.cutoff);
+		return true;
+	}
 }
 
 customElements.define("filter-params", FilterParams, { extends: "fieldset" });

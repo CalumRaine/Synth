@@ -101,6 +101,19 @@ class KnobInput extends LabelledInput {
 		this.input.setAttribute("title", `${prefix}${this.paramValue} ${units}`);
 		return true;
 	}
+
+	toJson(){
+		let json = {};
+		json.value = this.input.getAttribute("value");
+		return json;
+	}
+
+	fromJson(json){
+		this.input.value = json.value;
+		this.input.setAttribute("value", this.input.value);
+		this.knobToParam();
+		return true;
+	}
 }
 
 customElements.define("knob-input", KnobInput, { extends: "div" });

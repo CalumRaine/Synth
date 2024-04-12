@@ -19,6 +19,17 @@ class AmpParams extends HTMLFieldSetElement {
 
 		return dupe;
 	}
+
+	toJson(){
+		let json = {};
+		json.gain = this.gain.toJson();
+		return json;
+	}
+
+	fromJson(json){
+		this.gain.fromJson(json.gain);
+		return true;
+	}
 }
 
 customElements.define("amp-params", AmpParams, { extends: "fieldset" });

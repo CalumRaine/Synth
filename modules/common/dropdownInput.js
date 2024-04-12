@@ -24,5 +24,16 @@ class DropdownInput extends LabelledInput {
 		// Prompt parent to update sounds on the fly
 		this.dispatchEvent(new Event("input", { bubbles: true }));
 	}
+
+	toJson(){
+		let json = {};
+		json.value = this.select.selectedIndex;
+		return json;
+	}
+
+	fromJson(json){
+		this.select.selectedIndex = json.value;
+		return true;
+	}
 }
 
