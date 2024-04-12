@@ -22,15 +22,15 @@ form[is="synth-module"] fieldset div {
 
 form[is="synth-module"] fieldset div label {
 	display: inline-block;
-	width: 10ch;
+	width: 7ch;
 }
 
 form[is="synth-module"] fieldset div select {
-	width: 12ch;
+	width: 11ch;
 }
 
 form[is="synth-module"] fieldset div input {
-	width: 11ch;
+	width: 10ch;
 }
 
 form[is="synth-module"] fieldset div select:focus,
