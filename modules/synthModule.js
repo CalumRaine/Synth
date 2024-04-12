@@ -41,8 +41,8 @@ class SynthModule extends HTMLFormElement {
 		this.ampLfo = fieldset.appendChild(new LfoModule(1, "", true));
 
 		let buttons = this.appendChild(new ModuleButtons());
-		buttons.duplicate.onclick = (event) => { this.duplicateModule(event); };
-		buttons.remove.onclick = (event) => { this.removeModule(event); }
+		buttons.duplicate.addEventListener("click", (event) => { this.duplicateModule(event); });
+		buttons.remove.addEventListener("click", (event) => { this.removeModule(event); });
 
 		this.addEventListener("input", (event) => { this.updateSound(); });
 	}
