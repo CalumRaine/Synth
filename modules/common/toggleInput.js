@@ -5,7 +5,7 @@ class ToggleInput extends LabelledInput {
 		super.setAttribute("is", "toggle-input");
 
 		this.light = this.appendChild(document.createElement("button"));
-		this.light.onclick = (event) => { return this.toggle(); };
+		this.light.addEventListener("click", (event) => { this.Checked = !this.Checked; });
 		this.light.setAttribute("type", "button");
 		
 		this.input = this.light.appendChild(document.createElement("input"));
@@ -18,9 +18,18 @@ class ToggleInput extends LabelledInput {
 		return this.input.checked;
 	}
 
-	toggle(){
-		this.input.checked = !this.input.checked;
-		return this.input.checked ? this.input.setAttribute("checked", "") : this.input.removeAttribute("checked");
+	set Checked(value){
+		this.input.checked = value;
+		if (this.input.checked){
+			this.input.setAttribute("checked", "");
+		}
+		else {
+			this.input.removeAttribute("checked");
+		}
+	}
+
+	get Checked(){
+		return this.input.checked;
 	}
 }
 
