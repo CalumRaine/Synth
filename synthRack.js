@@ -117,14 +117,51 @@ class SynthRack extends HTMLDivElement {
 	}
 
 	handleMidi(message){
-		switch (message[0]){
-			case 158:
-				return this.midiKey(message[1], message[2]);
-			case 190:
-				return this.midiKnob(message[2]);
-			default:
-				console.log("Unhandled midi message", message);
-				return false;
+		/* message: [status, data_1, data_2]
+		 * STATUS
+		 * 128-143 = Note off
+		 * 144-159 = Note on (supported)
+		 * 160-175 = Polyphonic aftertouch
+		 * 176-191 = Control/Mode change (supported)
+		 * 192-207 = Program change
+		 * 208-223 = Channel aftertouch
+		 * 224-239 = Pitch bend (supported)
+		 * 240     = System exclusive
+		 * 241     = Time code
+		 * 242     = Song position pointer
+		 * 243     = Song selection
+		 * 244     = Reserved
+		 * 245     = Reserved
+		 * 246     = Tune request
+		 * 247     = SysEx
+		 * 248     = Timing clock
+		 * 249     = Reserved
+		 * 250     = Start
+		 * 251     = Continue
+		 * 252     = Stop
+		 * 253     = Reserved
+		 * 254     = Active sensing
+		 * 255     = System reset
+		 */ 
+		
+		let type = message[0];
+		if (type >= 144 && type <= 159){
+			return this.midiKey(message[1], message[2]);
+		}
+		else if (type >= 176 && type <= 191)
+			// DATA_1
+			// 1 = modulation wheel
+			// 7 = volume control
+		 	// (126 others covered in MIDI spec)
+			return this.midiKnob(message[2]);
+		}
+		else if (tddype >= 224 && type <= 239){
+			// Pitch bend
+			return this.midiKnob(message[2] - 0.5);
+		}
+		else {
+			console.log(`Midi: Status ${type} not handled.`);
+			return false;
 		}
 	}
 
