@@ -1,3 +1,4 @@
+/* Synth module unit */
 form[is="synth-module"] {
 	position: relative;
 	display: inline-flex;
@@ -14,11 +15,17 @@ form[is="synth-module"] h2 {
 	margin: -0.5rem 0rem 0.75rem 0rem;
 }
 
+/* Fieldsets */
 form[is="synth-module"] fieldset {
 	border: 1px solid black;
 	border-radius: 0.25rem;
 }
 
+form[is="synth-module"] fieldset legend {
+	font-weight: bold;
+}
+
+/* Primary outer fieldset */
 form[is="synth-module"] > fieldset {
 	display: flex;
 	flex-direction: row;
@@ -27,18 +34,16 @@ form[is="synth-module"] > fieldset {
 	column-gap: 0.5rem;
 }
 
-form[is="synth-module"] fieldset legend {
-	font-weight: bold;
-}
-
 form[is="synth-module"] > fieldset > legend {
 	text-transform: uppercase;
 }
 
+/* Secondary inner fieldset */
 form[is="synth-module"] fieldset fieldset {
 	border-color: grey;
 }
 
+/* Parameter input */
 form[is="synth-module"] fieldset div {
 	display: block;
 	margin-bottom: 0.2rem;
@@ -46,25 +51,55 @@ form[is="synth-module"] fieldset div {
 
 form[is="synth-module"] fieldset div label {
 	display: inline-block;
-	width: 9ch;
+	width: 7ch;
 }
 
-form[is="synth-module"] fieldset div select {
-	width: 41ch;
-}
-
+form[is="synth-module"] fieldset div button,
+form[is="synth-module"] fieldset div select,
 form[is="synth-module"] fieldset div input {
-	width: 40ch;
+	margin: 0rem 1rem;
 	cursor: pointer;
 	vertical-align: middle;
 	accent-color: darkslategrey;
 }
 
+form[is="synth-module"] fieldset div select,
+form[is="synth-module"] fieldset div input {
+	width: 30ch;
+}
+
+form[is="synth-module"] fieldset div span {
+	display: inline-block;
+	width: 8ch;
+	font-size: 0.7rem;
+}
+
+form[is="synth-module"] fieldset fieldset:first-of-type div span {
+	width: 14ch;
+}
+
+form[is="synth-module"] fieldset fieldset:last-of-type div span {
+	width: 12ch;
+}
+
 form[is="synth-module"] fieldset div select:focus,
 form[is="synth-module"] fieldset div input:focus {
 	background-color: lightgray;
+	accent-color: gray;
 }
 
+/* Toggle input */
+div[is="toggle-input"] button {
+	width: 1rem;
+	height: 1rem;
+	background-color: red;
+}
+
+div[is="toggle-input"] button:has(input[checked]) {
+	background-color: green;
+}
+
+/* Module add/remove buttons */
 form[is="synth-module"] div[is="module-buttons"] {
 	position: absolute;
 	bottom: -0.75rem;
@@ -79,15 +114,5 @@ form[is="synth-module"] div[is="module-buttons"] button {
 
 form[is="synth-module"]:only-of-type div[is="module-buttons"] button:last-child {
 	cursor: not-allowed;
-}
-
-div[is="toggle-input"] button {
-	width: 1rem;
-	height: 1rem;
-	background-color: red;
-}
-
-div[is="toggle-input"] button:has(input[checked]) {
-	background-color: green;
 }
 

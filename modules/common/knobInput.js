@@ -30,6 +30,8 @@ class KnobInput extends LabelledInput {
 	dp = 0;			// decimal places to increment
 	exp = 1;		// linear by default
 	reflect = false;	// 0-100 by default
+
+	span = null;
 	
 	constructor(label, paramMin, paramMax, paramUnits, decimalPlaces, knobPos, slope, reflect){
 		super(label);
@@ -43,6 +45,8 @@ class KnobInput extends LabelledInput {
 		this.input.setAttribute("step", 0.1);
 		this.input.setAttribute("value", knobPos);
 		this.input.setAttribute("title", "loading...");
+
+		this.span = this.appendChild(document.createElement("span"));
 
 		this.paramMin = paramMin;
 		this.paramMax = paramMax;
@@ -96,6 +100,7 @@ class KnobInput extends LabelledInput {
 		let prefix = this.reflect && this.paramValue > 0 ? "+" : "";
 		let units = this.paramUnits.length > 3 && !this.paramUnits.endsWith("s") && this.paramValue != 1 ? this.paramUnits + "s" : this.paramUnits;
 		this.input.setAttribute("title", `${prefix}${this.paramValue} ${units}`);
+		this.span.innerHTML = this.input.getAttribute("title");
 		return true;
 	}
 
