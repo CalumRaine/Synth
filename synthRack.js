@@ -177,6 +177,7 @@ class SynthRack extends HTMLDivElement {
 			return false;
 		}
 
+		// Knob adjusts parameter of whichever input has focus
 		document.activeElement.percentToParam(value / 1.27);
 		return true;
 	}
