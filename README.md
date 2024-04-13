@@ -30,6 +30,7 @@ Very early stages of development.  Known bugs.  Need to get a working prototype 
     * Have linear or exponential mappings for enhanced control, e.g. pitch shift (linear) or frequency cutoff (exp)
     * Can be continuous or discrete, e.g. detune (continuous) or pitch shift (discrete notes)
 * LFOs can be synced for improved polyphony
+* Import and export patches as JSON files
 
 ## How To Run
 
