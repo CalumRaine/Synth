@@ -127,6 +127,11 @@ class LfoModule extends HTMLFieldSetElement {
 	}
 
 	stopMaster(){
+		if (this.masterGain != null){
+			// Nothing to clean up
+			return false;
+		}
+
 		this.masterOsc.stop();
 		this.masterOsc.disconnect();
 		this.masterOsc = null;
