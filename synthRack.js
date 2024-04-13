@@ -148,14 +148,14 @@ class SynthRack extends HTMLDivElement {
 		if (type >= 144 && type <= 159){
 			return this.midiKey(message[1], message[2]);
 		}
-		else if (type >= 176 && type <= 191)
+		else if (type >= 176 && type <= 191){
 			// DATA_1
 			// 1 = modulation wheel
 			// 7 = volume control
 		 	// (126 others covered in MIDI spec)
 			return this.midiKnob(message[2]);
 		}
-		else if (tddype >= 224 && type <= 239){
+		else if (type >= 224 && type <= 239){
 			// Pitch bend
 			return this.midiKnob(message[2] - 0.5);
 		}
