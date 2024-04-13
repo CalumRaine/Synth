@@ -8,7 +8,7 @@ form[is="synth-module"] {
 	margin: 1rem;
 }
 
-form[is="synth-module"] h1 {
+form[is="synth-module"] h2 {
 	width: 100%;
 	margin: -0.5rem 0rem 0.5rem 0rem;
 }
@@ -57,7 +57,6 @@ form[is="synth-module"] div[is="module-buttons"] {
 
 form[is="synth-module"] div[is="module-buttons"] button {
 	font-weight: bold;
-	cursor: pointer;
 	width: 4rem;
 	height: 1.5rem;
 	margin-right: 0.3rem;

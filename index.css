@@ -4,3 +4,19 @@ body {
 	font-family: monospace;
 }
 
+button {
+	cursor: pointer;
+}
+
+div[is="synth-rack"] header {
+	margin: 1rem;
+	display: flex;
+	flex-direction: row;
+	column-gap: 0.4rem;
+}
+
+div[is="synth-rack"] header h1 {
+	margin: 0rem;
+	flex-grow: 1;
+}
+

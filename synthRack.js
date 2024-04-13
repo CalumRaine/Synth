@@ -1,13 +1,40 @@
 class SynthRack extends HTMLDivElement {
+	static VERSION = 0.5;
+
 	activate = null;
-	audioContext = null;
-	modules = [];
+	
+	title = null;
+	save = null;
+	load = null;
+
 	keyboard = null;
 	speakers = null;
+	audioContext = null;
+	modules = [];
 	
 	constructor(){
 		super();
 		super.setAttribute("is", "synth-rack");
+		let header = this.appendChild(document.createElement("header"));
+		this.title = header.appendChild(document.createElement("h1"));
+		this.title.setAttribute("contenteditable", "true");
+		this.title.innerHTML = "Synth Rack";
+
+		this.save = header.appendChild(document.createElement("button"));
+		this.save.setAttribute("title", "Export Patch");
+		this.save.innerHTML = "&#128190";
+		this.save.addEventListener("click", (event) => { this.savePatch(event); });
+
+		this.load = header.appendChild(document.createElement("button"));
+		this.load.innerHTML = "&#128194";
+		this.load.setAttribute("title", "Import Patch");
+		this.load.onclick = function() { this.querySelector("input").click(); };
+		let upload = this.load.appendChild(document.createElement("input"));
+		upload.setAttribute("type", "file");
+		upload.setAttribute("accept", "application/json");
+		upload.setAttribute("hidden", "");
+		upload.addEventListener("input", (event) => { this.loadPatch(event); });
+
 		this.keyboard = this.appendChild(new KeyboardController());
 		this.modules.push(this.appendChild(new SynthModule(this.getUniqueName())));
 		this.addEventListener("duplicate module", (event) => { this.modules.push(event.detail); });
@@ -121,6 +148,61 @@ class SynthRack extends HTMLDivElement {
 		let num=0;
 		for (num=this.modules.length+1; this.modules.some(m => m.header.innerHTML == `Module ${num}`); ++num);
 		return `Module ${num}`;
+	}
+
+	savePatch(){
+		let json = {};
+		json.version = SynthRack.VERSION;
+		json.name = this.title.innerHTML;
+		json.modules = this.modules.map(m => m.toJson());
+		console.log(json);
+		
+		let dataString = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(json))}`;
+		console.log(dataString);
+
+		let a = document.createElement("a");
+		a.setAttribute("href", dataString);
+		a.setAttribute("download", `${json.name}.json`);
+		a.click();
+		return json;
+	}
+
+	loadPatch(event){
+		if (event.target.files.length != 1){
+			console.log(`Expected 1 file but received ${event.target.files.length}.`);
+			return false;
+		}
+
+		let fr = new FileReader();
+		fr.onload = (event) => {
+			let json = "";
+			try {
+				json = JSON.parse(fr.result);
+			}
+			catch (error) {
+				console.log("JSON parse error:", error);
+				return false;
+			}
+			
+			if (SynthRack.VERSION != json.version){
+				console.log(`WARNING: Loading version ${json.version} into ${SynthRack.VERSION}`);
+			}
+
+			this.title.innerHTML = json.name;
+			this.modules.forEach(m => m.remove());
+			this.modules = [];
+			for (let jsonModule of json.modules){
+				let module = new SynthModule();
+				module.fromJson(jsonModule);
+				this.appendChild(module);
+				this.modules.push(module);
+			}
+
+			return true;
+		};
+		fr.readAsText(event.target.files[0]);
+		event.target.value = null;
+		return true;
 	}
 }
 
