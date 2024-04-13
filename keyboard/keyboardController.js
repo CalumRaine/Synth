@@ -85,10 +85,14 @@ class KeyboardController extends HTMLDivElement {
 		this.rail.addEventListener("pointerdown", (event) => { this.grabHandle(event); });
 		document.addEventListener("pointermove", (event) => { this.dragHandle(event); });
 		document.addEventListener("pointerup", (event) => { this.dropHandle(event); });
+		window.addEventListener("resize", (event) => { this.centreKeyboard(event); });
 	}
 
 	connectedCallback(){
-		// Centre keyboard on screen
+		this.centreKeyboard();
+	}
+
+	centreKeyboard(){
 		let requiredWidth = this.whiteKeys.length * KeyboardController.WHITE_KEY_WIDTH;
 		let availableWidth = this.getBoundingClientRect().width;
 		let marginLeft = (availableWidth - requiredWidth) / 2;

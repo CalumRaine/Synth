@@ -41,7 +41,6 @@ Just download the repository and open `index.html` in a browser window.
 * Add preset patches
 * Add stereo sound
 * Fix QWERTY mapping on black keys
-* Automatically redraw keyboard when window is resized
 * Add wood skins and metal skins etc.
 * Add recording/editing functionality
 * Add cool controllers (instead of just a keyboard)
