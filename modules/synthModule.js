@@ -51,6 +51,12 @@ class SynthModule extends HTMLFormElement {
 		buttons.remove.addEventListener("click", (event) => { this.removeModule(event); });
 
 		this.addEventListener("input", (event) => { this.updateSound(); });
+	
+		// Default setup
+		// - Triangle oscillator (sine too quiet)
+		// - 13% amp release (prevent popping)
+		this.oscParams.shape.select.value = "triangle";
+		this.ampEnv.release.percentToParam(13);
 	}
 
 	connectedCallback(){
