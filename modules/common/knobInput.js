@@ -59,11 +59,6 @@ class KnobInput extends LabelledInput {
 		return this.paramValue;
 	}
 
-	get Units(){
-		// Add trailing 's' to plural units if necessary.
-		// i.e. "3 Notes" instead of "3 Note"
-	}
-
 	percentToParam(percent){
 		// Called when MIDI knob turns
 		if (this.reflect){
@@ -96,6 +91,8 @@ class KnobInput extends LabelledInput {
 	}
 
 	setTitle(){
+		// Add trailing 's' to plural units if necessary.
+		// i.e. "3 Notes" instead of "3 Note"
 		let prefix = this.reflect && this.paramValue > 0 ? "+" : "";
 		let units = this.paramUnits.length > 3 && !this.paramUnits.endsWith("s") && this.paramValue != 1 ? this.paramUnits + "s" : this.paramUnits;
 		this.input.setAttribute("title", `${prefix}${this.paramValue} ${units}`);
