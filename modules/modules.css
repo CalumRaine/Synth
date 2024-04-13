@@ -1,30 +1,42 @@
 form[is="synth-module"] {
 	position: relative;
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
+	display: inline-flex;
+	flex-direction: column;
 	border: 1px solid black;
+	border-radius: 0.5rem;
+	margin: 1rem 1rem 2rem 1rem;
 	padding: 1rem;
-	margin: 1rem;
+	background-color: lightgrey;
 }
 
 form[is="synth-module"] h2 {
 	width: 100%;
-	margin: -0.5rem 0rem 0.5rem 0rem;
+	margin: -0.5rem 0rem 0.75rem 0rem;
+}
+
+form[is="synth-module"] fieldset {
+	border: 1px solid black;
+	border-radius: 0.25rem;
 }
 
 form[is="synth-module"] > fieldset {
 	display: flex;
 	flex-direction: row;
+	margin-bottom: 1rem;
+	padding: 0.75rem;
+	column-gap: 0.5rem;
+}
+
+form[is="synth-module"] fieldset legend {
+	font-weight: bold;
 }
 
 form[is="synth-module"] > fieldset > legend {
-	font-weight: bold;
 	text-transform: uppercase;
 }
 
-form[is="synth-module"] fieldset {
-	border: 1px solid black;
+form[is="synth-module"] fieldset fieldset {
+	border-color: grey;
 }
 
 form[is="synth-module"] fieldset div {
@@ -34,15 +46,18 @@ form[is="synth-module"] fieldset div {
 
 form[is="synth-module"] fieldset div label {
 	display: inline-block;
-	width: 7ch;
+	width: 9ch;
 }
 
 form[is="synth-module"] fieldset div select {
-	width: 11ch;
+	width: 41ch;
 }
 
 form[is="synth-module"] fieldset div input {
-	width: 10ch;
+	width: 40ch;
+	cursor: pointer;
+	vertical-align: middle;
+	accent-color: darkslategrey;
 }
 
 form[is="synth-module"] fieldset div select:focus,

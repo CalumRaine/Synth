@@ -37,10 +37,10 @@ class KnobInput extends LabelledInput {
 		this.reflect = reflect;
 
 		this.input = this.appendChild(document.createElement("input"));
-		this.input.setAttribute("type", "number");
+		this.input.setAttribute("type", "range");
 		this.input.setAttribute("min", this.reflect ? -100 : 0);
 		this.input.setAttribute("max", 100);
-		this.input.setAttribute("step", 1);
+		this.input.setAttribute("step", 0.1);
 		this.input.setAttribute("value", knobPos);
 		this.input.setAttribute("title", "loading...");
 

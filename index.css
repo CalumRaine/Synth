@@ -9,7 +9,7 @@ button {
 }
 
 div[is="synth-rack"] header {
-	margin: 1rem;
+	margin: 0.5rem 1rem 0rem 1rem;
 	display: flex;
 	flex-direction: row;
 	column-gap: 0.4rem;
