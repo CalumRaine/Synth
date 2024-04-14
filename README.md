@@ -23,6 +23,8 @@ A browser-based synth using the Web Audio API and HTML.
 * Amplifier
     * Gain parameter
     * ADSR envelope
+* Stereo panning
+    * With LFO and envelope
 * Parameters
     * Immediately update audio when changed
     * Have linear or exponential mappings for enhanced control, e.g. pitch shift (linear) or frequency cutoff (exp)
@@ -39,7 +41,6 @@ Just download the repository and open `index.html` in a browser window.
 * Use velocity from MIDI messages on key press
 * Figure out how to stop polyphonic sounds from overloading the speakers
 * Add preset patches
-* Add stereo sound
 * Fix QWERTY mapping on black keys
 * Try exponential ramps instead of linear ramps
 * Right click slider to return to default

@@ -13,9 +13,14 @@ class SynthModule extends HTMLFormElement {
 	ampEnv = null;
 	ampLfo = null;
 
+	panParams = null;
+	panEnv = null;
+	panLfo = null;
+
 	oscillators = [];
 	filters = [];
 	gains = [];
+	pans = [];
 
 	constructor(name){
 		super();
@@ -44,7 +49,14 @@ class SynthModule extends HTMLFormElement {
 		legend.innerHTML = "Amp";
 		this.ampParams = fieldset.appendChild(new AmpParams());
 		this.ampEnv = fieldset.appendChild(new EnvModule(EnvModule.USE_SR, EnvModule.NO_DEPTH));
-		this.ampLfo = fieldset.appendChild(new LfoModule(1, "", true));
+		this.ampLfo = fieldset.appendChild(new LfoModule(1, "", KnobInput.LINEAR));
+
+		fieldset = this.appendChild(document.createElement("fieldset"));
+		legend = fieldset.appendChild(document.createElement("legend"));
+		legend.innerHTML = "Pan";
+		this.panParams = fieldset.appendChild(new PanParams());
+		this.panEnv = fieldset.appendChild(new EnvModule(EnvModule.USE_SR, EnvModule.USE_DEPTH));
+		this.panLfo = fieldset.appendChild(new LfoModule(1, "", KnobInput.LINEAR));
 
 		let buttons = this.appendChild(new ModuleButtons());
 		buttons.duplicate.addEventListener("click", (event) => { this.duplicateModule(event); });
@@ -107,6 +119,18 @@ class SynthModule extends HTMLFormElement {
 		dupe.ampLfo.replaceWith(ampLfo);
 		dupe.ampLfo = ampLfo;
 
+		let pan = this.panParams.duplicate();
+		dupe.panParams.replaceWith(pan);
+		dupe.panParams = pan;
+
+		let panEnv = this.panEnv.duplicate();
+		dupe.panEnv.replaceWith(panEnv);
+		dupe.panEnv = panEnv;
+
+		let panLfo = this.panLfo.duplicate();
+		dupe.panLfo.replaceWith(panLfo);
+		dupe.panLfo = panLfo;
+
 		let e = new CustomEvent("duplicate module", { detail: dupe, bubbles: true });
 		this.dispatchEvent(e);
 
@@ -143,7 +167,7 @@ class SynthModule extends HTMLFormElement {
 		filter.frequency.value = this.filterParams.cutoff.Value;
 		// Filter env depth adds/subtracts 0-100% of the remainder above/below the cutoff
 		// i.e. from 0Hz to 20kHz
-		let target = this.filterEnv.Depth >= 0 ? (this.filterParams.cutoff.paramMax - this.filterParams.cutoff.Value) : this.filterParams.cutoff.Value;
+		let target = this.filterEnv.Depth >= 0 ? (this.filterParams.cutoff.paramMax - this.filterParams.cutoff.Value) : (this.filterParams.cutoff.Value + this.filterParams.cutoff.paramMax);
 		target *= this.filterEnv.Depth;
 		target += this.filterParams.cutoff.Value;
 		let delta = target - this.filterParams.cutoff.Value;
@@ -164,9 +188,24 @@ class SynthModule extends HTMLFormElement {
 		let ampLfo = this.ampLfo.makeSound(audioContext, key);
 		ampLfo.connect(gain.gain);
 
+		let pan = audioContext.createStereoPanner();
+		pan.calumKey = key;
+		pan.pan.value = this.panParams.pan.Value;
+		target = this.panEnv.Depth >= 0 ? (this.panParams.pan.paramMax - this.panParams.pan.Value) : (this.panParams.pan.Value + this.panParams.pan.paramMax);
+		target *= this.panEnv.Depth;
+		target += this.panParams.pan.Value;
+		delta = target - this.panParams.pan.Value;
+		pan.pan.linearRampToValueAtTime(target, audioContext.currentTime + this.panEnv.Attack);
+		pan.pan.linearRampToValueAtTime(this.panParams.pan.Value + (delta * this.panEnv.Sustain), audioContext.currentTime + this.panEnv.Decay);
+		this.pans.push(pan);
+
+		let panLfo = this.panLfo.makeSound(audioContext, key);
+		panLfo.connect(pan.pan);
+
 		osc.connect(filter);
 		filter.connect(gain);
-		gain.connect(speakers);
+		gain.connect(pan);
+		pan.connect(speakers);
 
 		return true;
 	}
@@ -192,6 +231,12 @@ class SynthModule extends HTMLFormElement {
 		}
 
 		this.ampLfo.updateSound();
+
+		for (let pan of this.pans){
+			pan.pan.value = this.panParams.pan.Value;
+		}
+
+		this.panLfo.updateSound();
 
 		return true;
 	}
@@ -219,6 +264,14 @@ class SynthModule extends HTMLFormElement {
 			this.gains.splice(index, 1);
 		}
 
+		let matchingPans = this.pans.filter(p => p.calumKey == key);
+		for (let pan of matchingPans){
+			pan.pan.cancelScheduledValues(0.0);
+			pan.pan.linearRampToValueAtTime(this.panParams.pan.Value, audioContext.currentTime + this.panEnv.Release);
+			let index = this.pans.findIndex(p => p == pan);
+			this.pans.splice(index, 1);
+		}
+
 		setTimeout(() => {
 			this.freqLfo.stopSound(audioContext, key);
 			matchingOsc.forEach(o => { o.stop(); o.disconnect(); });
@@ -226,6 +279,8 @@ class SynthModule extends HTMLFormElement {
 			matchingFilters.forEach(f => { f.disconnect(); });
 			this.ampLfo.stopSound(audioContext, key);
 			matchingGains.forEach(g => { g.disconnect(); });
+			this.panLfo.stopSound(audioContext, key);
+			matchingPans.forEach(p => { p.disconnect(); });
 		}, this.ampEnv.ReleaseMs);
 		
 		return true;
@@ -246,6 +301,11 @@ class SynthModule extends HTMLFormElement {
 		json.ampParams = this.ampParams.toJson();
 		json.ampEnv = this.ampEnv.toJson();
 		json.ampLfo = this.ampLfo.toJson();
+
+		json.panParams = this.panParams.toJson();
+		json.panEnv = this.panEnv.toJson();
+		json.panLfo = this.panLfo.toJson();
+
 		return json;
 	}
 
@@ -263,6 +323,11 @@ class SynthModule extends HTMLFormElement {
 		this.ampParams.fromJson(json.ampParams);
 		this.ampEnv.fromJson(json.ampEnv);
 		this.ampLfo.fromJson(json.ampLfo);
+
+		this.panParams.fromJson(json.panParams);
+		this.panEnv.fromJson(json.panEnv);
+		this.panLfo.fromJson(json.panLfo);
+
 		return true;
 	}
 }

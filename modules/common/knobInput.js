@@ -7,7 +7,7 @@ class KnobInput extends LabelledInput {
 	// 	- Often need greater control at lower range
 	static LINEAR = 1;
 	static CURVED = 3;
-	static U_SHAPE = 2; // Probably useful for panning later
+	static U_SHAPE = 2; // Current unused
 
 	// Can be reflected to include -100 to +100
 	// 	- i.e. -100 to 100 ==> -12dB to +12dB
