@@ -43,7 +43,6 @@ Just download the repository and open `index.html` in a browser window.
 * Add preset patches
 * Fix QWERTY mapping on black keys
 * Try exponential ramps instead of linear ramps
-* Right click slider to return to default
 * Add wood skins and metal skins etc.
 * Add recording/editing functionality
 * Add cool controllers (instead of just a keyboard)

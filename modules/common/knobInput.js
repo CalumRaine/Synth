@@ -2,6 +2,7 @@ class KnobInput extends LabelledInput {
 	// Produces numerical input with 0-100 range
 	// Translates knob position to param min-max range
 	// 	- i.e. 0 to 100 ==> 40Hz to 20kHz
+	// (Note: currently opted for sliders instead of knobs)
 	
 	// Translation can be linear or exponential
 	// 	- Often need greater control at lower range
@@ -22,6 +23,8 @@ class KnobInput extends LabelledInput {
 	static DP_CENT = 2;
 	static DP_FREQ = 5;
 
+	defKnobPos = 0;		// default knob position
+
 	paramMin = 0;		// e.g. 20 Hz or 0 ms
 	paramMax = 0;		// e.g. 20,000 Hz or 10000 ms
 	paramRange = 0;		// max - min
@@ -35,6 +38,7 @@ class KnobInput extends LabelledInput {
 	
 	constructor(label, paramMin, paramMax, paramUnits, decimalPlaces, knobPos, slope, reflect){
 		super(label);
+		this.defKnobPos = knobPos;
 		this.exp = slope;
 		this.reflect = reflect;
 
@@ -43,8 +47,7 @@ class KnobInput extends LabelledInput {
 		this.input.setAttribute("min", this.reflect ? -100 : 0);
 		this.input.setAttribute("max", 100);
 		this.input.setAttribute("step", 0.1);
-		this.input.setAttribute("value", knobPos);
-		this.input.setAttribute("title", "loading...");
+		this.input.setAttribute("value", this.defKnobPos);
 
 		this.span = this.appendChild(document.createElement("span"));
 
@@ -55,7 +58,8 @@ class KnobInput extends LabelledInput {
 		this.dp = decimalPlaces;
 		this.paramValue = this.knobToParam();
 		this.input.percentToParam = (percent) => { this.percentToParam(percent); };
-		this.input.addEventListener("input", (event) => { this.knobToParam(); });
+		this.input.addEventListener("input", (event) => { this.knobToParam(event); });
+		this.input.addEventListener("contextmenu", (event) => { this.reset(event); });
 	}
 
 	get Value(){
@@ -101,6 +105,16 @@ class KnobInput extends LabelledInput {
 		let units = this.paramUnits.length > 3 && !this.paramUnits.endsWith("s") && this.paramValue != 1 ? this.paramUnits + "s" : this.paramUnits;
 		this.input.setAttribute("title", `${prefix}${this.paramValue} ${units}`);
 		this.span.innerHTML = this.input.getAttribute("title");
+		return true;
+	}
+
+	reset(event){
+		// Reset knob when user right clicks
+		// Prevent right click menu from popping up
+		this.input.value = this.defKnobPos;
+		this.input.setAttribute("value", this.input.value);
+		this.knobToParam();
+		event.preventDefault();
 		return true;
 	}
 
