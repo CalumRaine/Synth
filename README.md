@@ -29,6 +29,7 @@ A browser-based synth using the Web Audio API and HTML.
     * Immediately update audio when changed
     * Have linear or exponential mappings for enhanced control, e.g. pitch shift (linear) or frequency cutoff (exp)
     * Can be continuous or discrete, e.g. detune (continuous) or pitch shift (discrete notes)
+    * Right click to reset back to initial value
 * LFOs can be synced for improved polyphony
 * Import and export patches as JSON files
 
