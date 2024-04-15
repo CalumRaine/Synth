@@ -79,27 +79,27 @@ class FilterSection extends HTMLFieldSetElement {
 
 	paramsHelpText(){
 		return `
-			<li>Remove or enhance frequencies around the cutoff value</li>
+			<li>Remove or enhance frequencies around the cutoff value.</li>
 		`;
 	}
 
 	envHelpText(){
 		return `
-			<li>Positive depth: target position between cutoff frequency and upper limit (24kHz)</li>
-			<li>Negative depth: target position between cutoff frequency and lower limit (0Hz)</li>
-			<li>Attack: time taken to glide from cutoff frequency to target frequency</li>
-			<li>Decay: time taken to glide from target frequency to sustain frequency</li>
-			<li>Sustain: position between cutoff frequency and target frequency to hold until release</li>
-			<li>Release: time taken to glide from sustain frequency back to cutoff frequency</li>
+			<li>Positive depth = target this position between the cutoff frequency and upper frequency limit (24kHz).</li>
+			<li>Negative depth = target this position between the cutoff frequency and lower frequency limit (0Hz).</li>
+			<li>Attack = time taken to glide from the cutoff frequency to the target frequency.</li>
+			<li>Decay = time taken to glide from the target frequency to the sustain frequency.</li>
+			<li>Sustain = hold this position between the cutoff frequency and target frequency until the key is released.</li>
+			<li>Release = time taken to glide from the sustain frequency back to the cutoff frequency when the key is released.</li>
 		`;
 	}
 
 	lfoHelpText(){
 		return `
-			<li>Depth: modulate filter by specified Hz either side of cutoff frequency</li>
-			<li>Freq: modulate filter at specified speed</li>
-			<li>Sync on: all pressed keys modulate together</li>
-			<li>Sync off: each pressed key spawns its own modulation wave</li>
+			<li>Depth = modulate filter by the specified Hz either side of the cutoff frequency.</li>
+			<li>Freq = modulate filter at this specified speed.</li>
+			<li>Sync on = all pressed keys modulate together.</li>
+			<li>Sync off = each pressed key spawns its own modulation wave.</li>
 		`;
 	}
 }

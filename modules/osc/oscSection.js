@@ -73,28 +73,28 @@ class OscSection extends HTMLFieldSetElement {
 
 	paramsHelpText(){
 		return `
-			<li>Generates the sound wave that passes through all other modules</li>
-			<li>Different wave forms (shape) have different harmonics (fuzz)</li>
-			<li>Plays the frequency of whichever note was played on the keyboard</li>
-			<li>Incrementally shift the frequency above or below the root note by up to 24 notes (2 octaves)</li>
-			<li>Detune the frequency above or below that root note in hundredths of a note</li>
+			<li>Generates the sound wave that passes through all other modules.</li>
+			<li>Plays the frequency of whichever note was pressed on the keyboard.</li>
+			<li>Shape = different wave forms (shape) have different harmonics (fuzz).</li>
+			<li>Shift = incrementally shift the frequency above or below the root note by up to 24 notes (2 octaves).</li>
+			<li>Detune = adjust the frequency above or below the root note in hundredths of a note.</li>
 		`;
 	}
 
 	envHelpText(){
 		return `
-			<li>Depth: target specified percentage above or below the root frequency</li>
-			<li>Attack: time taken to glide from root frequency to target</li>
-			<li>Decay: time taken ti glide from target to root frequency</li>
+			<li>Depth = target the specified percentage above or below the root frequency.</li>
+			<li>Attack = time taken to glide from the root frequency to the target frequency.</li>
+			<li>Decay = time taken to glide from the target frequency to the root frequency.</li>
 		`;
 	}
 
 	lfoHelpText(){
 		return `
-			<li>Depth: modulate frequency by specified hundredths of a note</li>
-			<li>Freq: modulate frequency at specified speed</li>
-			<li>Sync on: all pressed keys modulate together</li>
-			<li>Sync off: each pressed key spawns its own modulation wave</li>
+			<li>Depth = modulate the frequency by the specified hundredths of a note.</li>
+			<li>Freq = modulate the frequency at this specified speed.</li>
+			<li>Sync on = all pressed keys modulate together.</li>
+			<li>Sync off = each pressed key spawns its own modulation wave.</li>
 		`;
 	}
 }

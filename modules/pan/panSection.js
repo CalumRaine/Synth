@@ -72,27 +72,27 @@ class PanSection extends HTMLFieldSetElement {
 
 	paramsHelpText(){
 		return `
-			<li>Move sound left or right</li>
+			<li>Move audio toward the left or right.</li>
 		`;
 	}
 
 	envHelpText(){
 		return `
-			<li>Positive depth: target position between pan value and far right</li>
-			<li>Negative depth: target position between pan value and far left</li>
-			<li>Attack: time taken to glide from pan position to target position</li>
-			<li>Decay: time taken to glide from target position to sustain position</li>
-			<li>Sustain: position between sustain position and target position to hold until release</li>
-			<li>Release: time taken to glide from sustain position back to pan position</li>
+			<li>Positive depth = target this position between the pan value and the far right.</li>
+			<li>Negative depth = target this position between the pan value and the far left.</li>
+			<li>Attack = time taken to glide from the pan position to the target position.</li>
+			<li>Decay = time taken to glide from the target position to the sustain position.</li>
+			<li>Sustain = hold this position between the sustain position and target position until the key is released.</li>
+			<li>Release = time taken to glide from the sustain position back to the pan position when the key is released.</li>
 		`;
 	}
 
 	lfoHelpText(){
 		return `
-			<li>Depth: modulate sound left and right by specified amount</li>
-			<li>Freq: modulate pan at specified speed</li>
-			<li>Sync on: all pressed keys modulate together</li>
-			<li>Sync off: each pressed key spawns its own modulation wave</li>
+			<li>Depth = modulate audio toward the left and right by this specified amount.</li>
+			<li>Freq = modulate panning at this specified speed</li>
+			<li>Sync on = all pressed keys modulate together.</li>
+			<li>Sync off = each pressed key spawns its own modulation wave.</li>
 		`;
 	}
 }

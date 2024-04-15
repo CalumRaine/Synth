@@ -65,25 +65,25 @@ class AmpSection extends HTMLFieldSetElement {
 
 	paramsHelpText(){
 		return `
-			<li>Adjust volume of this module</li>
+			<li>Adjust the volume of this module.</li>
 		`;
 	}
 
 	envHelpText(){
 		return `
-			<li>Attack: time taken to glide from silence to gain value</li>
-			<li>Decay: time taken to glide from gain value to sustain value</li>
-			<li>Sustain: gain value to hold until release</li>
-			<li>Release: time taken to glide from sustain value back to silence</li>
+			<li>Attack = time taken to glide from silence to the gain value.</li>
+			<li>Decay = time taken to glide from the gain value to the sustain value.</li>
+			<li>Sustain = gain value to hold until the key is released.</li>
+			<li>Release = time taken to glide from the sustain value back to silence when the key is released.</li>
 		`;
 	}
 
 	lfoHelpText(){
 		return `
-			<li>Depth: modulate volume by specified value</li>
-			<li>Freq: modulate volume at specified speed</li>
-			<li>Sync on: all pressed keys modulate together</li>
-			<li>Sync off: each pressed key spawns its own modulation wave</li>
+			<li>Depth = modulate volume by this specified value.</li>
+			<li>Freq = modulate volume at this specified speed.</li>
+			<li>Sync on = all pressed keys modulate together.</li>
+			<li>Sync off = each pressed key spawns its own modulation wave.</li>
 		`;
 	}
 }
