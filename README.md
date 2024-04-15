@@ -39,7 +39,7 @@ Just download the repository and open `index.html` in a browser window.
 
 ## To Do
 
-* Use compressor to prevent polyphonic sounds overloading speakers
+* LFO: Add randomised "constant source node"
 * Amp LFO: prevent negative volume
 * Scroll on parameter to slide it left/right
 * Fix QWERTY mapping on black keys

@@ -8,6 +8,7 @@ class SynthRack extends HTMLDivElement {
 	load = null;
 
 	keyboard = null;
+	compressor = null;
 	speakers = null;
 	audioContext = null;
 	modules = [];
@@ -58,8 +59,13 @@ class SynthRack extends HTMLDivElement {
 	initialise(event){
 		this.audioContext = new AudioContext();
 		this.speakers = this.audioContext.createGain();
-		this.speakers.gain.value = 0.2;
-		this.speakers.connect(this.audioContext.destination);
+		this.speakers.gain.value = 1.0;
+
+		// Default compressor values appear fine
+		this.compressor = this.audioContext.createDynamicsCompressor();
+
+		this.speakers.connect(this.compressor);
+		this.compressor.connect(this.audioContext.destination);
 
 		navigator.requestMIDIAccess().then((access) => { this.setupMidi(access); });
 		this.activate.close();
