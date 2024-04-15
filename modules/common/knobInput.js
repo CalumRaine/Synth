@@ -125,7 +125,7 @@ class KnobInput extends LabelledInput {
 	}
 
 	fromJson(json){
-		this.input.value = json.value;
+		this.input.value = this.defKnobPos = json.value;
 		this.input.setAttribute("value", this.input.value);
 		this.knobToParam();
 		return true;
