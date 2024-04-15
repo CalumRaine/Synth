@@ -31,6 +31,8 @@ class LfoModule extends HTMLFieldSetElement {
 		// Polyphony is often better if the LFO is synced to one master wave
 		this.sync = this.appendChild(new ToggleInput("Sync", false));
 		this.sync.light.addEventListener("click", (event) => { return this.sync.Checked ? false : this.stopMaster(); });
+
+		this.addEventListener("input", (event) => { this.updateSound(); });
 	}
 
 	duplicate(){
