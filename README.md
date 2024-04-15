@@ -41,9 +41,15 @@ Just download the repository and open `index.html` in a browser window.
 
 ## To Do
 
-* Add "hold" button to sustain keys
 * Amp LFO: prevent negative volume
+    * Change "depth" parameter to percentage of Math.min(value, 1-value)
+    * Will keep within bounds of 0 to 1
 * Amp LFO bug: Overrides volume during release phase so doesn't fade out properly
+    * Connect constantSource() to another gain output 
+    * Linear ramp gain to 0 across release time when key released
+    * Also allows for LFO Delay feature, i.e. LFO attack
+        * I think use exponential ramp for this, not linear
+* Add "hold" button to sustain keys
 * Use velocity from MIDI messages on key press
 * Try exponential ramps instead of linear ramps
 * Add preset patches
