@@ -157,12 +157,14 @@ class LfoModule extends HTMLFieldSetElement {
 
 		for (let src of this.sources){
 			window.clearInterval(src.calumInterval);
+			src.offset.cancelScheduledValues(0.0);
 			src.offset.value = 0.0;
 			src.calumInterval = !this.IsRandom ? null : this.randomInterval(src);
 		}
 
 		if (this.masterSource != null){
 			window.clearInterval(this.masterSource.calumInterval);
+			this.masterSource.offset.cancelScheduledValues(0.0);
 			this.masterSource.offset.value = 0.0;
 			this.masterSource.calumInterval = !this.IsRandom ? null : this.randomInterval(this.masterSource);
 		}
