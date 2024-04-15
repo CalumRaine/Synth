@@ -46,8 +46,20 @@ class SynthRack extends HTMLDivElement {
 		start.innerHTML = "Start";
 		start.onclick = (event) => { this.initialise(event); };
 
-		this.keyboard.allKeys.forEach(k => k.onpointerdown = (event) => { this.playKey(k); });
-		this.keyboard.allKeys.forEach(k => k.onpointerup = (event) => { this.releaseKey(k); });
+		this.keyboard.allKeys.forEach(k => {
+			// Play key on mouse/touch down
+			k.onpointerdown = (event) => this.playKey(k);
+
+			// Play key when sliding into key with pressed mouse
+			k.onpointerenter = (event) => { return event.buttons > 0 ? this.playKey(k) : false };
+
+			// Release key when sliding out or lifting mouse/touch
+			k.onpointerleave = k.onpointerup = (event) => this.releaseKey(k);
+
+			// Ignore right click and long press
+			k.oncontextmenu = (event) => event.preventDefault();
+		});
+
 		document.addEventListener("keydown", (event) => { this.playQwerty(event) });
 		document.addEventListener("keyup", (event) => { this.releaseQwerty(event) });
 	}
@@ -94,12 +106,14 @@ class SynthRack extends HTMLDivElement {
 	}
 
 	playKey(key){
+		event.preventDefault();
 		key.play();
 		this.modules.forEach(m => m.makeSound(this.audioContext, key, this.speakers));
 		return true;
 	}
 
 	releaseKey(key){
+		event.preventDefault();
 		key.release();
 		this.modules.forEach(m => m.stopSound(this.audioContext, key));
 		return true;

@@ -7,6 +7,9 @@ div[is="keyboard-controller"] {
 	background-color: white;
 	border-top: 1px solid black;
 	padding: 0.2rem 0rem 0.5rem 0rem;
+
+	/* Prevent browser zooming on double click */
+	touch-action: manipulation;
 }
 
 	div[is="qwerty-rail"] {
