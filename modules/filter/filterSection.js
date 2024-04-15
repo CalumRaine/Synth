@@ -8,9 +8,9 @@ class FilterSection extends HTMLFieldSetElement {
 		super();
 		super.setAttribute("is", "filter-section");
 		this.appendChild(document.createElement("legend")).innerHTML = "Filter";
-		this.params = this.appendChild(new FilterParams());
-		this.env = this.appendChild(new EnvModule(EnvModule.USE_SR, EnvModule.USE_DEPTH));
-		this.lfo = this.appendChild(new LfoModule(24000, "Hz", KnobInput.CURVED));
+		this.params = this.appendChild(new FilterParams(this.paramsHelpText()));
+		this.env = this.appendChild(new EnvModule(EnvModule.USE_SR, EnvModule.USE_DEPTH, this.envHelpText()));
+		this.lfo = this.appendChild(new LfoModule(24000, "Hz", KnobInput.CURVED, this.lfoHelpText()));
 		this.addEventListener("input", (event) => { this.updateSound(); });
 	}
 
@@ -60,6 +60,32 @@ class FilterSection extends HTMLFieldSetElement {
 		}, delay);
 
 		return true;
+	}
+
+	paramsHelpText(){
+		return `
+			<li>Remove or enhance frequencies around the cutoff value</li>
+		`;
+	}
+
+	envHelpText(){
+		return `
+			<li>Positive depth: target position between cutoff frequency and upper limit (24kHz)</li>
+			<li>Negative depth: target position between cutoff frequency and lower limit (0Hz)</li>
+			<li>Attack: time taken to glide from cutoff frequency to target frequency</li>
+			<li>Decay: time taken to glide from target frequency to sustain frequency</li>
+			<li>Sustain: position between cutoff frequency and target frequency to hold until release</li>
+			<li>Release: time taken to glide from sustain frequency back to cutoff frequency</li>
+		`;
+	}
+
+	lfoHelpText(){
+		return `
+			<li>Depth: modulate filter by specified Hz either side of cutoff frequency</li>
+			<li>Freq: modulate filter at specified speed</li>
+			<li>Sync on: all pressed keys modulate together</li>
+			<li>Sync off: each pressed key spawns its own modulation wave</li>
+		`;
 	}
 }
 

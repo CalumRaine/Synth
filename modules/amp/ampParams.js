@@ -1,7 +1,8 @@
 class AmpParams extends HTMLFieldSetElement {
 	gain = null;
+	help = null;
 
-	constructor(){
+	constructor(helpText){
 		super();
 		super.setAttribute("is", "amp-params");
 
@@ -9,6 +10,7 @@ class AmpParams extends HTMLFieldSetElement {
 		legend.innerHTML = "Parameters";
 
 		this.gain = this.appendChild(new AmpGain());
+		this.help = this.appendChild(new HelpButton(helpText));
 	}
 
 	duplicate(){

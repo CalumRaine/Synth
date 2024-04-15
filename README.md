@@ -40,12 +40,12 @@ Just download the repository and open `index.html` in a browser window.
 ## To Do
 
 * Use compressor to prevent polyphonic sounds overloading speakers
+* Amp LFO: prevent negative volume
 * Scroll on parameter to slide it left/right
 * Fix QWERTY mapping on black keys
 * Use velocity from MIDI messages on key press
 * Try exponential ramps instead of linear ramps
 * Add preset patches
-* Add some kind of explanatory help text
 * Consider collapsible sections, i.e. modules or components
 * Add wood skins and metal skins etc.
 * Add recording/editing functionality

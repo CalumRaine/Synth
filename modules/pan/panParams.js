@@ -1,7 +1,8 @@
 class PanParams extends HTMLFieldSetElement {
 	pan = null;
+	help = null;
 
-	constructor(){
+	constructor(helpText){
 		super();
 		super.setAttribute("is", "pan-params");
 
@@ -9,6 +10,7 @@ class PanParams extends HTMLFieldSetElement {
 		legend.innerHTML = "Parameters";
 
 		this.pan = this.appendChild(new PanStereo());
+		this.help = this.appendChild(new HelpButton(helpText));
 	}
 
 	duplicate(){

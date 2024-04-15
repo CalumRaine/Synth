@@ -13,12 +13,14 @@ class LfoModule extends HTMLFieldSetElement {
 
 	sync = null;
 
+	help = null;
+
 	masterOsc = null;
 	oscillators = [];
 
 	masterGain = null;
 	gains = [];
-	constructor(maxDepth, unitsDepth, linearDepth){
+	constructor(maxDepth, unitsDepth, linearDepth, helpText){
 		super();
 		super.setAttribute("is", "lfo-module");
 		let legend = this.appendChild(document.createElement("legend"));
@@ -31,6 +33,8 @@ class LfoModule extends HTMLFieldSetElement {
 		// Polyphony is often better if the LFO is synced to one master wave
 		this.sync = this.appendChild(new ToggleInput("Sync", false));
 		this.sync.light.addEventListener("click", (event) => { return this.sync.Checked ? false : this.stopMaster(); });
+
+		this.help = this.appendChild(new HelpButton(helpText));
 
 		this.addEventListener("input", (event) => { this.updateSound(); });
 	}

@@ -26,8 +26,9 @@ class EnvModule extends HTMLFieldSetElement {
 	sustain = null;
 	release = null;
 	depth = null;
+	help = null;
 
-	constructor(useSustainRelease, useDepth){
+	constructor(useSustainRelease, useDepth, helpText){
 		super();
 		let legend = this.appendChild(document.createElement("legend"));
 		legend.innerHTML = "Envelope";
@@ -42,6 +43,8 @@ class EnvModule extends HTMLFieldSetElement {
 		if (useDepth){
 			this.depth = this.appendChild(new KnobInput("Depth", EnvModule.DEPTH_MIN, EnvModule.DEPTH_MAX, EnvModule.DEPTH_UNIT, KnobInput.DP_CENT, 0, KnobInput.CURVED, KnobInput.REFLECT));
 		}
+
+		this.help = this.appendChild(new HelpButton(helpText));
 	}
 
 	duplicate(){

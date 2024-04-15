@@ -8,9 +8,9 @@ class AmpSection extends HTMLFieldSetElement {
 		super();
 		super.setAttribute("is", "amp-section");
 		this.appendChild(document.createElement("legend")).innerHTML = "Amp";
-		this.params = this.appendChild(new AmpParams());
-		this.env = this.appendChild(new EnvModule(EnvModule.USE_SR, EnvModule.NO_DEPTH));
-		this.lfo = this.appendChild(new LfoModule(1, "", KnobInput.LINEAR));
+		this.params = this.appendChild(new AmpParams(this.paramsHelpText()));
+		this.env = this.appendChild(new EnvModule(EnvModule.USE_SR, EnvModule.NO_DEPTH, this.envHelpText()));
+		this.lfo = this.appendChild(new LfoModule(1, "", KnobInput.LINEAR, this.lfoHelpText()));
 		this.addEventListener("input", (event) => { this.updateSound(); });
 	}
 
@@ -46,6 +46,30 @@ class AmpSection extends HTMLFieldSetElement {
 		}, delay);
 
 		return true;
+	}
+
+	paramsHelpText(){
+		return `
+			<li>Adjust volume of this module</li>
+		`;
+	}
+
+	envHelpText(){
+		return `
+			<li>Attack: time taken to glide from silence to gain value</li>
+			<li>Decay: time taken to glide from gain value to sustain value</li>
+			<li>Sustain: gain value to hold until release</li>
+			<li>Release: time taken to glide from sustain value back to silence</li>
+		`;
+	}
+
+	lfoHelpText(){
+		return `
+			<li>Depth: modulate volume by specified value</li>
+			<li>Freq: modulate volume at specified speed</li>
+			<li>Sync on: all pressed keys modulate together</li>
+			<li>Sync off: each pressed key spawns its own modulation wave</li>
+		`;
 	}
 }
 

@@ -15,8 +15,42 @@ form[is="synth-module"] h2 {
 	margin: -0.5rem 0rem 0.75rem 0rem;
 }
 
+/* Help buttons */
+button[is="help-button"] {
+	position: absolute;
+	top: -0.25rem;
+	right: 0.25rem;
+	border-radius: 100%;
+	padding: 0rem;
+	font-size: 0.75rem;
+	line-height: 0.75rem;
+	width: 1rem;
+	height: 1rem;
+}
+
+button[is="help-button"] dialog {
+	text-align: start;
+	font-size: 1rem;
+	line-height: 1rem;
+}
+
+button[is="help-button"] dialog::backdrop {
+	background-color: rgba(0.5, 0.5, 0.5, 0.5);
+}
+
+button[is="help-button"] dialog ul {
+	padding-left: 1.5rem;
+}
+
+button[is="help-button"] dialog p {
+	text-align: center;
+	margin: 0rem;
+	font-size: 0.75rem;
+}
+
 /* Fieldsets */
 form[is="synth-module"] fieldset {
+	position: relative;
 	border: 1px solid black;
 	border-radius: 0.25rem;
 }

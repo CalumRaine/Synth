@@ -8,9 +8,9 @@ class PanSection extends HTMLFieldSetElement {
 		super();
 		super.setAttribute("is", "pan-section");
 		this.appendChild(document.createElement("legend")).innerHTML = "Pan";
-		this.params = this.appendChild(new PanParams());
-		this.env = this.appendChild(new EnvModule(EnvModule.USE_SR, EnvModule.USE_DEPTH));
-		this.lfo = this.appendChild(new LfoModule(1, "", KnobInput.LINEAR));
+		this.params = this.appendChild(new PanParams(this.paramsHelpText()));
+		this.env = this.appendChild(new EnvModule(EnvModule.USE_SR, EnvModule.USE_DEPTH, this.envHelpText()));
+		this.lfo = this.appendChild(new LfoModule(1, "", KnobInput.LINEAR, this.lfoHelpText()));
 		this.addEventListener("input", (event) => { this.updateSound(); });
 	}
 
@@ -53,6 +53,32 @@ class PanSection extends HTMLFieldSetElement {
 		}, delay);
 
 		return true;
+	}
+
+	paramsHelpText(){
+		return `
+			<li>Move sound left or right</li>
+		`;
+	}
+
+	envHelpText(){
+		return `
+			<li>Positive depth: target position between pan value and far right</li>
+			<li>Negative depth: target position between pan value and far left</li>
+			<li>Attack: time taken to glide from pan position to target position</li>
+			<li>Decay: time taken to glide from target position to sustain position</li>
+			<li>Sustain: position between sustain position and target position to hold until release</li>
+			<li>Release: time taken to glide from sustain position back to pan position</li>
+		`;
+	}
+
+	lfoHelpText(){
+		return `
+			<li>Depth: modulate sound left and right by specified amount</li>
+			<li>Freq: modulate pan at specified speed</li>
+			<li>Sync on: all pressed keys modulate together</li>
+			<li>Sync off: each pressed key spawns its own modulation wave</li>
+		`;
 	}
 }
 

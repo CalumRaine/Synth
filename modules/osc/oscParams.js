@@ -2,8 +2,9 @@ class OscParams extends HTMLFieldSetElement {
 	shape = null;
 	shift = null;
 	detune = null;
+	help = null;
 
-	constructor(){
+	constructor(helpText){
 		super();
 		super.setAttribute("is", "osc-params");
 
@@ -13,6 +14,8 @@ class OscParams extends HTMLFieldSetElement {
 		this.shape = this.appendChild(new OscShape());
 		this.shift = this.appendChild(new OscShift());
 		this.detune = this.appendChild(new OscDetune());
+
+		this.help = this.appendChild(new HelpButton(helpText));
 	}
 
 	duplicate(){

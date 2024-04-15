@@ -1,8 +1,9 @@
 class FilterParams extends HTMLFieldSetElement {
 	type = null;
 	cutoff = null;
+	help = null;
 
-	constructor(){
+	constructor(helpText){
 		super();
 		super.setAttribute("is", "filter-params");
 
@@ -11,6 +12,7 @@ class FilterParams extends HTMLFieldSetElement {
 
 		this.type = this.appendChild(new FilterType());
 		this.cutoff = this.appendChild(new FilterCutoff());
+		this.help = this.appendChild(new HelpButton(helpText));
 	}
 
 	duplicate(){

@@ -8,9 +8,9 @@ class OscSection extends HTMLFieldSetElement {
 		super();
 		super.setAttribute("is", "osc-section");
 		this.appendChild(document.createElement("legend")).innerHTML = "Oscillator";
-		this.params = this.appendChild(new OscParams());
-		this.env = this.appendChild(new EnvModule(EnvModule.NO_SR, EnvModule.USE_DEPTH));
-		this.lfo = this.appendChild(new LfoModule(1200, "Cents", KnobInput.CURVED));
+		this.params = this.appendChild(new OscParams(this.paramsHelpText()));
+		this.env = this.appendChild(new EnvModule(EnvModule.NO_SR, EnvModule.USE_DEPTH, this.envHelpText()));
+		this.lfo = this.appendChild(new LfoModule(1200, "Cents", KnobInput.CURVED, this.lfoHelpText()));
 		this.addEventListener("input", (event) => { this.updateSound(); });
 	}
 
@@ -69,6 +69,33 @@ class OscSection extends HTMLFieldSetElement {
 		this.env.fromJson(json);
 		this.lfo.fromJson(json);
 		return true;
+	}
+
+	paramsHelpText(){
+		return `
+			<li>Generates the sound wave that passes through all other modules</li>
+			<li>Different wave forms (shape) have different harmonics (fuzz)</li>
+			<li>Plays the frequency of whichever note was played on the keyboard</li>
+			<li>Incrementally shift the frequency above or below the root note by up to 24 notes (2 octaves)</li>
+			<li>Detune the frequency above or below that root note in hundredths of a note</li>
+		`;
+	}
+
+	envHelpText(){
+		return `
+			<li>Depth: target specified percentage above or below the root frequency</li>
+			<li>Attack: time taken to glide from root frequency to target</li>
+			<li>Decay: time taken ti glide from target to root frequency</li>
+		`;
+	}
+
+	lfoHelpText(){
+		return `
+			<li>Depth: modulate frequency by specified hundredths of a note</li>
+			<li>Freq: modulate frequency at specified speed</li>
+			<li>Sync on: all pressed keys modulate together</li>
+			<li>Sync off: each pressed key spawns its own modulation wave</li>
+		`;
 	}
 }
 
