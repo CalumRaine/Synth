@@ -41,7 +41,6 @@ Just download the repository and open `index.html` in a browser window.
 
 * LFO: Add randomised "constant source node"
 * Amp LFO: prevent negative volume
-* Scroll on parameter to slide it left/right
 * Fix QWERTY mapping on black keys
 * Use velocity from MIDI messages on key press
 * Try exponential ramps instead of linear ramps

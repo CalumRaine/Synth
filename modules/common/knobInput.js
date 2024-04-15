@@ -60,6 +60,7 @@ class KnobInput extends LabelledInput {
 		this.input.percentToParam = (percent) => { this.percentToParam(percent); };
 		this.input.addEventListener("input", (event) => { this.input.setAttribute("value", this.input.value); this.knobToParam(event); });
 		this.input.addEventListener("contextmenu", (event) => { this.reset(event); });
+		this.input.addEventListener("wheel", (event) => { this.wheel(event); });
 	}
 
 	get Value(){
@@ -105,6 +106,13 @@ class KnobInput extends LabelledInput {
 		let units = this.paramUnits.length > 3 && !this.paramUnits.endsWith("s") && this.paramValue != 1 ? this.paramUnits + "s" : this.paramUnits;
 		this.input.setAttribute("title", `${prefix}${this.paramValue} ${units}`);
 		this.span.innerHTML = this.input.getAttribute("title");
+		return true;
+	}
+
+	wheel(event){
+		event.preventDefault();
+		this.input.setAttribute("value", event.deltaY > 0 ? --this.input.value : ++this.input.value);
+		this.knobToParam();
 		return true;
 	}
 
