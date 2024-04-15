@@ -2,7 +2,7 @@
 
 A browser-based synth using the Web Audio API and HTML.
 
-![synth screenshot](./images/screenshot7.png)
+![synth screenshot](./images/screenshot8.png)
 
 ## Features
 
