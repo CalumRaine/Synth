@@ -123,6 +123,7 @@ class KeyboardController extends HTMLDivElement {
 			let key = this.allKeys[k];
 			if (this.whiteKeys.includes(key)){
 				key.QwertyKey = KeyboardController.WHITE_QWERTY[wq++];
+				bq += (key.note == "E" || key.note == "B" ? 1 : 0);
 			}
 			else {
 				key.QwertyKey = KeyboardController.BLACK_QWERTY[bq++];
