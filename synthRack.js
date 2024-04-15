@@ -1,5 +1,5 @@
 class SynthRack extends HTMLDivElement {
-	static VERSION = 0.6;
+	static VERSION = 0.65;
 
 	activate = null;
 	
@@ -193,10 +193,8 @@ class SynthRack extends HTMLDivElement {
 		json.version = SynthRack.VERSION;
 		json.name = this.title.innerHTML;
 		json.modules = this.modules.map(m => m.toJson());
-		console.log(json);
 		
 		let dataString = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(json))}`;
-		console.log(dataString);
 
 		let a = document.createElement("a");
 		a.setAttribute("href", dataString);
