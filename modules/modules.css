@@ -34,10 +34,6 @@ button[is="help-button"] dialog {
 	line-height: 1rem;
 }
 
-button[is="help-button"] dialog::backdrop {
-	background-color: rgba(0.5, 0.5, 0.5, 0.5);
-}
-
 button[is="help-button"] dialog ul {
 	padding-left: 1.5rem;
 }
