@@ -9,7 +9,7 @@ class LfoModule extends HTMLFieldSetElement {
 	freq = null;
 
 	static DEPTH_DEF = 0;
-	static DEPTH_MIN = 0
+	static DEPTH_MIN = 0;
 	depth = null;
 
 	sync = null;
