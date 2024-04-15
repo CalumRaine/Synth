@@ -65,9 +65,9 @@ class OscSection extends HTMLFieldSetElement {
 	}
 
 	fromJson(json){
-		this.params.fromJson(json);
-		this.env.fromJson(json);
-		this.lfo.fromJson(json);
+		this.params.fromJson(json.params);
+		this.env.fromJson(json.env);
+		this.lfo.fromJson(json.lfo);
 		return true;
 	}
 

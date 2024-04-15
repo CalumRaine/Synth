@@ -48,6 +48,21 @@ class AmpSection extends HTMLFieldSetElement {
 		return true;
 	}
 
+	toJson(){
+		let json = {};
+		json.params = this.params.toJson();
+		json.env = this.env.toJson();
+		json.lfo = this.lfo.toJson();
+		return json;
+	}
+
+	fromJson(json){
+		this.params.fromJson(json.params);
+		this.env.fromJson(json.env);
+		this.lfo.fromJson(json.lfo);
+		return true;
+	}
+
 	paramsHelpText(){
 		return `
 			<li>Adjust volume of this module</li>
