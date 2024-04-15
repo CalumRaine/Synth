@@ -58,7 +58,7 @@ class KnobInput extends LabelledInput {
 		this.dp = decimalPlaces;
 		this.paramValue = this.knobToParam();
 		this.input.percentToParam = (percent) => { this.percentToParam(percent); };
-		this.input.addEventListener("input", (event) => { this.knobToParam(event); });
+		this.input.addEventListener("input", (event) => { this.input.setAttribute("value", this.input.value); this.knobToParam(event); });
 		this.input.addEventListener("contextmenu", (event) => { this.reset(event); });
 	}
 
