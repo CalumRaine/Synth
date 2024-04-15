@@ -40,6 +40,7 @@ Just download the repository and open `index.html` in a browser window.
 ## To Do
 
 * LFO: Add randomised "constant source node"
+* Add "hold" button to sustain keys
 * Amp LFO: prevent negative volume
 * Use velocity from MIDI messages on key press
 * Try exponential ramps instead of linear ramps
