@@ -47,6 +47,7 @@ Just download the repository and open `index.html` in a browser window.
 * Amp LFO bug: Overrides volume during release phase so doesn't fade out properly
     * Connect constantSource() to another gain output 
     * Linear ramp gain to 0 across release time when key released
+    * Will need to slightly rewrite master/sync because every key press will need its own gain/env now
     * Also allows for LFO Delay feature, i.e. LFO attack
         * I think use exponential ramp for this, not linear
 * Add "hold" button to sustain keys
