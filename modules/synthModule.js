@@ -81,56 +81,10 @@ class SynthModule extends HTMLFormElement {
 	}
 
 	duplicateModule(){
-		let dupe = new SynthModule(`${this.header.innerHTML} (duplicate)`);
+		let dupe = new SynthModule();
+		dupe.fromJson(this.toJson());
+		dupe.header.innerHTML = `${this.header.innerHTML} (duplicate)`;
 		
-		let osc = this.oscParams.duplicate();
-		dupe.oscParams.replaceWith(osc);
-		dupe.oscParams = osc;
-
-		let freqEnv = this.freqEnv.duplicate();
-		dupe.freqEnv.replaceWith(freqEnv);
-		dupe.freqEnv = freqEnv;
-
-		let freqLfo = this.freqLfo.duplicate();
-		dupe.freqLfo.replaceWith(freqLfo);
-		dupe.freqLfo = freqLfo;
-
-		let filter = this.filterParams.duplicate();
-		dupe.filterParams.replaceWith(filter);
-		dupe.filterParams = filter;
-
-		let filterEnv = this.filterEnv.duplicate();
-		dupe.filterEnv.replaceWith(filterEnv);
-		dupe.filterEnv = filterEnv;
-
-		let filterLfo = this.filterLfo.duplicate();
-		dupe.filterLfo.replaceWith(filterLfo);
-		dupe.filterLfo = filterLfo;
-
-		let amp = this.ampParams.duplicate();
-		dupe.ampParams.replaceWith(amp);
-		dupe.ampParams = amp;
-
-		let ampEnv = this.ampEnv.duplicate();
-		dupe.ampEnv.replaceWith(ampEnv);
-		dupe.ampEnv = ampEnv;
-
-		let ampLfo = this.ampLfo.duplicate();
-		dupe.ampLfo.replaceWith(ampLfo);
-		dupe.ampLfo = ampLfo;
-
-		let pan = this.panParams.duplicate();
-		dupe.panParams.replaceWith(pan);
-		dupe.panParams = pan;
-
-		let panEnv = this.panEnv.duplicate();
-		dupe.panEnv.replaceWith(panEnv);
-		dupe.panEnv = panEnv;
-
-		let panLfo = this.panLfo.duplicate();
-		dupe.panLfo.replaceWith(panLfo);
-		dupe.panLfo = panLfo;
-
 		let e = new CustomEvent("duplicate module", { detail: dupe, bubbles: true });
 		this.dispatchEvent(e);
 
