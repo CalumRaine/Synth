@@ -43,6 +43,7 @@ Just download the repository and open `index.html` in a browser window.
 
 * Add "hold" button to sustain keys
 * Amp LFO: prevent negative volume
+* Amp LFO bug: Overrides volume during release phase so doesn't fade out properly
 * Use velocity from MIDI messages on key press
 * Try exponential ramps instead of linear ramps
 * Add preset patches
