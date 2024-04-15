@@ -30,7 +30,9 @@ A browser-based synth using the Web Audio API and HTML.
     * Have linear or exponential mappings for enhanced control, e.g. pitch shift (linear) or frequency cutoff (exp)
     * Can be continuous or discrete, e.g. detune (continuous) or pitch shift (discrete notes)
     * Right click to reset back to initial value
-* LFOs can be synced for improved polyphony
+* LFOs
+    * Can be synced for improved polyphony
+    * Can use standard wave shapes or a random generator
 * Import and export patches as JSON files
 
 ## How To Run
@@ -39,7 +41,6 @@ Just download the repository and open `index.html` in a browser window.
 
 ## To Do
 
-* LFO: Add randomised "constant source node"
 * Add "hold" button to sustain keys
 * Amp LFO: prevent negative volume
 * Use velocity from MIDI messages on key press

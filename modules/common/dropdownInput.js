@@ -2,6 +2,7 @@ class DropdownInput extends LabelledInput {
 	select = null;
 	constructor(label, entries){
 		super(label);
+		super.setAttribute("is", "dropdown-input");
 		this.select = this.input = this.appendChild(document.createElement("select"));
 		for (let entry of entries){
 			let option = document.createElement("option");
@@ -36,4 +37,6 @@ class DropdownInput extends LabelledInput {
 		return true;
 	}
 }
+
+customElements.define("dropdown-input", DropdownInput, { extends: "div" });
 
