@@ -83,8 +83,11 @@ class AmpSection extends HTMLFieldSetElement {
 		return `
 			<li>Depth = modulate volume by this specified value.</li>
 			<li>Freq = modulate volume at this specified speed.</li>
+			<li>Attack = time until modulation fades in.</li>
 			<li>Sync on = all pressed keys modulate together.</li>
 			<li>Sync off = each pressed key spawns its own modulation wave.</li>
+			<li>Distortion may occur if <i>gain + depth</i> &gt; 1.</li>
+			<li>Asymmetry occurs if <i>gain - depth</i> &lt; 1 (volume will rise at trough of modulation wave).</li>
 		`;
 	}
 }

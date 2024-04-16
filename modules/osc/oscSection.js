@@ -94,6 +94,7 @@ class OscSection extends HTMLFieldSetElement {
 		return `
 			<li>Depth = modulate the frequency by the specified hundredths of a note.</li>
 			<li>Freq = modulate the frequency at this specified speed.</li>
+			<li>Attack = time until modulation fades in.</li>
 			<li>Sync on = all pressed keys modulate together.</li>
 			<li>Sync off = each pressed key spawns its own modulation wave.</li>
 		`;

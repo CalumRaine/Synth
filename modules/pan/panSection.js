@@ -92,6 +92,7 @@ class PanSection extends HTMLFieldSetElement {
 		return `
 			<li>Depth = modulate audio toward the left and right by this specified amount.</li>
 			<li>Freq = modulate panning at this specified speed</li>
+			<li>Attack = time until modulation fades in.</li>
 			<li>Sync on = all pressed keys modulate together.</li>
 			<li>Sync off = each pressed key spawns its own modulation wave.</li>
 		`;
