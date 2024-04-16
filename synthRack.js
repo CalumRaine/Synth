@@ -53,8 +53,11 @@ class SynthRack extends HTMLDivElement {
 			// Play key when sliding into key with pressed mouse
 			k.onpointerenter = (event) => { event.preventDefault(); return event.buttons > 0 ? this.playKey(k) : false };
 
-			// Release key when sliding out or lifting mouse/touch
-			k.onpointerleave = k.onpointerup = (event) => { event.preventDefault(); this.releaseKey(k); }
+			// Release key when sliding out
+			k.onpointerleave = (event) => { event.preventDefault(); return event.buttons > 0 ? this.releaseKey(k) : false; }
+			
+			// Release key when lifting mouse/touch
+			k.onpointerup = (event) => { event.preventDefault(); this.releaseKey(k); }
 
 			// Ignore right click and long press
 			k.oncontextmenu = (event) => event.preventDefault();
