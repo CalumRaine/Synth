@@ -13,15 +13,6 @@ class PanParams extends HTMLFieldSetElement {
 		this.help = this.appendChild(new HelpButton(helpText));
 	}
 
-	duplicate(){
-		let dupe = new PanParams();
-
-		dupe.pan.input.value = this.pan.input.value;
-		dupe.pan.knobToParam();
-
-		return dupe;
-	}
-
 	toJson(){
 		let json = {};
 		json.pan = this.pan.toJson();

@@ -18,20 +18,6 @@ class OscParams extends HTMLFieldSetElement {
 		this.help = this.appendChild(new HelpButton(helpText));
 	}
 
-	duplicate(){
-		let dupe = new OscParams();
-
-		dupe.shape.select.value = this.shape.select.value;
-		
-		dupe.shift.input.value = this.shift.input.value;
-		dupe.shift.knobToParam();
-
-		dupe.detune.input.value = this.detune.input.value;
-		dupe.detune.knobToParam();
-
-		return dupe;
-	}
-
 	toJson(){
 		let json = {};
 		json.shape = this.shape.toJson();

@@ -13,15 +13,6 @@ class AmpParams extends HTMLFieldSetElement {
 		this.help = this.appendChild(new HelpButton(helpText));
 	}
 
-	duplicate(){
-		let dupe = new AmpParams();
-
-		dupe.gain.input.value = this.gain.input.value;
-		dupe.gain.knobToParam();
-
-		return dupe;
-	}
-
 	toJson(){
 		let json = {};
 		json.gain = this.gain.toJson();

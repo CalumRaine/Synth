@@ -47,33 +47,6 @@ class EnvModule extends HTMLFieldSetElement {
 		this.help = this.appendChild(new HelpButton(helpText));
 	}
 
-	duplicate(){
-		let dupe = new EnvModule(this.sustain != null && this.release != null, this.depth != null);
-
-		dupe.attack.input.value = this.attack.input.value;
-		dupe.attack.knobToParam();
-
-		dupe.decay.input.value = this.decay.input.value;
-		dupe.decay.knobToParam();
-
-		if (this.sustain != null){
-			dupe.sustain.input.value = this.sustain.input.value;
-			dupe.sustain.knobToParam();
-		}
-		
-		if (this.release != null){
-			dupe.release.input.value = this.release.input.value;
-			dupe.release.knobToParam();
-		}
-
-		if (this.depth != null){
-			dupe.depth.input.value = this.depth.input.value;
-			dupe.depth.knobToParam();
-		}
-
-		return dupe;
-	}
-
 	get Attack(){
 		// As seconds
 		return this.attack.Value / 1000;

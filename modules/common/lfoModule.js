@@ -57,22 +57,6 @@ class LfoModule extends HTMLFieldSetElement {
 		return this.masterSource != null;
 	}
 
-	duplicate(){
-		let dupe = new LfoModule(this.depth.paramMax, this.depth.paramUnits, this.depth.exp);
-		
-		dupe.shape.input.value = this.shape.input.value;
-		
-		dupe.freq.input.value = this.freq.input.value;
-		dupe.freq.knobToParam();
-		
-		dupe.depth.input.value = this.depth.input.value;
-		dupe.depth.knobToParam();
-
-		dupe.sync.Checked = this.sync.Checked;
-
-		return dupe;
-	}
-
 	makeSound(audioContext, key){
 		let src = null;
 		if (this.sync.Checked){

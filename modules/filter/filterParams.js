@@ -15,17 +15,6 @@ class FilterParams extends HTMLFieldSetElement {
 		this.help = this.appendChild(new HelpButton(helpText));
 	}
 
-	duplicate(){
-		let dupe = new FilterParams();
-
-		dupe.type.input.value = this.type.input.value;
-
-		dupe.cutoff.input.value = this.cutoff.input.value;
-		dupe.cutoff.knobToParam();
-
-		return dupe;
-	}
-
 	toJson(){
 		let json = {};
 		json.type = this.type.toJson();
