@@ -44,7 +44,6 @@ Just download the repository and open `index.html` in a browser window.
 * Amp LFO: prevent negative volume
     * Change "depth" parameter to percentage of Math.min(value, 1-value)
     * Will keep within bounds of 0 to 1
-* Include LFO Attack in JSON duplication
 * Add "hold" button to sustain keys
 * Use velocity from MIDI messages on key press
 * Add preset patches

@@ -236,6 +236,7 @@ class LfoModule extends HTMLFieldSetElement {
 		let json = {};
 		json.freq = this.freq.toJson();
 		json.depth = this.depth.toJson();
+		json.attack = this.attack.toJson();
 		json.sync = this.sync.toJson();
 		return json;
 	}
@@ -243,6 +244,7 @@ class LfoModule extends HTMLFieldSetElement {
 	fromJson(json){
 		this.freq.fromJson(json.freq);
 		this.depth.fromJson(json.depth);
+		this.attack.fromJson(json.attack);
 		this.sync.fromJson(json.sync);
 		return true;
 	}
