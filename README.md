@@ -42,6 +42,8 @@ Just download the repository and open `index.html` in a browser window.
 ## To Do
 
 * Add "hold" button to sustain keys
+* Look for memory leak in stopSound()
+* Optimise compressor parameters
 * Use velocity from MIDI messages on key press
 * Add preset patches
 * Consider collapsible sections, i.e. modules or components

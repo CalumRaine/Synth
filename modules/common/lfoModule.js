@@ -179,7 +179,7 @@ class LfoModule extends HTMLFieldSetElement {
 			this.oscillators.splice(index, 1);
 		}
 
-		let matchingOscGains = this.oscGains.filter(o => o.calumKey == key);
+		let matchingOscGains = this.oscGains.filter(g => g.calumKey == key);
 		for (let oscGain of matchingOscGains){
 			let index = this.oscGains.findIndex(g => g == oscGain);
 			this.oscGains.splice(index, 1);
