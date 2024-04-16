@@ -43,6 +43,7 @@ class SynthRack extends HTMLDivElement {
 		this.addEventListener("remove module", (event) => { this.removeModule(event.detail); });
 
 		this.activate = this.appendChild(document.createElement("dialog"));
+		this.activate.className = "activate";
 		let start = this.activate.appendChild(document.createElement("button"));
 		start.innerHTML = "Start";
 		start.onclick = (event) => { this.initialise(event); };

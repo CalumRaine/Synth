@@ -20,7 +20,15 @@ div[is="synth-rack"] header h1 {
 	flex-grow: 1;
 }
 
-dialog::backdrop {
-	background-color: rgba(0.5, 0.5, 0.5, 0.5);
+dialog.activate {
+	padding: 2rem;
+	border-radius: 1rem;
 }
 
+dialog.activate button {
+	font-size: 1.5rem;
+}
+
+dialog.activate::backdrop {
+	background-color: rgba(0, 0, 0, 0.75);
+}
