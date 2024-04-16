@@ -32,7 +32,9 @@ class AmpSection extends HTMLFieldSetElement {
 		return true;
 	}
 
-	stopSound(audioContext, key, delay){
+	stopSound(audioContext, key, delayMs){
+		this.lfo.stopSound(audioContext, key, delayMs);
+		
 		let matchingAmps = this.amps.filter(a => a.calumKey == key);
 		for (let amp of matchingAmps){
 			amp.gain.cancelScheduledValues(0.0);
@@ -41,9 +43,8 @@ class AmpSection extends HTMLFieldSetElement {
 		}
 
 		setTimeout(() => {
-			this.lfo.stopSound(audioContext, key);
 			matchingAmps.forEach(a => a.disconnect());
-		}, delay);
+		}, delayMs);
 
 		return true;
 	}

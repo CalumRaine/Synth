@@ -39,7 +39,9 @@ class PanSection extends HTMLFieldSetElement {
 		return true;
 	}
 
-	stopSound(audioContext, key, delay){
+	stopSound(audioContext, key, delayMs){
+		this.lfo.stopSound(audioContext, key, delayMs);
+
 		let matchingPans = this.pans.filter(p => p.calumKey == key);
 		for (let pan of matchingPans){
 			pan.pan.cancelScheduledValues(0.0);
@@ -48,9 +50,8 @@ class PanSection extends HTMLFieldSetElement {
 		}
 
 		setTimeout(() => {
-			this.lfo.stopSound(audioContext, key);
 			matchingPans.forEach(p => p.disconnect());
-		}, delay);
+		}, delayMs);
 
 		return true;
 	}

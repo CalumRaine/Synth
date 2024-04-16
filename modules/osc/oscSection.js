@@ -42,16 +42,17 @@ class OscSection extends HTMLFieldSetElement {
 		return true;
 	}
 
-	stopSound(audioContext, key, delay){
+	stopSound(audioContext, key, delayMs){
+		this.lfo.stopSound(audioContext, key, delayMs);
+
 		let matchingOsc = this.oscillators.filter(o => o.calumKey == key);
 		for (let osc of matchingOsc){
 			this.oscillators.splice(this.oscillators.findIndex(o => o == osc));
 		}
 
 		setTimeout(() => {
-			this.lfo.stopSound(audioContext, key);
 			matchingOsc.forEach(o => { o.stop(); o.disconnect(); });
-		}, delay);
+		}, delayMs);
 
 		return true;
 	}

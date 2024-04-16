@@ -12,6 +12,8 @@ class LfoModule extends HTMLFieldSetElement {
 	static DEPTH_MIN = 0;
 	depth = null;
 
+	attack = null;
+
 	sync = null;
 
 	help = null;
@@ -19,11 +21,13 @@ class LfoModule extends HTMLFieldSetElement {
 	masterOsc = null;
 	oscillators = [];
 
-	masterGain = null;
-	gains = [];
+	masterOscGain = null;
+	oscGains = [];
 	
 	masterSource = null;
 	sources = [];
+
+	gains = [];
 
 	constructor(maxDepth, unitsDepth, linearDepth, helpText){
 		super();
@@ -32,8 +36,9 @@ class LfoModule extends HTMLFieldSetElement {
 		legend.innerHTML = "LFO";
 
 		this.shape = this.appendChild(new DropdownInput("Shape", LfoModule.SHAPES));
-		this.depth = this.appendChild(new KnobInput("Depth", LfoModule.DEPTH_MIN, maxDepth, unitsDepth, KnobInput.DP_CENT, LfoModule.DEPTH_DEF, linearDepth, KnobInput.NO_REFLECT));
 		this.freq = this.appendChild(new KnobInput("Freq", LfoModule.FREQ_MIN, LfoModule.FREQ_MAX, LfoModule.FREQ_UNIT, KnobInput.DP_FREQ, LfoModule.FREQ_DEF, KnobInput.CURVED, KnobInput.NO_REFLECT));
+		this.depth = this.appendChild(new KnobInput("Depth", LfoModule.DEPTH_MIN, maxDepth, unitsDepth, KnobInput.DP_CENT, LfoModule.DEPTH_DEF, linearDepth, KnobInput.NO_REFLECT));
+		this.attack = this.appendChild(new KnobInput("Attack", EnvModule.TIME_MIN, EnvModule.TIME_MAX, EnvModule.TIME_UNIT, KnobInput.DP_INT, 0, KnobInput.CURVED, KnobInput.NO_REFLECT));
 
 		// Polyphony is often better if the LFO is synced to one master wave
 		this.sync = this.appendChild(new ToggleInput("Sync", false));
@@ -69,40 +74,51 @@ class LfoModule extends HTMLFieldSetElement {
 	}
 
 	makeSound(audioContext, key){
+		let src = null;
 		if (this.sync.Checked){
-			return this.MasterInitialised ? this.masterSource : this.makeMaster(audioContext);
+			src = this.MasterInitialised ? this.masterSource : this.makeMaster(audioContext);
+		}
+		else {
+			let osc = audioContext.createOscillator();
+			osc.type = this.IsRandom ? osc.type : this.shape.Value;
+			osc.frequency.value = this.freq.Value;
+			osc.calumKey = key;
+			osc.start();
+			this.oscillators.push(osc);
+
+			let oscGain = audioContext.createGain();
+			oscGain.calumKey = key;
+			oscGain.gain.value = this.IsRandom ? 0.0 : this.depth.Value;
+			this.oscGains.push(oscGain);
+
+			// When LFO is randomised, src behaves as a randomiser:
+			// 	- Ignore oscillator by silencing gain
+			// 	- Randomise src offset at set intervals
+			// When LFO not randomised, src behaves as a pass-through:
+			// 	- Reinstate oscillator by restoring gain
+			// 	- Cancel any scheduled changes
+			// 	- Return src offset to 0
+			// 	- Clear interval
+			src = audioContext.createConstantSource();
+			src.offset.value = 0.0;
+			src.calumInterval = !this.IsRandom ? null : this.randomInterval(src);
+			src.calumKey = key;
+			src.start();
+			this.sources.push(src);
+			
+			osc.connect(oscGain);
+			oscGain.connect(src.offset);
 		}
 
-		let osc = audioContext.createOscillator();
-		osc.type = this.IsRandom ? osc.type : this.shape.Value;
-		osc.frequency.value = this.freq.Value;
-		osc.calumKey = key;
-		osc.start();
-		this.oscillators.push(osc);
-
+		// Shape output with attack and release
 		let gain = audioContext.createGain();
 		gain.calumKey = key;
-		gain.gain.value = this.IsRandom ? 0.0 : this.depth.Value;
+		gain.gain.value = 0.0;
+		gain.gain.linearRampToValueAtTime(1.0, audioContext.currentTime + (this.attack.Value / 1000));
 		this.gains.push(gain);
 
-		// When LFO is randomised, src behaves as a randomiser:
-		// 	- Ignore oscillator by silencing gain
-		// 	- Randomise src offset at set intervals
-		// When LFO not randomised, src behaves as a pass-through:
-		// 	- Reinstate oscillator by restoring gain
-		// 	- Cancel any scheduled changes
-		// 	- Return src offset to 0
-		// 	- Clear interval
-		let src = audioContext.createConstantSource();
-		src.offset.value = 0.0;
-		src.calumInterval = !this.IsRandom ? null : this.randomInterval(src);
-		src.calumKey = key;
-		src.start();
-		this.sources.push(src);
-
-		osc.connect(gain);
-		gain.connect(src.offset);
-		return src;
+		src.connect(gain);
+		return gain;
 	}
 
 	makeMaster(audioContext){
@@ -112,9 +128,9 @@ class LfoModule extends HTMLFieldSetElement {
 		osc.start();
 		this.masterOsc = osc;
 
-		let gain = audioContext.createGain();
-		gain.gain.value = this.IsRandom ? 0.0 : this.depth.Value;
-		this.masterGain = gain;
+		let oscGain = audioContext.createGain();
+		oscGain.gain.value = this.IsRandom ? 0.0 : this.depth.Value;
+		this.masterOscGain = oscGain;
 
 		let src = audioContext.createConstantSource();
 		src.offset.value = 0.0;
@@ -122,8 +138,8 @@ class LfoModule extends HTMLFieldSetElement {
 		src.start();
 		this.masterSource = src;
 
-		osc.connect(gain);
-		gain.connect(src.offset);
+		osc.connect(oscGain);
+		oscGain.connect(src.offset);
 		return this.masterSource;
 	}
 
@@ -147,12 +163,12 @@ class LfoModule extends HTMLFieldSetElement {
 			this.masterOsc.type = this.IsRandom ? this.masterOsc.type : this.shape.Value;
 		}
 
-		for (let gain of this.gains){
-			gain.gain.value = this.IsRandom ? 0.0 : this.depth.Value;
+		for (let oscGain of this.oscGains){
+			oscGain.gain.value = this.IsRandom ? 0.0 : this.depth.Value;
 		}
 
-		if (this.masterGain != null){
-			this.masterGain.gain.value = this.IsRandom ? 0.0 : this.depth.Value;
+		if (this.masterOscGain != null){
+			this.masterOscGain.gain.value = this.IsRandom ? 0.0 : this.depth.Value;
 		}
 
 		for (let src of this.sources){
@@ -172,20 +188,17 @@ class LfoModule extends HTMLFieldSetElement {
 		return true;
 	}
 
-	stopSound(audioContext, key){
+	stopSound(audioContext, key, releaseMs){
 		let matchingOsc = this.oscillators.filter(o => o.calumKey == key);
 		for (let osc of matchingOsc){
 			let index = this.oscillators.findIndex(o => o == osc);
 			this.oscillators.splice(index, 1);
-			osc.stop();
-			osc.disconnect();
 		}
 
-		let matchingGains = this.gains.filter(o => o.calumKey == key);
-		for (let gain of matchingGains){
-			let index = this.gains.findIndex(g => g == gain);
-			this.gains.splice(index, 1);
-			gain.disconnect();
+		let matchingOscGains = this.oscGains.filter(o => o.calumKey == key);
+		for (let oscGain of matchingOscGains){
+			let index = this.oscGains.findIndex(g => g == oscGain);
+			this.oscGains.splice(index, 1);
 		}
 
 		let matchingSources = this.sources.filter(s => s.calumKey == key);
@@ -193,10 +206,22 @@ class LfoModule extends HTMLFieldSetElement {
 			window.clearInterval(src.calumInterval);
 			let index = this.sources.findIndex(s => s.calumKey == key);
 			this.sources.splice(index, 1);
-			src.offset.cancelScheduledValues(0.0);
-			src.stop();
-			src.disconnect();
 		}
+
+		let matchingGains = this.gains.filter(g => g.calumKey == key);
+		for (let gain of matchingGains){
+			gain.gain.cancelScheduledValues(0.0);
+			gain.gain.linearRampToValueAtTime(0.0, audioContext.currentTime + (releaseMs / 1000));
+			let index = this.gains.findIndex(g => g == gain);
+			this.gains.splice(index, 1);
+		}
+
+		setTimeout(() => {
+			matchingOsc.forEach(o => { o.stop(); o.disconnect(); });
+			matchingOscGains.forEach(g => g.disconnect() );
+			matchingSources.forEach(s => { s.stop(); s.disconnect(); });
+			matchingGains.forEach(g => g.disconnect() );
+		}, releaseMs);
 
 		return true;
 	}
@@ -211,8 +236,8 @@ class LfoModule extends HTMLFieldSetElement {
 		this.masterOsc.disconnect();
 		this.masterOsc = null;
 
-		this.masterGain.disconnect();
-		this.masterGain = null;
+		this.masterOscGain.disconnect();
+		this.masterOscGain = null;
 
 		window.clearInterval(this.masterSource.calumInterval);
 		this.masterSource.offset.cancelScheduledValues(0.0);

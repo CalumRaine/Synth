@@ -46,7 +46,9 @@ class FilterSection extends HTMLFieldSetElement {
 		return true;
 	}
 
-	stopSound(audioContext, key, delay){
+	stopSound(audioContext, key, delayMs){
+		this.lfo.stopSound(audioContext, key, delayMs);
+
 		let matchingFilters = this.filters.filter(f => f.calumKey == key);
 		for (let filter of matchingFilters){
 			filter.frequency.cancelScheduledValues(0.0);
@@ -55,9 +57,8 @@ class FilterSection extends HTMLFieldSetElement {
 		}
 
 		setTimeout(() => {
-			this.lfo.stopSound(audioContext, key);
 			matchingFilters.forEach(f => f.disconnect());
-		}, delay);
+		}, delayMs);
 
 		return true;
 	}
