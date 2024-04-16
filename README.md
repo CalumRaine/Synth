@@ -49,6 +49,7 @@ Just download the repository and open `index.html` in a browser window.
 * Consider collapsible sections, i.e. modules or components
 * Add wood skins and metal skins etc.
 * Add recording/editing functionality
+* Improve naming of inputs to assist screen readers
 * Add cool controllers (instead of just a keyboard)
     * Use the trackpad like a theremin?
     * Edit incoming audio files
