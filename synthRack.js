@@ -48,13 +48,13 @@ class SynthRack extends HTMLDivElement {
 
 		this.keyboard.allKeys.forEach(k => {
 			// Play key on mouse/touch down
-			k.onpointerdown = (event) => this.playKey(k);
+			k.onpointerdown = (event) => { event.preventDefault(); this.playKey(k); }
 
 			// Play key when sliding into key with pressed mouse
-			k.onpointerenter = (event) => { return event.buttons > 0 ? this.playKey(k) : false };
+			k.onpointerenter = (event) => { event.preventDefault(); return event.buttons > 0 ? this.playKey(k) : false };
 
 			// Release key when sliding out or lifting mouse/touch
-			k.onpointerleave = k.onpointerup = (event) => this.releaseKey(k);
+			k.onpointerleave = k.onpointerup = (event) => { event.preventDefault(); this.releaseKey(k); }
 
 			// Ignore right click and long press
 			k.oncontextmenu = (event) => event.preventDefault();
@@ -106,14 +106,12 @@ class SynthRack extends HTMLDivElement {
 	}
 
 	playKey(key){
-		event.preventDefault();
 		key.play();
 		this.modules.forEach(m => m.makeSound(this.audioContext, key, this.speakers));
 		return true;
 	}
 
 	releaseKey(key){
-		event.preventDefault();
 		key.release();
 		this.modules.forEach(m => m.stopSound(this.audioContext, key));
 		return true;
