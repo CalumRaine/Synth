@@ -7,6 +7,7 @@ div[is="keyboard-controller"] {
 	background-color: white;
 	border-top: 1px solid black;
 	padding: 0.2rem 0rem 0.5rem 0rem;
+	user-select: none;
 
 	/* Prevent browser zooming on double click */
 	touch-action: manipulation;
@@ -16,8 +17,7 @@ div[is="keyboard-controller"] {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		width: 100%;
-		height: 1vh;
+		height: 1rem;
 		background-color: black;
 		cursor: grab;
 	}
@@ -27,7 +27,8 @@ div[is="keyboard-controller"] {
 	}
 	
 	div[is="qwerty-handle"] {
-		height: 80%;
+		text-align: center;
+		font-size: 0.6rem;
 		background-color: yellow;
 	}
 

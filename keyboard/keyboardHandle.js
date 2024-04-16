@@ -26,6 +26,7 @@ class QwertyHandle extends HTMLDivElement {
 	constructor(){
 		super();
 		super.setAttribute("is", "qwerty-handle");
+		this.innerHTML = "&equiv;"
 	}
 
 	get MarginLeft(){
