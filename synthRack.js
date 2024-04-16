@@ -18,8 +18,9 @@ class SynthRack extends HTMLDivElement {
 		super.setAttribute("is", "synth-rack");
 		let header = this.appendChild(document.createElement("header"));
 		this.title = header.appendChild(document.createElement("h1"));
-		this.title.setAttribute("contenteditable", "true");
 		this.title.innerHTML = "Synth Rack";
+		this.title.setAttribute("contenteditable", "true");
+		this.title.setAttribute("title", "Patch name");
 
 		this.save = header.appendChild(document.createElement("button"));
 		this.save.setAttribute("title", "Export Patch");

@@ -11,6 +11,7 @@ class SynthModule extends HTMLFormElement {
 
 		this.header = this.appendChild(document.createElement("h2"));
 		this.header.innerHTML = name;
+		this.header.setAttribute("title", "Module name");
 		this.header.setAttribute("contenteditable", "true");
 
 		this.osc = this.appendChild(new OscSection());
