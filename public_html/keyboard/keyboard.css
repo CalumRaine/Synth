@@ -10,7 +10,7 @@ div[is="keyboard-controller"] {
 	user-select: none;
 
 	/* Prevent browser zooming on double click */
-	touch-action: manipulation;
+	touch-action: none;
 }
 
 	div[is="qwerty-rail"] {
