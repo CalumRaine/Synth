@@ -12,6 +12,9 @@ class KeyboardKey extends HTMLButtonElement {
 		this.note = note;
 		this.freq = freq;
 		this.span = this.appendChild(document.createElement("span"));
+
+		// Hack to make it work on touchscreen
+		this.span.ongotpointercapture = function(event) { this.releasePointerCapture(event.pointerId); };
 	}
 
 	set QwertyKey(value){

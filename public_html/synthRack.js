@@ -61,6 +61,9 @@ class SynthRack extends HTMLDivElement {
 			// Release key when lifting mouse/touch
 			k.onpointerup = (event) => { event.preventDefault(); this.releaseKey(k); }
 
+			// Hack to make it work on touchscreen
+			k.ongotpointercapture = function(event) { this.releasePointerCapture(event.pointerId); };
+
 			// Ignore right click and long press
 			k.oncontextmenu = (event) => event.preventDefault();
 		});
