@@ -41,6 +41,8 @@ Just download the repository and open `index.html` in a browser window.
 
 ## To Do
 
+* Add module mute button
+* Try reusing oscillators/modules instead of creating/disposing
 * Add "hold" button to sustain keys
 * Look for memory leak in stopSound()
 * Use velocity from MIDI messages on key press
