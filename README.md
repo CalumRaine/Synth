@@ -41,11 +41,14 @@ Just download the repository and open `index.html` in a browser window.
 
 Or host it locally: `python -m http.server` and then open `localhost:8000` in your favourite browser.
 
+(Currently only tested in Google Chrome).
+
 ## To Do
 
 * Add preset patches
 * Improve naming of input elements to assist screen readers
 * Try reusing oscillators/nodes instead of creating/disposing
+    * This doesn't seem necessary now I fixed the memory leak
 
 ## Future Considerations
 
