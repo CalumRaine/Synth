@@ -27,6 +27,9 @@ class QwertyHandle extends HTMLDivElement {
 		super();
 		super.setAttribute("is", "qwerty-handle");
 		this.innerHTML = "&equiv;"
+
+		// Hack to make it work on touchscreen
+		this.ongotpointercapture = function(event) { this.releasePointerCapture(event.pointerId); };
 	}
 
 	get MarginLeft(){
