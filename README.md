@@ -45,7 +45,6 @@ Or host it locally: `python -m http.server` and then open `localhost:8000` in yo
 
 * Add preset patches
 * Improve naming of input elements to assist screen readers
-* Identify memory leak in `stopSound()`
 * Try reusing oscillators/nodes instead of creating/disposing
 
 ## Future Considerations

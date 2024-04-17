@@ -47,7 +47,7 @@ class OscSection extends HTMLFieldSetElement {
 
 		let matchingOsc = this.oscillators.filter(o => o.calumKey == key);
 		for (let osc of matchingOsc){
-			this.oscillators.splice(this.oscillators.findIndex(o => o == osc));
+			this.oscillators.splice(this.oscillators.findIndex(o => o == osc), 1);
 		}
 
 		setTimeout(() => {
