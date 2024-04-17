@@ -78,8 +78,11 @@ class SynthRack extends HTMLDivElement {
 		this.speakers = this.audioContext.createGain();
 		this.speakers.gain.value = 1.0;
 
-		// Default compressor values appear fine
 		this.compressor = this.audioContext.createDynamicsCompressor();
+		this.compressor.ratio.value = 20;		// default = 12
+		this.compressor.threshold.value = -30;		// default = -24
+		this.compressor.knee.value = 20;		// default = 30
+		this.compressor.attack.value = 0.002;		// default = 0.003
 
 		this.speakers.connect(this.compressor);
 		this.compressor.connect(this.audioContext.destination);
