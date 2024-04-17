@@ -224,7 +224,7 @@ class SynthRack extends HTMLDivElement {
 
 		let a = document.createElement("a");
 		a.setAttribute("href", dataString);
-		a.setAttribute("download", `${json.name}.json`);
+		a.setAttribute("download", `${json.name.replace(" ", "_")}.json`);
 		a.click();
 		return json;
 	}
