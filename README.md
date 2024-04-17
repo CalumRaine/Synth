@@ -52,6 +52,7 @@ Or host it locally: `python -m http.server` and then open `localhost:8000` in yo
 
 ## Future Considerations
 
+* Add reverb/echo/delay effects etc.
 * Add recording/editing functionality
     * Basic sound capture/layering/playback
     * MIDI capture for editing and parameter automation
