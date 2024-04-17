@@ -41,7 +41,7 @@ Access the online version at [synthrack.app](https://www.synthrack.app).
 
 Or download this repository and open `index.html` in a browser window.
 
-Or download this repository host it locally: `python -m http.server` and then open `localhost:8000` in your favourite browser.
+Or download this repository and host it locally: `python -m http.server` and then open `localhost:8000` in your favourite browser.
 
 (Currently only tested in Google Chrome on laptop and Android).
 
