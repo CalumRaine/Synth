@@ -39,19 +39,27 @@ A browser-based synth using the Web Audio API and HTML.
 
 Just download the repository and open `index.html` in a browser window.
 
+Or host it locally: `python -m http.server` and then open `localhost:8000` in your favourite browser.
+
 ## To Do
 
-* Add module mute button
-* Try reusing oscillators/modules instead of creating/disposing
-* Add "hold" button to sustain keys
-* Look for memory leak in stopSound()
-* Use velocity from MIDI messages on key press
 * Add preset patches
+* Improve naming of input elements to assist screen readers
+* Identify memory leak in `stopSound()`
+* Try reusing oscillators/nodes instead of creating/disposing
+
+## Future Considerations
+
+* Add recording/editing functionality
+    * Basic sound capture/layering/playback
+    * MIDI capture for editing and parameter automation
+* Utilise key press velocity from MIDI messages
+* Add "hold" button to keep keys pressed while editing
+* Add a module mute button
+* Add a master volume control
+* Add other non-keyboard controllers
+    * Use the trackpad like a thermin?
+    * Modify incoming audio files
 * Consider collapsible sections, i.e. modules or components
 * Add wood skins and metal skins etc.
-* Add recording/editing functionality
-* Improve naming of inputs to assist screen readers
-* Add cool controllers (instead of just a keyboard)
-    * Use the trackpad like a theremin?
-    * Edit incoming audio files
 

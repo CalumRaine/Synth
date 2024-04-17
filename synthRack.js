@@ -1,5 +1,5 @@
 class SynthRack extends HTMLDivElement {
-	static VERSION = 0.7;
+	static VERSION = 1.0;
 
 	activate = null;
 	
