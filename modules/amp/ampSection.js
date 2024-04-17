@@ -39,7 +39,8 @@ class AmpSection extends HTMLFieldSetElement {
 		for (let amp of matchingAmps){
 			amp.gain.cancelScheduledValues(0.0);
 			amp.gain.linearRampToValueAtTime(0.0, audioContext.currentTime + this.env.Release);
-			this.amps.splice(this.amps.findIndex(a => a == amp), 1);
+			let index = this.amps.findIndex(a => a == amp);
+			this.amps.splice(index, 1);
 		}
 
 		setTimeout(() => {

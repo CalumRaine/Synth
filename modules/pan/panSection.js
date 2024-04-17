@@ -46,7 +46,8 @@ class PanSection extends HTMLFieldSetElement {
 		for (let pan of matchingPans){
 			pan.pan.cancelScheduledValues(0.0);
 			pan.pan.linearRampToValueAtTime(this.params.pan.Value, audioContext.currentTime + this.env.Release);
-			this.pans.splice(this.pans.findIndex(p => p == pan), 1);
+			let index = this.pans.findIndex(p => p == pan);
+			this.pans.splice(index, 1);
 		}
 
 		setTimeout(() => {

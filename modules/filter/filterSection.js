@@ -53,7 +53,8 @@ class FilterSection extends HTMLFieldSetElement {
 		for (let filter of matchingFilters){
 			filter.frequency.cancelScheduledValues(0.0);
 			filter.frequency.linearRampToValueAtTime(this.params.cutoff.Value, audioContext.currentTime + this.env.Release);
-			this.filters.splice(this.filters.findIndex(f => f == filter), 1);
+			let index = this.filters.findIndex(f => f == filter);
+			this.filters.splice(index, 1);
 		}
 
 		setTimeout(() => {
