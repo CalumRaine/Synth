@@ -37,7 +37,10 @@ dialog.activate::backdrop {
 a#contact {
 	position: fixed;
 	bottom: 0;
+	left: 0;
+	right: 0;
 	z-index: 3;
 	font-size: 0.75rem;
+	text-align: center;
 }
 
