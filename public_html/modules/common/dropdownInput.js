@@ -1,8 +1,8 @@
 class DropdownInput extends LabelledInput {
 	select = null;
-	constructor(label, entries){
-		super(label);
-		super.setAttribute("is", "dropdown-input");
+
+	init(label, entries){
+		super.init(label);
 		this.select = this.input = this.appendChild(document.createElement("select"));
 		for (let entry of entries){
 			let option = document.createElement("option");
@@ -12,6 +12,7 @@ class DropdownInput extends LabelledInput {
 		}
 
 		this.input.percentToParam = (percent) => { this.percentToParam(percent); };
+		return this;
 	}
 
 	percentToParam(percent){
@@ -38,5 +39,5 @@ class DropdownInput extends LabelledInput {
 	}
 }
 
-customElements.define("dropdown-input", DropdownInput, { extends: "div" });
+customElements.define("dropdown-input", DropdownInput);
 

@@ -1,4 +1,4 @@
-class SynthRack extends HTMLDivElement {
+class SynthRack extends CalumDiv {
 	static VERSION = 1.0;
 
 	activate = null;
@@ -13,9 +13,8 @@ class SynthRack extends HTMLDivElement {
 	audioContext = null;
 	modules = [];
 	
-	constructor(){
-		super();
-		super.setAttribute("is", "synth-rack");
+	init(){
+		super.init();
 		let header = this.appendChild(document.createElement("header"));
 		this.title = header.appendChild(document.createElement("h1"));
 		this.title.innerHTML = "Synth Rack";
@@ -37,8 +36,8 @@ class SynthRack extends HTMLDivElement {
 		upload.setAttribute("hidden", "");
 		upload.addEventListener("input", (event) => { this.loadPatch(event); });
 
-		this.keyboard = this.appendChild(new KeyboardController());
-		this.modules.push(this.appendChild(new SynthModule(this.getUniqueName())));
+		this.keyboard = this.appendChild(new KeyboardController().init());
+		this.modules.push(this.appendChild(new SynthModule().init(this.getUniqueName())));
 		this.addEventListener("duplicate module", (event) => { this.modules.push(event.detail); });
 		this.addEventListener("remove module", (event) => { this.removeModule(event.detail); });
 
@@ -73,6 +72,7 @@ class SynthRack extends HTMLDivElement {
 	}
 
 	connectedCallback(){
+		this.init();
 		this.activate.showModal();
 	}
 
@@ -257,7 +257,7 @@ class SynthRack extends HTMLDivElement {
 			this.modules.forEach(m => m.remove());
 			this.modules = [];
 			for (let jsonModule of json.modules){
-				let module = new SynthModule();
+				let module = new SynthModule().init();
 				module.fromJson(jsonModule);
 				this.appendChild(module);
 				this.modules.push(module);
@@ -271,5 +271,5 @@ class SynthRack extends HTMLDivElement {
 	}
 }
 
-customElements.define("synth-rack", SynthRack, { extends: "div" });
+customElements.define("synth-rack", SynthRack);
 

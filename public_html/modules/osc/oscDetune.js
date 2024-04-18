@@ -4,9 +4,9 @@ class OscDetune extends KnobInput {
 	static DEF = 0;
 	static UNIT = "Cent";
 	
-	constructor(){
-		super("Detune", OscDetune.MIN, OscDetune.MAX, OscDetune.UNIT, KnobInput.DP_INT, OscDetune.DEF, KnobInput.LINEAR, KnobInput.REFLECT);
-		super.setAttribute("is", "osc-detune");
+	init(){
+		super.init("Detune", OscDetune.MIN, OscDetune.MAX, OscDetune.UNIT, KnobInput.DP_INT, OscDetune.DEF, KnobInput.LINEAR, KnobInput.REFLECT);
+		return this;
 	}
 
 	get Cents(){
@@ -14,5 +14,5 @@ class OscDetune extends KnobInput {
 	}
 }
 
-customElements.define("osc-detune", OscDetune, { extends: "div" });
+customElements.define("osc-detune", OscDetune);
 

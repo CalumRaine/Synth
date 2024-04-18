@@ -1,17 +1,16 @@
-class FilterSection extends HTMLFieldSetElement {
+class FilterSection extends CalumFieldset {
 	params = null;
 	env = null;
 	lfo = null;
 	filters = [];
 
-	constructor(){
-		super();
-		super.setAttribute("is", "filter-section");
-		this.appendChild(document.createElement("legend")).innerHTML = "Filter";
-		this.params = this.appendChild(new FilterParams(this.paramsHelpText()));
-		this.env = this.appendChild(new EnvModule(EnvModule.USE_SR, EnvModule.USE_DEPTH, this.envHelpText()));
-		this.lfo = this.appendChild(new LfoModule(24000, "Hz", KnobInput.CURVED, this.lfoHelpText()));
+	init(){
+		super.init("Filter");
+		this.params = this.appendChild(new FilterParams().init(this.paramsHelpText()));
+		this.env = this.appendChild(new EnvModule().init(EnvModule.USE_SR, EnvModule.USE_DEPTH, this.envHelpText()));
+		this.lfo = this.appendChild(new LfoModule().init(24000, "Hz", KnobInput.CURVED, this.lfoHelpText()));
 		this.addEventListener("input", (event) => { this.updateSound(); });
+		return this;
 	}
 
 	makeSound(audioContext, key){
@@ -107,5 +106,5 @@ class FilterSection extends HTMLFieldSetElement {
 	}
 }
 
-customElements.define("filter-section", FilterSection, { extends: "fieldset" });
+customElements.define("filter-section", FilterSection);
 

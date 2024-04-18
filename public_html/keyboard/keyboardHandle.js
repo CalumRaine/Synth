@@ -1,10 +1,10 @@
-class QwertyRail extends HTMLDivElement {
+class QwertyRail extends CalumDiv {
 	handle = null;
 	grabbed = false;
 
-	constructor(){
-		super();
-		super.setAttribute("is", "qwerty-rail");
+	init(){
+		super.init();
+		return this;
 	}
 
 	set Grabbed(value){
@@ -22,14 +22,15 @@ class QwertyRail extends HTMLDivElement {
 	}
 }
 
-class QwertyHandle extends HTMLDivElement {
-	constructor(){
-		super();
-		super.setAttribute("is", "qwerty-handle");
+class QwertyHandle extends CalumDiv {
+	init(){
+		super.init();
 		this.innerHTML = "&equiv;"
 
 		// Hack to make it work on touchscreen
 		this.ongotpointercapture = function(event) { this.releasePointerCapture(event.pointerId); };
+		
+		return this;
 	}
 
 	get MarginLeft(){
@@ -41,6 +42,6 @@ class QwertyHandle extends HTMLDivElement {
 	}
 }
 
-customElements.define("qwerty-rail", QwertyRail, { extends: "div" });
-customElements.define("qwerty-handle", QwertyHandle, { extends: "div" });
+customElements.define("qwerty-rail", QwertyRail);
+customElements.define("qwerty-handle", QwertyHandle);
 

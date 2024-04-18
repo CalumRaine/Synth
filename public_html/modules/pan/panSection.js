@@ -1,17 +1,16 @@
-class PanSection extends HTMLFieldSetElement {
+class PanSection extends CalumFieldset {
 	params = null;
 	env = null;
 	lfo = null;
 	pans = [];
 	
-	constructor(){
-		super();
-		super.setAttribute("is", "pan-section");
-		this.appendChild(document.createElement("legend")).innerHTML = "Pan";
-		this.params = this.appendChild(new PanParams(this.paramsHelpText()));
-		this.env = this.appendChild(new EnvModule(EnvModule.USE_SR, EnvModule.USE_DEPTH, this.envHelpText()));
-		this.lfo = this.appendChild(new LfoModule(1, "", KnobInput.LINEAR, this.lfoHelpText()));
+	init(){
+		super.init("Pan");
+		this.params = this.appendChild(new PanParams().init(this.paramsHelpText()));
+		this.env = this.appendChild(new EnvModule().init(EnvModule.USE_SR, EnvModule.USE_DEPTH, this.envHelpText()));
+		this.lfo = this.appendChild(new LfoModule().init(1, "", KnobInput.LINEAR, this.lfoHelpText()));
 		this.addEventListener("input", (event) => { this.updateSound(); });
+		return this;
 	}
 
 	makeSound(audioContext, key){
@@ -100,5 +99,5 @@ class PanSection extends HTMLFieldSetElement {
 	}
 }
 
-customElements.define("pan-section", PanSection, { extends: "fieldset" });
+customElements.define("pan-section", PanSection);
 

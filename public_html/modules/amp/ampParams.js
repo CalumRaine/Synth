@@ -1,16 +1,12 @@
-class AmpParams extends HTMLFieldSetElement {
+class AmpParams extends CalumFieldset {
 	gain = null;
 	help = null;
 
-	constructor(helpText){
-		super();
-		super.setAttribute("is", "amp-params");
-
-		let legend = this.appendChild(document.createElement("legend"));
-		legend.innerHTML = "Parameters";
-
-		this.gain = this.appendChild(new AmpGain());
-		this.help = this.appendChild(new HelpButton(helpText));
+	init(helpText){
+		super.init("Parameters");
+		this.gain = this.appendChild(new AmpGain().init());
+		this.help = this.appendChild(new HelpButton().init(helpText));
+		return this;
 	}
 
 	toJson(){
@@ -25,5 +21,5 @@ class AmpParams extends HTMLFieldSetElement {
 	}
 }
 
-customElements.define("amp-params", AmpParams, { extends: "fieldset" });
+customElements.define("amp-params", AmpParams);
 

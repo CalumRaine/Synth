@@ -1,25 +1,23 @@
-class SynthModule extends HTMLFormElement {
+class SynthModule extends CalumForm {
 	header = null;
 	osc = null;
 	filter = null;
 	amp = null;
 	pan = null;
 
-	constructor(name){
-		super();
-		super.setAttribute("is", "synth-module");
-
+	init(name){
+		super.init();
 		this.header = this.appendChild(document.createElement("h2"));
 		this.header.innerHTML = name;
 		this.header.setAttribute("title", "Module name");
 		this.header.setAttribute("contenteditable", "true");
 
-		this.osc = this.appendChild(new OscSection());
-		this.filter = this.appendChild(new FilterSection());
-		this.amp = this.appendChild(new AmpSection());
-		this.pan = this.appendChild(new PanSection());
+		this.osc = this.appendChild(new OscSection().init());
+		this.filter = this.appendChild(new FilterSection().init());
+		this.amp = this.appendChild(new AmpSection().init());
+		this.pan = this.appendChild(new PanSection().init());
 
-		let buttons = this.appendChild(new ModuleButtons());
+		let buttons = this.appendChild(new ModuleButtons().init());
 		buttons.duplicate.addEventListener("click", (event) => { this.duplicateModule(event); });
 		buttons.remove.addEventListener("click", (event) => { this.removeModule(event); });
 
@@ -28,6 +26,7 @@ class SynthModule extends HTMLFormElement {
 		// - 13% amp release (prevent popping)
 		this.osc.params.shape.select.value = "triangle";
 		this.amp.env.release.percentToParam(13);
+		return this;
 	}
 
 	connectedCallback(){
@@ -40,7 +39,7 @@ class SynthModule extends HTMLFormElement {
 	}
 
 	duplicateModule(){
-		let dupe = new SynthModule();
+		let dupe = new SynthModule().init();
 		dupe.fromJson(this.toJson());
 		dupe.header.innerHTML = `${this.header.innerHTML} (duplicate)`;
 		
@@ -102,5 +101,5 @@ class SynthModule extends HTMLFormElement {
 	}
 }
 
-customElements.define("synth-module", SynthModule, { extends: "form" });
+customElements.define("synth-module", SynthModule);
 

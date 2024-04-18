@@ -1,13 +1,12 @@
-class KeyboardKey extends HTMLButtonElement {
+class KeyboardKey extends CalumButton {
 	num = 0;
 	note = "A";
 	freq = 440.0;
 	span = null;
 	qwertyKey = "";
 
-	constructor(num, note, freq){
-		super();
-		super.setAttribute("is", "keyboard-key");
+	init(num, note, freq){
+		super.init();
 		this.num = num;
 		this.note = note;
 		this.freq = freq;
@@ -15,6 +14,8 @@ class KeyboardKey extends HTMLButtonElement {
 
 		// Hack to make it work on touchscreen
 		this.span.ongotpointercapture = function(event) { this.releasePointerCapture(event.pointerId); };
+
+		return this;
 	}
 
 	set QwertyKey(value){
@@ -39,5 +40,5 @@ class KeyboardKey extends HTMLButtonElement {
 	}
 }
 
-customElements.define("keyboard-key", KeyboardKey, { extends: "button" });
+customElements.define("keyboard-key", KeyboardKey);
 

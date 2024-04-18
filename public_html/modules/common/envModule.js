@@ -1,4 +1,4 @@
-class EnvModule extends HTMLFieldSetElement {
+class EnvModule extends CalumFieldset {
 	static TIME_MIN = 0;
 	static TIME_MAX = 10000;
 	static TIME_UNIT = "ms";
@@ -28,23 +28,22 @@ class EnvModule extends HTMLFieldSetElement {
 	depth = null;
 	help = null;
 
-	constructor(useSustainRelease, useDepth, helpText){
-		super();
-		let legend = this.appendChild(document.createElement("legend"));
-		legend.innerHTML = "Envelope";
-		this.attack = this.appendChild(new KnobInput("Attack", EnvModule.TIME_MIN, EnvModule.TIME_MAX, EnvModule.TIME_UNIT, KnobInput.DP_INT, 0, KnobInput.CURVED, KnobInput.NO_REFLECT));
-		this.decay = this.appendChild(new KnobInput("Decay", EnvModule.TIME_MIN, EnvModule.TIME_MAX, EnvModule.TIME_UNIT, KnobInput.DP_INT, 0, KnobInput.CURVED, KnobInput.NO_REFLECT));
+	init(useSustainRelease, useDepth, helpText){
+		super.init("Envelope");
+		this.attack = this.appendChild(new KnobInput().init("Attack", EnvModule.TIME_MIN, EnvModule.TIME_MAX, EnvModule.TIME_UNIT, KnobInput.DP_INT, 0, KnobInput.CURVED, KnobInput.NO_REFLECT));
+		this.decay = this.appendChild(new KnobInput().init("Decay", EnvModule.TIME_MIN, EnvModule.TIME_MAX, EnvModule.TIME_UNIT, KnobInput.DP_INT, 0, KnobInput.CURVED, KnobInput.NO_REFLECT));
 		
 		if (useSustainRelease){
-			this.sustain = this.appendChild(new KnobInput("Sustain", EnvModule.SUS_MIN, EnvModule.SUS_MAX, EnvModule.SUS_UNIT, KnobInput.DP_CENT, 100, KnobInput.LINEAR, KnobInput.NO_REFLECT));
-			this.release = this.appendChild(new KnobInput("Release", EnvModule.TIME_MIN, EnvModule.TIME_MAX, EnvModule.TIME_UNIT, KnobInput.DP_INT, 0, KnobInput.CURVED, KnobInput.NO_REFLECT));
+			this.sustain = this.appendChild(new KnobInput().init("Sustain", EnvModule.SUS_MIN, EnvModule.SUS_MAX, EnvModule.SUS_UNIT, KnobInput.DP_CENT, 100, KnobInput.LINEAR, KnobInput.NO_REFLECT));
+			this.release = this.appendChild(new KnobInput().init("Release", EnvModule.TIME_MIN, EnvModule.TIME_MAX, EnvModule.TIME_UNIT, KnobInput.DP_INT, 0, KnobInput.CURVED, KnobInput.NO_REFLECT));
 		}
 		
 		if (useDepth){
-			this.depth = this.appendChild(new KnobInput("Depth", EnvModule.DEPTH_MIN, EnvModule.DEPTH_MAX, EnvModule.DEPTH_UNIT, KnobInput.DP_CENT, 0, KnobInput.CURVED, KnobInput.REFLECT));
+			this.depth = this.appendChild(new KnobInput().init("Depth", EnvModule.DEPTH_MIN, EnvModule.DEPTH_MAX, EnvModule.DEPTH_UNIT, KnobInput.DP_CENT, 0, KnobInput.CURVED, KnobInput.REFLECT));
 		}
 
-		this.help = this.appendChild(new HelpButton(helpText));
+		this.help = this.appendChild(new HelpButton().init(helpText));
+		return this;
 	}
 
 	get Attack(){
@@ -107,5 +106,5 @@ class EnvModule extends HTMLFieldSetElement {
 	}
 }
 
-customElements.define("env-module", EnvModule, { extends: "fieldset" });
+customElements.define("env-module", EnvModule);
 

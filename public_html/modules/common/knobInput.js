@@ -36,8 +36,8 @@ class KnobInput extends LabelledInput {
 
 	span = null;
 	
-	constructor(label, paramMin, paramMax, paramUnits, decimalPlaces, knobPos, slope, reflect){
-		super(label);
+	init(label, paramMin, paramMax, paramUnits, decimalPlaces, knobPos, slope, reflect){
+		super.init(label);
 		this.defKnobPos = knobPos;
 		this.exp = slope;
 		this.reflect = reflect;
@@ -61,6 +61,8 @@ class KnobInput extends LabelledInput {
 		this.input.addEventListener("input", (event) => { this.input.setAttribute("value", this.input.value); this.knobToParam(event); });
 		this.input.addEventListener("contextmenu", (event) => { this.reset(event); });
 		this.input.addEventListener("wheel", (event) => { this.wheel(event); });
+
+		return this;
 	}
 
 	get Value(){
@@ -140,5 +142,5 @@ class KnobInput extends LabelledInput {
 	}
 }
 
-customElements.define("knob-input", KnobInput, { extends: "div" });
+customElements.define("knob-input", KnobInput);
 

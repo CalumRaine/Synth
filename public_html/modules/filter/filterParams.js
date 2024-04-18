@@ -1,18 +1,14 @@
-class FilterParams extends HTMLFieldSetElement {
+class FilterParams extends CalumFieldset {
 	type = null;
 	cutoff = null;
 	help = null;
 
-	constructor(helpText){
-		super();
-		super.setAttribute("is", "filter-params");
-
-		let legend = this.appendChild(document.createElement("legend"));
-		legend.innerHTML = "Parameters";
-
-		this.type = this.appendChild(new FilterType());
-		this.cutoff = this.appendChild(new FilterCutoff());
-		this.help = this.appendChild(new HelpButton(helpText));
+	init(helpText){
+		super.init("Parameters");
+		this.type = this.appendChild(new FilterType().init());
+		this.cutoff = this.appendChild(new FilterCutoff().init());
+		this.help = this.appendChild(new HelpButton().init(helpText));
+		return this;
 	}
 
 	toJson(){
@@ -29,5 +25,5 @@ class FilterParams extends HTMLFieldSetElement {
 	}
 }
 
-customElements.define("filter-params", FilterParams, { extends: "fieldset" });
+customElements.define("filter-params", FilterParams);
 

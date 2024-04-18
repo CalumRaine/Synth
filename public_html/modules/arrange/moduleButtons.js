@@ -1,10 +1,10 @@
-class ModuleButtons extends HTMLDivElement {
+class ModuleButtons extends CalumDiv {
 	duplicate = null;
 	remove = null;
-	constructor(){
-		super();
-		super.setAttribute("is", "module-buttons");
-
+	
+	init(){
+		super.init();
+		
 		this.duplicate = this.appendChild(document.createElement("button"));
 		this.duplicate.setAttribute("type", "button");
 		this.duplicate.setAttribute("title", "Duplicate module");
@@ -14,8 +14,10 @@ class ModuleButtons extends HTMLDivElement {
 		this.remove.setAttribute("type", "button");
 		this.remove.setAttribute("title", "Remove module");
 		this.remove.innerHTML = "-";
+
+		return this;
 	}
 }
 
-customElements.define("module-buttons", ModuleButtons, { extends: "div" });
+customElements.define("module-buttons", ModuleButtons);
 

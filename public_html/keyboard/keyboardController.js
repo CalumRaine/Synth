@@ -1,4 +1,4 @@
-class KeyboardController extends HTMLDivElement {
+class KeyboardController extends CalumDiv {
 	static ALL_NOTES = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 	static ALL_QWERTY = ["A", "W", "S", "E", "D", "R", "F", "T", "G", "Y", "H", "U", "J", "I", "K", "O", "L"];
 	allKeys = [];
@@ -22,19 +22,18 @@ class KeyboardController extends HTMLDivElement {
 	handle = null;
 	keyboard = null;
 
-	constructor(){
-		super();
-		super.setAttribute("is", "keyboard-controller");
+	init(){
+		super.init();
 
 		// Setup child objects
-		this.rail = this.appendChild(new QwertyRail());
-		this.keyboard = this.appendChild(new KeyboardKeys());
-		this.handle = this.rail.appendChild(new QwertyHandle());
+		this.rail = this.appendChild(new QwertyRail().init());
+		this.keyboard = this.appendChild(new KeyboardKeys().init());
+		this.handle = this.rail.appendChild(new QwertyHandle().init());
 
 		// Make white/black keys
 		for (let k=0, freq=KeyboardController.ROOT_FREQ, note=KeyboardController.ROOT_NOTE; k < KeyboardController.NUM_KEYS; ++k){
 			// Create key with note and freq
-			let key = new KeyboardKey(k+1, note, freq);
+			let key = new KeyboardKey().init(k+1, note, freq);
 			this.keyboard.appendChild(key);
 			this.allKeys.push(key);
 
@@ -86,6 +85,8 @@ class KeyboardController extends HTMLDivElement {
 		document.addEventListener("pointermove", (event) => { this.dragHandle(event); });
 		document.addEventListener("pointerup", (event) => { this.dropHandle(event); });
 		window.addEventListener("resize", (event) => { this.centreKeyboard(event); });
+		
+		return this;
 	}
 
 	connectedCallback(){
@@ -150,5 +151,5 @@ class KeyboardController extends HTMLDivElement {
 	}
 }
 
-customElements.define("keyboard-controller", KeyboardController, { extends: "div" });
+customElements.define("keyboard-controller", KeyboardController);
 

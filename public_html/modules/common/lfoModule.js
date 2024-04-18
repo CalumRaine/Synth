@@ -1,4 +1,4 @@
-class LfoModule extends HTMLFieldSetElement {
+class LfoModule extends CalumFieldset {
 	static SHAPES = ["Sine", "Triangle", "Square", "Sawtooth", "Random"];
 	shape = null;
 
@@ -29,24 +29,23 @@ class LfoModule extends HTMLFieldSetElement {
 
 	gains = [];
 
-	constructor(maxDepth, unitsDepth, linearDepth, helpText){
-		super();
-		super.setAttribute("is", "lfo-module");
-		let legend = this.appendChild(document.createElement("legend"));
-		legend.innerHTML = "LFO";
+	init(maxDepth, unitsDepth, linearDepth, helpText){
+		super.init("LFO");
 
-		this.shape = this.appendChild(new DropdownInput("Shape", LfoModule.SHAPES));
-		this.freq = this.appendChild(new KnobInput("Freq", LfoModule.FREQ_MIN, LfoModule.FREQ_MAX, LfoModule.FREQ_UNIT, KnobInput.DP_FREQ, LfoModule.FREQ_DEF, KnobInput.CURVED, KnobInput.NO_REFLECT));
-		this.depth = this.appendChild(new KnobInput("Depth", LfoModule.DEPTH_MIN, maxDepth, unitsDepth, KnobInput.DP_CENT, LfoModule.DEPTH_DEF, linearDepth, KnobInput.NO_REFLECT));
-		this.attack = this.appendChild(new KnobInput("Attack", EnvModule.TIME_MIN, EnvModule.TIME_MAX, EnvModule.TIME_UNIT, KnobInput.DP_INT, 0, KnobInput.CURVED, KnobInput.NO_REFLECT));
+		this.shape = this.appendChild(new DropdownInput().init("Shape", LfoModule.SHAPES));
+		this.freq = this.appendChild(new KnobInput().init("Freq", LfoModule.FREQ_MIN, LfoModule.FREQ_MAX, LfoModule.FREQ_UNIT, KnobInput.DP_FREQ, LfoModule.FREQ_DEF, KnobInput.CURVED, KnobInput.NO_REFLECT));
+		this.depth = this.appendChild(new KnobInput().init("Depth", LfoModule.DEPTH_MIN, maxDepth, unitsDepth, KnobInput.DP_CENT, LfoModule.DEPTH_DEF, linearDepth, KnobInput.NO_REFLECT));
+		this.attack = this.appendChild(new KnobInput().init("Attack", EnvModule.TIME_MIN, EnvModule.TIME_MAX, EnvModule.TIME_UNIT, KnobInput.DP_INT, 0, KnobInput.CURVED, KnobInput.NO_REFLECT));
 
 		// Polyphony is often better if the LFO is synced to one master wave
-		this.sync = this.appendChild(new ToggleInput("Sync", false));
+		this.sync = this.appendChild(new ToggleInput().init("Sync", false));
 		this.sync.light.addEventListener("click", (event) => { return this.sync.Checked ? false : this.stopMaster(); });
 
-		this.help = this.appendChild(new HelpButton(helpText));
+		this.help = this.appendChild(new HelpButton().init(helpText));
 
 		this.addEventListener("input", (event) => { this.updateSound(); });
+
+		return this;
 	}
 
 	get IsRandom(){
@@ -250,5 +249,5 @@ class LfoModule extends HTMLFieldSetElement {
 	}
 }
 
-customElements.define("lfo-module", LfoModule, { extends: "fieldset" });
+customElements.define("lfo-module", LfoModule);
 

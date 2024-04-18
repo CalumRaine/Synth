@@ -4,9 +4,9 @@ class OscShift extends KnobInput {
 	static DEF = 0;
 	static UNIT = "Note";
 
-	constructor(){
-		super("Shift", OscShift.MIN, OscShift.MAX, OscShift.UNIT, KnobInput.DP_INT, OscShift.DEF, KnobInput.LINEAR, KnobInput.REFLECT);
-		super.setAttribute("is", "osc-shift");
+	init(){
+		super.init("Shift", OscShift.MIN, OscShift.MAX, OscShift.UNIT, KnobInput.DP_INT, OscShift.DEF, KnobInput.LINEAR, KnobInput.REFLECT);
+		return this;
 	}
 
 	get Cents(){
@@ -14,5 +14,5 @@ class OscShift extends KnobInput {
 	}
 }
 
-customElements.define("osc-shift", OscShift, { extends: "div" });
+customElements.define("osc-shift", OscShift);
 

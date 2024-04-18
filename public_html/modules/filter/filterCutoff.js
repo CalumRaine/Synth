@@ -3,11 +3,12 @@ class FilterCutoff extends KnobInput {
 	static MAX = 24000;
 	static DEF = 100;
 	static UNIT = "Hz";
-	constructor(){
-		super("Cutoff", FilterCutoff.MIN, FilterCutoff.MAX, FilterCutoff.UNIT, KnobInput.DP_FREQ, FilterCutoff.DEF, KnobInput.CURVED, KnobInput.NO_REFLECT);
-		super.setAttribute("is", "filter-cutoff");
+	
+	init(){
+		super.init("Cutoff", FilterCutoff.MIN, FilterCutoff.MAX, FilterCutoff.UNIT, KnobInput.DP_FREQ, FilterCutoff.DEF, KnobInput.CURVED, KnobInput.NO_REFLECT);
+		return this;
 	}
 }
 
-customElements.define("filter-cutoff", FilterCutoff, { extends: "div" });
+customElements.define("filter-cutoff", FilterCutoff);
 

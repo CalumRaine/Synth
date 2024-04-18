@@ -1,21 +1,18 @@
-class OscParams extends HTMLFieldSetElement {
+class OscParams extends CalumFieldset {
 	shape = null;
 	shift = null;
 	detune = null;
 	help = null;
 
-	constructor(helpText){
-		super();
-		super.setAttribute("is", "osc-params");
+	init(helpText){
+		super.init("Parameters");
 
-		let legend = this.appendChild(document.createElement("legend"));
-		legend.innerHTML = "Parameters";
+		this.shape = this.appendChild(new OscShape().init());
+		this.shift = this.appendChild(new OscShift().init());
+		this.detune = this.appendChild(new OscDetune().init());
 
-		this.shape = this.appendChild(new OscShape());
-		this.shift = this.appendChild(new OscShift());
-		this.detune = this.appendChild(new OscDetune());
-
-		this.help = this.appendChild(new HelpButton(helpText));
+		this.help = this.appendChild(new HelpButton().init(helpText));
+		return this;
 	}
 
 	toJson(){
@@ -34,5 +31,5 @@ class OscParams extends HTMLFieldSetElement {
 	}
 }
 
-customElements.define("osc-params", OscParams, { extends: "fieldset" });
+customElements.define("osc-params", OscParams);
 

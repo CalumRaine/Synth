@@ -9,14 +9,14 @@ button {
 	cursor: pointer;
 }
 
-div[is="synth-rack"] header {
+synth-rack > div header {
 	margin: 0.5rem 1rem 0rem 1rem;
 	display: flex;
 	flex-direction: row;
 	column-gap: 0.4rem;
 }
 
-div[is="synth-rack"] header h1 {
+synth-rack > div header h1 {
 	margin: 0rem;
 	flex-grow: 1;
 }
@@ -42,5 +42,9 @@ a#contact {
 	z-index: 3;
 	font-size: 0.75rem;
 	text-align: center;
+}
+
+.web-component {
+	display: contents;
 }
 

@@ -1,16 +1,12 @@
-class PanParams extends HTMLFieldSetElement {
+class PanParams extends CalumFieldset {
 	pan = null;
 	help = null;
 
-	constructor(helpText){
-		super();
-		super.setAttribute("is", "pan-params");
-
-		let legend = this.appendChild(document.createElement("legend"));
-		legend.innerHTML = "Parameters";
-
-		this.pan = this.appendChild(new PanStereo());
-		this.help = this.appendChild(new HelpButton(helpText));
+	init(helpText){
+		super.init("Parameters");
+		this.pan = this.appendChild(new PanStereo().init());
+		this.help = this.appendChild(new HelpButton().init(helpText));
+		return this;
 	}
 
 	toJson(){
@@ -25,5 +21,5 @@ class PanParams extends HTMLFieldSetElement {
 	}
 }
 
-customElements.define("pan-params", PanParams, { extends: "fieldset" });
+customElements.define("pan-params", PanParams);
 

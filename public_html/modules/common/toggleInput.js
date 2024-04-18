@@ -1,8 +1,8 @@
 class ToggleInput extends LabelledInput {
 	light = null;
-	constructor(label, checked){
-		super(label);
-		super.setAttribute("is", "toggle-input");
+	
+	init(label, checked){
+		super.init(label);
 
 		this.light = this.appendChild(document.createElement("button"));
 		this.light.addEventListener("click", (event) => { this.Checked = !this.Checked; });
@@ -12,6 +12,8 @@ class ToggleInput extends LabelledInput {
 		this.input.setAttribute("type", "checkbox");
 		this.input.checked = checked;
 		this.input.hidden = true;
+
+		return this;
 	}
 
 	get Value(){
@@ -44,5 +46,5 @@ class ToggleInput extends LabelledInput {
 	}
 }
 
-customElements.define("toggle-input", ToggleInput, { extends: "div" });
+customElements.define("toggle-input", ToggleInput);
 

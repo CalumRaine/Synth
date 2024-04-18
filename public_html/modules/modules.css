@@ -1,5 +1,5 @@
 /* Synth module unit */
-form[is="synth-module"] {
+synth-module > form {
 	position: relative;
 	display: inline-flex;
 	flex-direction: column;
@@ -10,13 +10,13 @@ form[is="synth-module"] {
 	background-color: lightgrey;
 }
 
-form[is="synth-module"] h2 {
+synth-module > form h2 {
 	width: 100%;
 	margin: -0.5rem 0rem 0.75rem 0rem;
 }
 
 /* Help buttons */
-button[is="help-button"] {
+help-button > button {
 	position: absolute;
 	top: -0.25rem;
 	right: 0.25rem;
@@ -28,39 +28,39 @@ button[is="help-button"] {
 	height: 1rem;
 }
 
-button[is="help-button"] dialog {
+help-button > button dialog {
 	text-align: start;
 	font-size: 1rem;
 	line-height: 1rem;
 }
 
-button[is="help-button"] dialog::backdrop {
+help-button > button dialog::backdrop {
 	background-color: rgba(0, 0, 0, 0.6);
 }
 
-button[is="help-button"] dialog ul {
+help-button > button dialog ul {
 	padding-left: 1.5rem;
 }
 
-button[is="help-button"] dialog p {
+help-button > button dialog p {
 	text-align: center;
 	margin: 0rem;
 	font-size: 0.75rem;
 }
 
 /* Fieldsets */
-form[is="synth-module"] fieldset {
+synth-module > form fieldset {
 	position: relative;
 	border: 1px solid black;
 	border-radius: 0.25rem;
 }
 
-form[is="synth-module"] fieldset legend {
+synth-module > form fieldset legend {
 	font-weight: bold;
 }
 
 /* Primary outer fieldset */
-form[is="synth-module"] > fieldset {
+synth-module > form  > .web-component > fieldset {
 	display: flex;
 	flex-direction: row;
 	margin-bottom: 1rem;
@@ -68,85 +68,85 @@ form[is="synth-module"] > fieldset {
 	column-gap: 0.5rem;
 }
 
-form[is="synth-module"] > fieldset > legend {
+synth-module > form > .web-component > fieldset > legend {
 	text-transform: uppercase;
 }
 
 /* Secondary inner fieldset */
-form[is="synth-module"] fieldset fieldset {
+synth-module > form fieldset fieldset {
 	border-color: grey;
 }
 
 /* Parameter input */
-form[is="synth-module"] fieldset div {
+synth-module > form fieldset div {
 	display: block;
 	margin-bottom: 0.2rem;
 }
 
-form[is="synth-module"] fieldset div label {
+synth-module > form fieldset div label {
 	display: inline-block;
 	width: 7ch;
 }
 
-form[is="synth-module"] fieldset div button,
-form[is="synth-module"] fieldset div select,
-form[is="synth-module"] fieldset div input {
+synth-module > form fieldset div button,
+synth-module > form fieldset div select,
+synth-module > form fieldset div input {
 	margin: 0rem 1rem;
 	cursor: pointer;
 	vertical-align: middle;
 	accent-color: darkslategrey;
 }
 
-form[is="synth-module"] fieldset div select,
-form[is="synth-module"] fieldset div input {
+synth-module > form fieldset div select,
+synth-module > form fieldset div input {
 	width: 30ch;
 }
 
-form[is="synth-module"] fieldset div span {
+synth-module > form fieldset div span {
 	display: inline-block;
 	width: 8ch;
 	font-size: 0.7rem;
 }
 
-form[is="synth-module"] fieldset fieldset:first-of-type div span {
+synth-module > form fieldset filter-params > fieldset div span {
 	width: 14ch;
 }
 
-form[is="synth-module"] fieldset fieldset:last-of-type div span {
+synth-module > form fieldset fieldset div span {
 	width: 12ch;
 }
 
-form[is="synth-module"] fieldset div select:focus,
-form[is="synth-module"] fieldset div input:focus {
+synth-module > form fieldset div select:focus,
+synth-module > form fieldset div input:focus {
 	background-color: lightgray;
 	accent-color: gray;
 }
 
 /* Toggle input */
-div[is="toggle-input"] button {
+toggle-input > div button {
 	width: 1rem;
 	height: 1rem;
 	background-color: red;
 }
 
-div[is="toggle-input"] button:has(input[checked]) {
+toggle-input > div button:has(input[checked]) {
 	background-color: green;
 }
 
 /* Module add/remove buttons */
-form[is="synth-module"] div[is="module-buttons"] {
+synth-module > form module-buttons > div {
 	position: absolute;
 	bottom: -0.75rem;
 }
 
-form[is="synth-module"] div[is="module-buttons"] button {
+synth-module > form module-buttons > div button {
 	font-weight: bold;
 	width: 4rem;
 	height: 1.5rem;
 	margin-right: 0.3rem;
 }
 
-form[is="synth-module"]:only-of-type div[is="module-buttons"] button:last-child {
+synth-module > form:only-of-type module-buttons > div button:last-child {
 	cursor: not-allowed;
 }
 

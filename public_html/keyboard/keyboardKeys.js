@@ -1,7 +1,7 @@
-class KeyboardKeys extends HTMLDivElement {
-	constructor(){
-		super();
-		super.setAttribute("is", "keyboard-keys");
+class KeyboardKeys extends CalumDiv {
+	init(){
+		super.init();
+		return this;
 	}
 
 	get MarginLeft(){
@@ -13,5 +13,5 @@ class KeyboardKeys extends HTMLDivElement {
 	}
 }
 
-customElements.define("keyboard-keys", KeyboardKeys, { extends: "div" });
+customElements.define("keyboard-keys", KeyboardKeys);
 

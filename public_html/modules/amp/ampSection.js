@@ -1,17 +1,16 @@
-class AmpSection extends HTMLFieldSetElement {
+class AmpSection extends CalumFieldset {
 	params = null;
 	env = null;
 	lfo = null;
 	amps = [];
 	
-	constructor(){
-		super();
-		super.setAttribute("is", "amp-section");
-		this.appendChild(document.createElement("legend")).innerHTML = "Amp";
-		this.params = this.appendChild(new AmpParams(this.paramsHelpText()));
-		this.env = this.appendChild(new EnvModule(EnvModule.USE_SR, EnvModule.NO_DEPTH, this.envHelpText()));
-		this.lfo = this.appendChild(new LfoModule(1, "", KnobInput.LINEAR, this.lfoHelpText()));
+	init(){
+		super.init("Amp");
+		this.params = this.appendChild(new AmpParams().init(this.paramsHelpText()));
+		this.env = this.appendChild(new EnvModule().init(EnvModule.USE_SR, EnvModule.NO_DEPTH, this.envHelpText()));
+		this.lfo = this.appendChild(new LfoModule().init(1, "", KnobInput.LINEAR, this.lfoHelpText()));
 		this.addEventListener("input", (event) => { this.updateSound(); });
+		return this;
 	}
 
 	makeSound(audioContext, key){
@@ -93,5 +92,5 @@ class AmpSection extends HTMLFieldSetElement {
 	}
 }
 
-customElements.define("amp-section", AmpSection, { extends: "fieldset" });
+customElements.define("amp-section", AmpSection);
 

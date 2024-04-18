@@ -1,17 +1,16 @@
-class OscSection extends HTMLFieldSetElement {
+class OscSection extends CalumFieldset {
 	params = null;
 	env = null;
 	lfo = null;
 	oscillators = [];
 	
-	constructor(){
-		super();
-		super.setAttribute("is", "osc-section");
-		this.appendChild(document.createElement("legend")).innerHTML = "Oscillator";
-		this.params = this.appendChild(new OscParams(this.paramsHelpText()));
-		this.env = this.appendChild(new EnvModule(EnvModule.NO_SR, EnvModule.USE_DEPTH, this.envHelpText()));
-		this.lfo = this.appendChild(new LfoModule(1200, "Cents", KnobInput.CURVED, this.lfoHelpText()));
+	init(){
+		super.init("Oscillator");
+		this.params = this.appendChild(new OscParams().init(this.paramsHelpText()));
+		this.env = this.appendChild(new EnvModule().init(EnvModule.NO_SR, EnvModule.USE_DEPTH, this.envHelpText()));
+		this.lfo = this.appendChild(new LfoModule().init(1200, "Cents", KnobInput.CURVED, this.lfoHelpText()));
 		this.addEventListener("input", (event) => { this.updateSound(); });
+		return this;
 	}
 
 	makeSound(audioContext, key){
@@ -102,5 +101,5 @@ class OscSection extends HTMLFieldSetElement {
 	}
 }
 
-customElements.define("osc-section", OscSection, { extends: "fieldset" });
+customElements.define("osc-section", OscSection);
 

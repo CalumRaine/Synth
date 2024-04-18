@@ -3,9 +3,9 @@ class PanStereo extends KnobInput {
 	static PAN_MAX = 1;
 	static PAN_DEF = 0;
 
-	constructor(){
-		super("Pan", PanStereo.PAN_MIN, PanStereo.PAN_MAX, "", KnobInput.DP_CENT, PanStereo.PAN_DEF, KnobInput.LINEAR, KnobInput.REFLECT);
-		super.setAttribute("is", "pan-stereo");
+	init(){
+		super.init("Pan", PanStereo.PAN_MIN, PanStereo.PAN_MAX, "", KnobInput.DP_CENT, PanStereo.PAN_DEF, KnobInput.LINEAR, KnobInput.REFLECT);
+		return this;
 	}
 
 	setTitle(){
@@ -27,5 +27,5 @@ class PanStereo extends KnobInput {
 	}
 }
 
-customElements.define("pan-stereo", PanStereo, { extends: "div" });
+customElements.define("pan-stereo", PanStereo);
 
